@@ -33,26 +33,11 @@ const Signup = ({ firebase }) => {
           stripUnknown: true,
         })
           .then(() => {
-            firebase.auth
-              .signInWithEmailAndPassword(values.email, values.password)
+            firebase
+              .signIn(values)
               .then(() => <Redirect to={{ pathname: '/' }} />)
-              .catch(({ code, message }) => {
-                let error = null;
-                switch (code) {
-                  case 'auth/email-already-in-use':
-                    error = 'This email address has already been taken';
-                    break;
-                  case 'auth/user-disabled':
-                    error = 'Your account has been disabled';
-                    break;
-                  case 'auth/user-not-found':
-                  case 'auth/wrong-password':
-                    error = 'Credintials are incorrect';
-                    break;
-                  default:
-                    error = 'Check your internet connection';
-                }
-                toast.error(error || message);
+              .catch(error => {
+                toast.error(error);
                 changeIsSubmitting(false);
               });
           })

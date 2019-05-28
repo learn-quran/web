@@ -2,6 +2,7 @@
 import React from 'react';
 import app from 'firebase/app';
 
+// Firebase dependencies
 import 'firebase/auth';
 
 const config = {
@@ -20,6 +21,32 @@ class Firebase {
 
     this.auth = app.auth();
   }
+
+  signIn = ({ email, password }) => {
+    return new Promise((resovle, reject) => {
+      this.auth
+        .signInWithEmailAndPassword(email, password)
+        .then(() => resovle())
+        .catch(({ code, message }) => {
+          let error = null;
+          switch (code) {
+            case 'auth/email-already-in-use':
+              error = 'This email address has already been taken';
+              break;
+            case 'auth/user-disabled':
+              error = 'Your account has been disabled';
+              break;
+            case 'auth/user-not-found':
+            case 'auth/wrong-password':
+              error = 'Credintials are incorrect';
+              break;
+            default:
+              error = 'Check your internet connection';
+          }
+          reject(error || message);
+        });
+    });
+  };
 }
 
 const FirebaseContext = React.createContext(null);
