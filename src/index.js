@@ -4,13 +4,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { ScaleLoader } from 'react-spinners';
 
-
 import Firebase, { FirebaseContext } from './Firebase';
 import { NavBar, Navigation } from './Navigation';
 
 import PropTypes from 'prop-types';
 import * as serviceWorker from './serviceWorker';
-import 'react-toastify/dist/ReactToastify.css';
+import './Assets/stylesheets/index.scss';
 
 class App extends React.Component {
   static propTypes = {
@@ -48,10 +47,10 @@ class App extends React.Component {
         <Fragment>
           <NavBar user={user} />
 
-          <Fragment>
+          <div className="container">
             <Navigation user={user} />
             <ToastContainer />
-          </Fragment>
+          </div>
         </Fragment>
       </Router>
     );
