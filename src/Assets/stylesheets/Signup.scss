@@ -1,9 +1,10 @@
 .container {
+  position: relative;
   justify-content: center;
   align-items: center;
   form {
     display: flex;
-    min-width: 400px;
+    width: 26rem;
     .form-container {
       display: flex;
       align-items: center;
