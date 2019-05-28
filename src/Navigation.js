@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Switch, Route, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Home from './Containers/Home';
 import Signup from './Containers/Signup';
@@ -21,10 +22,12 @@ const SignedOutNavBar = () => (
   </ul>
 );
 
-const NavBar = ({ user }: Object) => (
+const NavBar = ({ user }) => (
   <div>{user ? <SignedInNavBar /> : <SignedOutNavBar />}</div>
 );
-
+NavBar.propTypes = {
+  user: PropTypes.object,
+};
 const SignedInNavigation = () => (
   <Switch>
     <Route path="/home" component={Home} />
@@ -40,8 +43,11 @@ const SignedOutNavigation = () => (
   </Switch>
 );
 
-const Navigation = ({ user }: Object) => {
+const Navigation = ({ user }) => {
   return user ? <SignedInNavigation /> : <SignedOutNavigation />;
+};
+Navigation.propTypes = {
+  user: PropTypes.object,
 };
 
 export { NavBar, Navigation };
