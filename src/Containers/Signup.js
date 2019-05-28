@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
 
 import '../Assets/stylesheets/Signup.scss';
@@ -19,7 +20,7 @@ const SignupSchema = Yup.object().shape({
     .email('Invalid email'),
 });
 
-const Signup = ({ firebase }: Object) => {
+const Signup = ({ firebase }) => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
   return (
     <Formik
@@ -103,6 +104,9 @@ const Signup = ({ firebase }: Object) => {
       )}
     />
   );
+};
+Signup.propTypes = {
+  firebase: PropTypes.object,
 };
 
 export default withFirebase(Signup);
