@@ -6,28 +6,30 @@ import Home from './Containers/Home';
 import Signup from './Containers/Signup';
 import Login from './Containers/Login';
 
-const SignedInNavBar = () => (
-  <ul>
-    <li>
-      <Link to="/home">Home</Link>
-    </li>
-  </ul>
-);
+import { useTranslation } from 'react-i18next';
+
+const SignedInNavBar = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="nav-content">
+      <div className="nav-item">
+        <Link to="/home">{t('home')}</Link>
+      </div>
+    </div>
+  );
+};
 
 const SignedOutNavBar = () => (
-  <ul>
-    <li>
-      <Link to="/login">Sign In</Link>
-    </li>
-  </ul>
+  <div className="nav-content">
+    <div className="nav-item">
+      <Link to="/signup">Sign Up</Link>
+    </div>
+    <div className="nav-item">
+      <Link to="/login">Log In</Link>
+    </div>
+  </div>
 );
 
-const NavBar = ({ user }) => (
-  <div>{user ? <SignedInNavBar /> : <SignedOutNavBar />}</div>
-);
-NavBar.propTypes = {
-  user: PropTypes.object,
-};
 const SignedInNavigation = () => (
   <Switch>
     <Route path="/home" component={Home} />
@@ -50,4 +52,10 @@ Navigation.propTypes = {
   user: PropTypes.object,
 };
 
-export { NavBar, Navigation };
+export {
+  SignedInNavBar,
+  SignedOutNavBar,
+  SignedInNavigation,
+  SignedOutNavigation,
+  Navigation,
+};
