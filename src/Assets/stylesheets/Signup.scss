@@ -1,0 +1,31 @@
+.container {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  form {
+    display: flex;
+    width: 26rem;
+    .form-container {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      padding: 2px 16px;
+      width: 100%;
+      .text-field-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        .text-field {
+          width: 100%;
+        }
+      }
+      .button-container {
+        width: 80%;
+        margin: 48px 0;
+        .button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
