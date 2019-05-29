@@ -19,16 +19,19 @@ const SignedInNavBar = () => {
   );
 };
 
-const SignedOutNavBar = () => (
-  <div className="nav-content">
-    <div className="nav-item">
-      <Link to="/signup">Sign Up</Link>
+const SignedOutNavBar = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="nav-content">
+      <div className="nav-item">
+        <Link to="/signup">{t('sign-up')}</Link>
+      </div>
+      <div className="nav-item">
+        <Link to="/login">{t('log-in')}</Link>
+      </div>
     </div>
-    <div className="nav-item">
-      <Link to="/login">Log In</Link>
-    </div>
-  </div>
-);
+  );
+};
 
 const SignedInNavigation = () => (
   <Switch>
