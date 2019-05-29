@@ -1,7 +1,10 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import app from 'firebase/app';
 
+// Firebase dependencies
 import 'firebase/auth';
+import 'firebase/database';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -18,7 +21,80 @@ class Firebase {
     app.initializeApp(config);
 
     this.auth = app.auth();
+    this.database = app.database();
   }
+
+  signIn = ({ email, password }) =>
+    new Promise((resovle, reject) => {
+      this.auth
+        .signInWithEmailAndPassword(email, password)
+        .then(() => resovle())
+        .catch(({ code, message }) => {
+          let error = null;
+          switch (code) {
+            case 'auth/email-already-in-use':
+              error = 'This email address has already been taken';
+              break;
+            case 'auth/user-disabled':
+              error = 'Your account has been disabled';
+              break;
+            case 'auth/user-not-found':
+            case 'auth/wrong-password':
+              error = 'Credintials are incorrect';
+              break;
+            default:
+              error = 'Check your internet connection';
+          }
+          reject(error || message);
+        });
+    });
+  createUser = ({ email, password, username }) =>
+    new Promise((resolve, reject) => {
+      this.database
+        .ref('users')
+        .orderByChild('username')
+        .equalTo(username)
+        .once('value')
+        .then(snapshot => {
+          if (snapshot.val()) {
+            reject('Username already exists');
+          } else {
+            this.auth
+              .createUserWithEmailAndPassword(email, password)
+              .then(({ user }) => {
+                if (user && user.uid) {
+                  user.updateProfile({ displayName: username });
+                  let updates = {};
+                  updates['users/' + user.uid] = {
+                    uid: user.uid,
+                    username: username,
+                    email: email,
+                    isEmailVerified: false,
+                  };
+                  this.database.ref().update(updates);
+                  resolve();
+                }
+              })
+              .catch(({ code, message }) => {
+                let error = null;
+                switch (code) {
+                  case 'auth/email-already-in-use':
+                    error = 'This email address has already been taken';
+                    break;
+                  case 'auth/invalid-email':
+                    error = 'Invalid e-mail address format';
+                    break;
+                  case 'auth/weak-password':
+                    error = 'Password too weak';
+                    break;
+                  default:
+                    error = 'Check your internet connection';
+                }
+                reject(error || message);
+              });
+          }
+        });
+    });
 }
 
 const FirebaseContext = React.createContext(null);
