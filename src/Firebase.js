@@ -69,6 +69,7 @@ class Firebase {
                     uid: user.uid,
                     username: username,
                     email: email,
+                    points: 0,
                     isEmailVerified: false,
                   };
                   this.database.ref().update(updates);
