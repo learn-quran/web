@@ -1,0 +1,15 @@
+// React Toastify Stylesheet
+@import '~react-toastify/dist/ReactToastify.css';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  .container {
+    display: flex;
+    height: 90vh;
+    width: 100vw;
+  }
+}
