@@ -55,10 +55,11 @@ const Login = ({ firebase }) => {
       }}
       onSubmit={submit}
       render={({ values, handleBlur, handleChange, handleSubmit }) => (
-        <form onSubmit={handleSubmit} autoCapitalize="off" autoComplete="off">
+        <form onSubmit={handleSubmit} autoCapitalize="off">
           <div className="form-container login">
             <div className="text-field-container">
               <TextField
+                autoFocus
                 id="email"
                 label="Email "
                 type="email"
