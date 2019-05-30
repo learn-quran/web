@@ -11,14 +11,14 @@ import { withFirebase } from '../Firebase';
 
 import '../Assets/stylesheets/Signup.scss';
 
-const SignupSchema = Yup.object().shape({
+const LoginSchema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
   email: Yup.string()
     .email('NO_MESSAGE')
     .required('Email is required'),
 });
 
-const Signup = ({ firebase }) => {
+const Login = ({ firebase }) => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
   return (
     <Formik
@@ -28,7 +28,7 @@ const Signup = ({ firebase }) => {
       }}
       onSubmit={values => {
         changeIsSubmitting(true);
-        SignupSchema.validate(values, {
+        LoginSchema.validate(values, {
           strict: true,
           stripUnknown: true,
         })
@@ -50,7 +50,7 @@ const Signup = ({ firebase }) => {
       }}
       render={({ values, handleBlur, handleChange, handleSubmit }) => (
         <form onSubmit={handleSubmit} autoCapitalize="off" autoComplete="off">
-          <div className="form-container">
+          <div className="form-container login">
             <div className="text-field-container">
               <TextField
                 id="email"
@@ -91,8 +91,8 @@ const Signup = ({ firebase }) => {
     />
   );
 };
-Signup.propTypes = {
+Login.propTypes = {
   firebase: PropTypes.object,
 };
 
-export default withFirebase(Signup);
+export default withFirebase(Login);
