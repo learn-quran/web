@@ -1,0 +1,14 @@
+.container {
+  align-items: initial;
+  padding: 24px 0;
+  .MuiTable-root {
+    width: 60rem !important;
+    padding: 20px 28px;
+    .MuiTableCell-head {
+      font-size: 1rem !important;
+    }
+    .MuiTableCell-body {
+      font-size: 0.9rem !important;
+    } 
+  }
+}
