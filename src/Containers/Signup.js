@@ -67,10 +67,11 @@ const Signup = ({ firebase }) => {
       }}
       onSubmit={submit}
       render={({ values, handleBlur, handleChange, handleSubmit }) => (
-        <form autoCapitalize="off" autoComplete="off">
+        <form autoCapitalize="off">
           <div className="form-container">
             <div className="text-field-container">
               <TextField
+                autoFocus
                 id="email"
                 label="Email "
                 type="email"
