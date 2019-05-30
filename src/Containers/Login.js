@@ -20,34 +20,40 @@ const LoginSchema = Yup.object().shape({
 
 const Login = ({ firebase }) => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
+  const submit = values => {
+    changeIsSubmitting(true);
+    LoginSchema.validate(values, {
+      strict: true,
+      stripUnknown: true,
+    })
+      .then(() => {
+        firebase
+          .signIn(values)
+          .then(() => <Redirect to={{ pathname: '/' }} />)
+          .catch(error => {
+            toast.error(error);
+            changeIsSubmitting(false);
+          });
+      })
+      .catch(({ message }) => {
+        if (message !== 'NO_MESSAGE') {
+          toast.error(message);
+        }
+        changeIsSubmitting(false);
+      });
+  };
+  const handleKeyPress = ({ keyCode, charCode }, values) => {
+    if (keyCode === 13 || charCode === 13) {
+      submit(values);
+    }
+  };
   return (
     <Formik
       initialValues={{
         email: '',
         password: '',
       }}
-      onSubmit={values => {
-        changeIsSubmitting(true);
-        LoginSchema.validate(values, {
-          strict: true,
-          stripUnknown: true,
-        })
-          .then(() => {
-            firebase
-              .signIn(values)
-              .then(() => <Redirect to={{ pathname: '/' }} />)
-              .catch(error => {
-                toast.error(error);
-                changeIsSubmitting(false);
-              });
-          })
-          .catch(({ message }) => {
-            if (message !== 'NO_MESSAGE') {
-              toast.error(message);
-            }
-            changeIsSubmitting(false);
-          });
-      }}
+      onSubmit={submit}
       render={({ values, handleBlur, handleChange, handleSubmit }) => (
         <form onSubmit={handleSubmit} autoCapitalize="off" autoComplete="off">
           <div className="form-container login">
@@ -73,6 +79,7 @@ const Login = ({ firebase }) => {
                 onBlur={handleBlur('password')}
                 margin="normal"
                 variant="outlined"
+                onKeyDown={e => handleKeyPress(e, values)}
               />
             </div>
             <div className="button-container">
