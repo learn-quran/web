@@ -70,6 +70,7 @@ class Firebase {
                     username: username,
                     email: email,
                     points: 0,
+                    lastPlayed: '3 days ago',
                     isEmailVerified: false,
                   };
                   this.database.ref().update(updates);
@@ -94,6 +95,16 @@ class Firebase {
                 reject(error || message);
               });
           }
+        });
+    });
+  getLeaderboard = () =>
+    new Promise((resolve, reject) => {
+      this.database
+        .ref('users')
+        .orderByChild('points')
+        .once('value')
+        .then(snapshot => {
+          resolve(snapshot.val());
         });
     });
 }
