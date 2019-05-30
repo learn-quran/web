@@ -107,6 +107,14 @@ class Firebase {
         })
         .catch(error => reject(error.message));
     });
+  updateUserOnDB = updates =>
+    new Promise((resolve, reject) => {
+      this.database
+        .ref(`users/${this.auth.currentUser.uid}`)
+        .update(updates)
+        .then(() => resolve())
+        .catch(() => reject('An error occured. Please try again later'));
+    });
 }
 
 const FirebaseContext = React.createContext(null);
