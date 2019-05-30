@@ -63,7 +63,6 @@ class Firebase {
               .createUserWithEmailAndPassword(email, password)
               .then(({ user }) => {
                 if (user && user.uid) {
-                  user.updateProfile({ displayName: username });
                   let updates = {};
                   updates['users/' + user.uid] = {
                     uid: user.uid,
@@ -95,6 +94,18 @@ class Firebase {
               });
           }
         });
+    });
+  getUser = () =>
+    new Promise((resolve, reject) => {
+      this.database
+        .ref(`users/${this.auth.currentUser.uid}`)
+        .once('value')
+        .then(snapshot => {
+          resolve({
+            ...snapshot.val(),
+          });
+        })
+        .catch(error => reject(error.message));
     });
 }
 
