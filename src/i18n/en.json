@@ -1,10 +1,18 @@
 {
   "language": "Language",
   "home": "Home",
+  "username": "Username",
   "sign-up": "Sign Up",
   "log-in": "Log In",
   "email": "Email",
   "password": "Password",
-  "login": "Login",
+  "password-confirmation": "Password confirmation",
+  "password-is-required": "Password is required",
+  "email-is-required": "Email is required",
+  "invalid-email": "Invalid email",
+  "password-is-too-short": "Password is too short",
+  "password-confirmation-is-required": "Password confirmation is required",
+  "passwords-dont-match": "Passwords don't match",
+  "this-will-be-used-on-the-leaderboard": "This will be used on the leaderboard.",
   "":""
 }

@@ -1,10 +1,19 @@
 {
   "language": "اللغة",
   "home": "البيت",
+  "username": "اسم المستخدم",
   "sign-up": "انشاء حساب",
   "log-in": "تسجيل الدخول",
   "email": "البريد الإلكتروني",
   "password": "كلمة المرور",
-  "login": "تسجيل الدخول",
+  "password-confirmation": "تأكيد كلمة المرور",
+  "password-is-required": "كلمة المرور مطلوبة",
+  "email-is-required": "البريد الإلكتروني مطلوب",
+  "invalid-email": "البريد الإلكتروني غير صالح",
+  "password-is-too-short": "كلمة المرور قصيرة جدًا",
+  "password-confirmation-is-required": "يجب تأكيد كلمة المرور",
+  "passwords-dont-match": "كلمتي المرور غير متطابقات",
+  "this-will-be-used-on-the-leaderboard": "هذا سيستخدم على قائمة الصدارة.",
+
   "":""
 }
