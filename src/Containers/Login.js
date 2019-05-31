@@ -12,11 +12,13 @@ import { withFirebase } from '../Firebase';
 import { useTranslation } from 'react-i18next';
 import '../Assets/stylesheets/Signup.scss';
 
+import { t } from '../i18n';
+
 const LoginSchema = Yup.object().shape({
-  password: Yup.string().required('Password is required'),
+  password: Yup.string().required(t('password-is-required')),
   email: Yup.string()
     .email('NO_MESSAGE')
-    .required('Email is required'),
+    .required(t('email-is-required')),
 });
 
 const Login = ({ firebase }) => {
@@ -92,7 +94,7 @@ const Login = ({ firebase }) => {
                 className="button"
                 onClick={handleSubmit}
                 disabled={isSubmitting}>
-                {t('login')}
+                {t('log-in')}
               </Button>
             </div>
           </div>

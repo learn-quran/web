@@ -9,25 +9,30 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
 
+import { t } from '../i18n';
+
+import { useTranslation } from 'react-i18next';
+
 import '../Assets/stylesheets/Signup.scss';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
-    .required('Email is required')
-    .email('Invalid email'),
+    .required('email-is-required')
+    .email(t('invalid-email')),
   password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password too short'),
+    .required(t('password-is-required'))
+    .min(6, t('password-is-too-short')),
   passwordConfirmation: Yup.string().required(
-    'Password confirmation is required',
+    t('password-confirmation-is-required'),
   ),
 });
 
 const Signup = ({ firebase }) => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
+  const { t } = useTranslation();
   const submit = values => {
     if (values.password !== values.passwordConfirmation) {
-      toast.error("Passwords don't match");
+      toast.error(t('passwords-dont-match'));
     } else {
       changeIsSubmitting(true);
       SignupSchema.validate(values, {
@@ -73,7 +78,7 @@ const Signup = ({ firebase }) => {
               <TextField
                 autoFocus
                 id="email"
-                label="Email "
+                label={t('email')}
                 type="email"
                 className="text-field"
                 value={values.email}
@@ -84,10 +89,10 @@ const Signup = ({ firebase }) => {
               />
               <TextField
                 id="username"
-                label="Username "
+                label={t('username')}
                 className="text-field"
                 value={values.username}
-                helperText="This is will be used on the leaderboard"
+                helperText={t('this-will-be-used-on-the-leaderboard')}
                 onChange={handleChange('username')}
                 onBlur={handleBlur('username')}
                 margin="normal"
@@ -96,7 +101,7 @@ const Signup = ({ firebase }) => {
               <TextField
                 id="password"
                 type="password"
-                label="Password "
+                label={t('password')}
                 className="text-field"
                 value={values.password}
                 onChange={handleChange('password')}
@@ -107,7 +112,7 @@ const Signup = ({ firebase }) => {
               <TextField
                 id="passwordConfirmation"
                 type="password"
-                label="Password Confirmation "
+                label={t('password-confirmation')}
                 className="text-field"
                 margin="normal"
                 variant="outlined"
@@ -124,7 +129,7 @@ const Signup = ({ firebase }) => {
                 className="button"
                 onClick={handleSubmit}
                 disabled={isSubmitting}>
-                Sign up
+                {t('sign-up')}
               </Button>
             </div>
           </div>
