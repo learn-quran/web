@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
 
+import { useTranslation } from 'react-i18next';
 import '../Assets/stylesheets/Signup.scss';
 
 const LoginSchema = Yup.object().shape({
@@ -20,6 +21,7 @@ const LoginSchema = Yup.object().shape({
 
 const Login = ({ firebase }) => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
+  const { t } = useTranslation();
   const submit = values => {
     changeIsSubmitting(true);
     LoginSchema.validate(values, {
@@ -61,7 +63,7 @@ const Login = ({ firebase }) => {
               <TextField
                 autoFocus
                 id="email"
-                label="Email "
+                label={t('email')}
                 type="email"
                 className="text-field"
                 value={values.email}
@@ -73,7 +75,7 @@ const Login = ({ firebase }) => {
               <TextField
                 id="password"
                 type="password"
-                label="Password "
+                label={t('password')}
                 className="text-field"
                 value={values.password}
                 onChange={handleChange('password')}
@@ -90,7 +92,7 @@ const Login = ({ firebase }) => {
                 className="button"
                 onClick={handleSubmit}
                 disabled={isSubmitting}>
-                Login
+                {t('login')}
               </Button>
             </div>
           </div>
