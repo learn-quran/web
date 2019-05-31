@@ -115,6 +115,31 @@ class Firebase {
         .then(() => resolve())
         .catch(() => reject('An error occured. Please try again later'));
     });
+  updateUserEmail = email =>
+    new Promise((resolve, reject) => {
+      const user = this.auth.currentUser;
+      user
+        .updateEmail(email)
+        .then(() => this.updateUserOnDB({ email }).then(() => resolve()))
+        .catch(({ code, message }) => {
+          let error = null;
+          switch (code) {
+            case 'auth/email-already-in-use':
+              error = 'This email address has already been taken';
+              break;
+            case 'auth/invalid-email':
+              error = 'Invalid e-mail address format';
+              break;
+            case 'auth/requires-recent-login':
+              error =
+                'Changing your email requires a recent login. Please log out and try again.';
+              break;
+            default:
+              error = 'Check your internet connection';
+          }
+          reject(error || message);
+        });
+    });
 }
 
 const FirebaseContext = React.createContext(null);
