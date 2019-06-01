@@ -14,6 +14,17 @@
   "password-confirmation-is-required": "يجب تأكيد كلمة المرور",
   "passwords-dont-match": "كلمتي المرور غير متطابقات",
   "this-will-be-used-on-the-leaderboard": "هذا سيستخدم على قائمة الصدارة.",
+  "auth/email-already-in-use": "هذا البريد الإلكتروني تم استخدامه مسبقًا",
+  "auth/user-disabled": "تم الغاء تفعيل حسابك",
+  "auth/user-not-found": "اسم المستخدم او كلمة المرور غير صحيحان",
+  "check-your-internet-connection": "تأكد من الإنترنت الخاص بك",
+  "username-already-exists": "اسم المستخدم موجود مستبقًا",
+  "auth/email-already-in-use": "البريد الإلكتروني هذا مستخدم مسبقًا",
+  "auth/invalid-email": "صيغة البريد الإلكتروني خاطئة",
+  "auth/weak-password": "كلمة المرور ضعيفة جدًا",
+
+    
+
 
   "":""
 }

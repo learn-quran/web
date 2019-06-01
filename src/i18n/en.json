@@ -14,5 +14,15 @@
   "password-confirmation-is-required": "Password confirmation is required",
   "passwords-dont-match": "Passwords don't match",
   "this-will-be-used-on-the-leaderboard": "This will be used on the leaderboard.",
+  "auth/email-already-in-use": "This email address has already been taken",
+  "auth/user-disabled": "Your account has been disabled",
+  "auth/user-not-found": "Credentials are incorrect",
+  "check-your-internet-connection": "Check your internet connection",
+  "username-already-exists": "Username already exists",
+  "auth/email-already-in-use": "This email address has already been taken",
+  "auth/invalid-email": "Invalid e-mail address format",
+  "auth/weak-password": "Password too weak",
+  
+
   "":""
 }

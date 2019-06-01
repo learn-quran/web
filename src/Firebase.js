@@ -6,6 +6,8 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
+import { t } from 'i18n';
+
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -33,17 +35,17 @@ class Firebase {
           let error = null;
           switch (code) {
             case 'auth/email-already-in-use':
-              error = 'This email address has already been taken';
+              error = t('auth/email-already-in-use');
               break;
             case 'auth/user-disabled':
-              error = 'Your account has been disabled';
+              error = t('auth/user-disabled');
               break;
             case 'auth/user-not-found':
             case 'auth/wrong-password':
-              error = 'Credintials are incorrect';
+              error = t('auth/user-not-found');
               break;
             default:
-              error = 'Check your internet connection';
+              error = t('check-your-internet-connection');
           }
           reject(error || message);
         });
@@ -57,7 +59,7 @@ class Firebase {
         .once('value')
         .then(snapshot => {
           if (snapshot.val()) {
-            reject('Username already exists');
+            reject(t('username-already-exists'));
           } else {
             this.auth
               .createUserWithEmailAndPassword(email, password)
@@ -81,16 +83,16 @@ class Firebase {
                 let error = null;
                 switch (code) {
                   case 'auth/email-already-in-use':
-                    error = 'This email address has already been taken';
+                    error = t('auth/email-already-in-use');
                     break;
                   case 'auth/invalid-email':
-                    error = 'Invalid e-mail address format';
+                    error = t('auth/invalid-email');
                     break;
                   case 'auth/weak-password':
-                    error = 'Password too weak';
+                    error = t('auth/weak-password');
                     break;
                   default:
-                    error = 'Check your internet connection';
+                    error = t('check-your-internet-connection');
                 }
                 reject(error || message);
               });
