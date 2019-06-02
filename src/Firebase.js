@@ -171,7 +171,6 @@ class Firebase {
         .reauthenticateWithCredential(credintial)
         .then(() => resolve())
         .catch(({ code, message }) => {
-          console.log(code);
           let error = null;
           switch (code) {
             case 'auth/user-mismatch':
