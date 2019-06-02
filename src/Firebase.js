@@ -20,13 +20,13 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
 
-    this.auth = app.auth();
+    this.auth = app.auth;
     this.database = app.database();
   }
 
   signIn = ({ email, password }) =>
     new Promise((resovle, reject) => {
-      this.auth
+      this.auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => resovle())
         .catch(({ code, message }) => {
@@ -59,7 +59,7 @@ class Firebase {
           if (snapshot.val()) {
             reject('Username already exists');
           } else {
-            this.auth
+            this.auth()
               .createUserWithEmailAndPassword(email, password)
               .then(({ user }) => {
                 if (user && user.uid) {
@@ -98,7 +98,7 @@ class Firebase {
   getUser = () =>
     new Promise((resolve, reject) => {
       this.database
-        .ref(`users/${this.auth.currentUser.uid}`)
+        .ref(`users/${this.auth().currentUser.uid}`)
         .once('value')
         .then(snapshot => {
           resolve({
@@ -110,15 +110,15 @@ class Firebase {
   updateUserOnDB = updates =>
     new Promise((resolve, reject) => {
       this.database
-        .ref(`users/${this.auth.currentUser.uid}`)
+        .ref(`users/${this.auth().currentUser.uid}`)
         .update(updates)
         .then(() => resolve())
         .catch(() => reject('An error occured. Please try again later'));
     });
   updateUserEmail = email =>
     new Promise((resolve, reject) => {
-      this.auth.currentUser
-        .updateEmail(email)
+      this.auth()
+        .currentUser.updateEmail(email)
         .then(() => this.updateUserOnDB({ email }).then(() => resolve()))
         .catch(({ code, message }) => {
           let error = null;
@@ -141,8 +141,8 @@ class Firebase {
     });
   updateUserPassword = password =>
     new Promise((resolve, reject) => {
-      this.auth.currentUser
-        .updatePassword(password)
+      this.auth()
+        .currentUser.updatePassword(password)
         .then(() => resolve())
         .catch(({ code, message }) => {
           let error = null;
@@ -153,6 +153,36 @@ class Firebase {
             case 'auth/requires-recent-login':
               error =
                 'Changing your password requires a recent login. Please log out and try again.';
+              break;
+            default:
+              error = 'Check your internet connection';
+          }
+          reject(error || message);
+        });
+    });
+  reauthenticate = password =>
+    new Promise((resolve, reject) => {
+      const user = this.auth().currentUser;
+      const credintial = this.auth.EmailAuthProvider.credential(
+        user.email,
+        password,
+      );
+      user
+        .reauthenticateWithCredential(credintial)
+        .then(() => resolve())
+        .catch(({ code, message }) => {
+          console.log(code);
+          let error = null;
+          switch (code) {
+            case 'auth/user-mismatch':
+            case 'auth/user-not-found':
+            case 'auth/invalid-credential':
+            case 'auth/invalid-email':
+              error =
+                'Something went wrong with reauthenticating your account. Please sign out and try again';
+              break;
+            case 'auth/wrong-password':
+              error = 'The password you entered is incorrect';
               break;
             default:
               error = 'Check your internet connection';
