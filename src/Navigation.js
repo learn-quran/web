@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Home from './Containers/Home';
 import Signup from './Containers/Signup';
 import Login from './Containers/Login';
+import Leaderboard from './Containers/Leaderboard';
 
 import Account from './Components/Account';
 
@@ -41,6 +42,7 @@ const SignedOutNavBar = () => {
 const SignedInNavigation = () => (
   <Switch>
     <Route path="/home" component={Home} />
+    <Route path="/leaderboard" component={Leaderboard} />
     <Route render={() => <Redirect to="/home" />} />
   </Switch>
 );
@@ -49,6 +51,7 @@ const SignedOutNavigation = () => (
   <Switch>
     <Route path="/signup" component={Signup} />
     <Route path="/login" component={Login} />
+    <Route path="/leaderboard" component={Leaderboard} />
     <Route render={() => <Redirect to="/signup" />} />
   </Switch>
 );
