@@ -108,7 +108,7 @@ class Firebase {
         })
         .catch(error => reject(error.message));
     });
-getLeaderboard = () =>
+  getLeaderboard = () =>
     new Promise((resolve, reject) => {
       this.database
         .ref('users')
@@ -116,6 +116,8 @@ getLeaderboard = () =>
         .once('value')
         .then(snapshot => {
           resolve(snapshot.val());
+        });
+    });
   updateUserOnDB = updates =>
     new Promise((resolve, reject) => {
       this.database
