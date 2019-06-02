@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
 
 const Home = ({ firebase }) => (
-  <button onClick={() => firebase.auth.signOut()} type="button">
+  <button onClick={() => firebase.auth().signOut()} type="button">
     SIGN OUT
   </button>
 );
