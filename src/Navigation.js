@@ -7,6 +7,8 @@ import Signup from './Containers/Signup';
 import Login from './Containers/Login';
 import Leaderboard from './Containers/Leaderboard';
 
+import Account from './Components/Account';
+
 import { useTranslation } from 'react-i18next';
 
 const SignedInNavBar = () => {
@@ -15,6 +17,9 @@ const SignedInNavBar = () => {
     <div className="nav-content">
       <div className="nav-item">
         <Link to="/home">{t('home')}</Link>
+      </div>
+      <div className="nav-item">
+        <Account />
       </div>
     </div>
   );
