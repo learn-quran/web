@@ -122,7 +122,6 @@ class Firebase {
         .then(() => this.updateUserOnDB({ email }).then(() => resolve()))
         .catch(({ code, message }) => {
           let error = null;
-          console.log(code)
           switch (code) {
             case 'auth/email-already-in-use':
               error = 'This email address has already been taken';
@@ -146,7 +145,6 @@ class Firebase {
         .updatePassword(password)
         .then(() => resolve())
         .catch(({ code, message }) => {
-          console.log(code)
           let error = null;
           switch (code) {
             case 'auth/weak-password':
