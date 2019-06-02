@@ -8,9 +8,13 @@
     .form-container {
       display: flex;
       align-items: center;
+      justify-content: space-around;
       flex-direction: column;
       padding: 2px 16px;
       width: 100%;
+      &.login {
+        justify-content: center;
+      }
       .text-field-container {
         display: flex;
         flex-direction: column;
@@ -24,6 +28,7 @@
         margin: 48px 0;
         .button {
           width: 100%;
+          padding: 8px 18px;
         }
       }
     }
