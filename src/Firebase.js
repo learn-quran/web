@@ -117,12 +117,12 @@ class Firebase {
     });
   updateUserEmail = email =>
     new Promise((resolve, reject) => {
-      const user = this.auth.currentUser;
-      user
+      this.auth.currentUser
         .updateEmail(email)
         .then(() => this.updateUserOnDB({ email }).then(() => resolve()))
         .catch(({ code, message }) => {
           let error = null;
+          console.log(code)
           switch (code) {
             case 'auth/email-already-in-use':
               error = 'This email address has already been taken';
@@ -133,6 +133,28 @@ class Firebase {
             case 'auth/requires-recent-login':
               error =
                 'Changing your email requires a recent login. Please log out and try again.';
+              break;
+            default:
+              error = 'Check your internet connection';
+          }
+          reject(error || message);
+        });
+    });
+  updateUserPassword = password =>
+    new Promise((resolve, reject) => {
+      this.auth.currentUser
+        .updatePassword(password)
+        .then(() => resolve())
+        .catch(({ code, message }) => {
+          console.log(code)
+          let error = null;
+          switch (code) {
+            case 'auth/weak-password':
+              error = 'Password too weak';
+              break;
+            case 'auth/requires-recent-login':
+              error =
+                'Changing your password requires a recent login. Please log out and try again.';
               break;
             default:
               error = 'Check your internet connection';
