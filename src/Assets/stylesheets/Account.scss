@@ -1,0 +1,65 @@
+.content {
+  .open-button {
+    cursor: pointer;
+  }
+}
+.MuiDialog-root {
+  .MuiDialog-paper {
+    min-width: 36vw;
+    .MuiTypography-h6 {
+      display: flex;
+      justify-content: space-between;
+      .icon {
+        -webkit-transition: -webkit-transform .25s ease-in-out;
+        transition: transform .25s ease-in-out;
+      }
+      .icon:hover {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+      }
+    }
+    .MuiDialogContent-root {
+      .MuiExpansionPanel-root {
+        .MuiExpansionPanelSummary-content {
+          display: flex;
+          .field {
+            flex: 2;
+          }
+          .field-value {
+            flex: 3;
+          }
+        }
+        .MuiCollapse-wrapperInner {
+          .MuiExpansionPanelDetails-root {
+            form {
+              position: relative;
+              width: 100%;
+              .form-conatiner {
+                width: 100%;
+                position: relative;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+              }
+            }
+          }
+        }
+      }
+      .buttons-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        padding-top: 18px;
+        .MuiButton-root {
+          width: 45%;
+        }
+      }
+    }
+    .MuiDialogActions-root {
+      .submit-button {
+        margin: 0 18px 6px 18px;
+      }
+    }
+  }
+  
+}
