@@ -34,7 +34,7 @@ class App extends React.Component {
     document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
     document.body.classList.remove(language === 'en' ? 'rtl' : 'ltr');
     document.body.setAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
-    this.unsubscribe = this.props.firebase.auth.onAuthStateChanged(user => {
+    this.unsubscribe = this.props.firebase.auth().onAuthStateChanged(user => {
       this.setState({ loading: false });
       user ? this.setState({ user }) : this.setState({ user: null });
     });
