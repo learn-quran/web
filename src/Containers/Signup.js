@@ -9,16 +9,14 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
 
-import { t } from '../i18n';
-
 import { useTranslation } from 'react-i18next';
 
 import '../Assets/stylesheets/Signup.scss';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
-    .required(t('email-is-required'))
-    .email(t('invalid-email')),
+    .required('email-is-required')
+    .email('invalid-email'),
   username: Yup.string()
     .required('Username is required')
     .min(3, 'Username too short')
@@ -27,10 +25,10 @@ const SignupSchema = Yup.object().shape({
       'Username can only contain letters',
     ),
   password: Yup.string()
-    .required(t('password-is-required'))
-    .min(6, t('password-is-too-short')),
+    .required('password-is-required')
+    .min(6, 'password-is-too-short'),
   passwordConfirmation: Yup.string().required(
-    t('password-confirmation-is-required'),
+    'password-confirmation-is-required',
   ),
 });
 
@@ -57,7 +55,7 @@ const Signup = ({ firebase }) => {
         })
         .catch(({ message }) => {
           if (message !== 'NO_MESSAGE') {
-            toast.error(message);
+            toast.error(t(message));
           }
           changeIsSubmitting(false);
         });
