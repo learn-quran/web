@@ -9,6 +9,7 @@ import { Navigation } from './Navigation';
 import NavBar from './Components/NavBar';
 
 import './i18n';
+import { withTranslation } from 'react-i18next';
 
 import PropTypes from 'prop-types';
 import * as serviceWorker from './serviceWorker';
@@ -18,7 +19,7 @@ class App extends React.Component {
   static propTypes = {
     firebase: PropTypes.object,
     t: PropTypes.func,
-    i18n: PropTypes.func,
+    i18n: PropTypes.object,
   };
   constructor(props) {
     super(props);
@@ -29,14 +30,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const language = window.localStorage.getItem('language') || 'en';
-    document.documentElement.lang = language;
-    document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
-    document.body.classList.remove(language === 'en' ? 'rtl' : 'ltr');
-    document.body.setAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
-    this.unsubscribe = this.props.firebase.auth().onAuthStateChanged(user => {
-      this.setState({ loading: false });
-      user ? this.setState({ user }) : this.setState({ user: null });
+    const language = localStorage.getItem('language') || 'en';
+    this.props.i18n.changeLanguage(language).then(() => {
+      document.documentElement.lang = language;
+      document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
+      document.body.classList.remove(language === 'en' ? 'rtl' : 'ltr');
+      document.body.setAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
+      this.unsubscribe = this.props.firebase.auth().onAuthStateChanged(user => {
+        this.setState({ loading: false });
+        user ? this.setState({ user }) : this.setState({ user: null });
+      });
     });
   }
   componentWillUnmount() {
@@ -59,7 +62,13 @@ class App extends React.Component {
 
           <div className="container">
             <Navigation user={user} />
-            <ToastContainer />
+            <ToastContainer
+              position={
+                localStorage.getItem('language') === 'en'
+                  ? 'top-right'
+                  : 'top-left'
+              }
+            />
           </div>
         </Fragment>
       </Router>
@@ -67,10 +76,12 @@ class App extends React.Component {
   }
 }
 
+const WrappedApp = withTranslation()(App);
+
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <FirebaseContext.Consumer>
-      {firebase => <App firebase={firebase} />}
+      {firebase => <WrappedApp firebase={firebase} />}
     </FirebaseContext.Consumer>
   </FirebaseContext.Provider>,
   document.getElementById('root'),
