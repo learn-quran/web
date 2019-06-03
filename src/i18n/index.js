@@ -18,8 +18,4 @@ i18n.use(initReactI18next).init({
   },
 });
 
-export function t(name, params = {}) {
-  return i18n.t(name, params);
-}
-
 export default i18n;
