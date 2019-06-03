@@ -21,7 +21,6 @@
   "username-already-exists": "Username already exists",
   "auth/invalid-email": "Invalid e-mail address format",
   "auth/weak-password": "Password too weak",
-  
-
+  "auth/wrong-password": "Credentials are incorrect",
   "":""
 }
