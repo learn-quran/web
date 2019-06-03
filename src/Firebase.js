@@ -24,28 +24,26 @@ class Firebase {
     this.database = app.database();
   }
 
+  errors = [
+    'auth/email-already-in-use',
+    'auth/user-disabled',
+    'auth/user-not-found',
+    'auth/wrong-password',
+    'auth/email-already-in-use',
+    'auth/invalid-email',
+    'auth/weak-password',
+  ];
+
+  getErrorMessage = code =>
+    this.errors.includes(code) ? code : 'check-your-internet-connection';
+
   signIn = ({ email, password }) =>
     new Promise((resovle, reject) => {
       this.auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => resovle())
         .catch(({ code, message }) => {
-          let error = null;
-          switch (code) {
-            case 'auth/email-already-in-use':
-              error = 'This email address has already been taken';
-              break;
-            case 'auth/user-disabled':
-              error = 'Your account has been disabled';
-              break;
-            case 'auth/user-not-found':
-            case 'auth/wrong-password':
-              error = 'Credintials are incorrect';
-              break;
-            default:
-              error = 'Check your internet connection';
-          }
-          reject(error || message);
+          reject(this.getErrorMessage(code) || message);
         });
     });
   createUser = ({ email, password, username }) =>
@@ -57,7 +55,7 @@ class Firebase {
         .once('value')
         .then(snapshot => {
           if (snapshot.val()) {
-            reject('Username already exists');
+            reject('username-already-exists');
           } else {
             this.auth()
               .createUserWithEmailAndPassword(email, password)
@@ -77,21 +75,7 @@ class Firebase {
                 }
               })
               .catch(({ code, message }) => {
-                let error = null;
-                switch (code) {
-                  case 'auth/email-already-in-use':
-                    error = 'This email address has already been taken';
-                    break;
-                  case 'auth/invalid-email':
-                    error = 'Invalid e-mail address format';
-                    break;
-                  case 'auth/weak-password':
-                    error = 'Password too weak';
-                    break;
-                  default:
-                    error = 'Check your internet connection';
-                }
-                reject(error || message);
+                reject(this.getErrorMessage(code) || message);
               });
           }
         });
