@@ -12,13 +12,11 @@ import { withFirebase } from '../Firebase';
 import { useTranslation } from 'react-i18next';
 import '../Assets/stylesheets/Signup.scss';
 
-import { t } from '../i18n';
-
 const LoginSchema = Yup.object().shape({
-  password: Yup.string().required(t('password-is-required')),
+  password: Yup.string().required('password-is-required'),
   email: Yup.string()
     .email('NO_MESSAGE')
-    .required(t('email-is-required')),
+    .required('email-is-required'),
 });
 
 const Login = ({ firebase }) => {
@@ -41,7 +39,7 @@ const Login = ({ firebase }) => {
       })
       .catch(({ message }) => {
         if (message !== 'NO_MESSAGE') {
-          toast.error(message);
+          toast.error(t(message));
         }
         changeIsSubmitting(false);
       });
