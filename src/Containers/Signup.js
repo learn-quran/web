@@ -49,7 +49,7 @@ const Signup = ({ firebase }) => {
             .createUser(values)
             .then(() => <Redirect to={{ pathname: '/' }} />)
             .catch(error => {
-              toast.error(error);
+              toast.error(t(error));
               changeIsSubmitting(false);
             });
         })

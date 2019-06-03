@@ -33,7 +33,7 @@ const Login = ({ firebase }) => {
           .signIn(values)
           .then(() => <Redirect to={{ pathname: '/' }} />)
           .catch(error => {
-            toast.error(error);
+            toast.error(t(error));
             changeIsSubmitting(false);
           });
       })

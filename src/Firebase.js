@@ -6,8 +6,6 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-import { t } from './i18n';
-
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -37,7 +35,7 @@ class Firebase {
   ];
 
   getErrorMessage = code =>
-    this.errors.includes(code) ? t(code) : t('check-your-internet-connection');
+    this.errors.includes(code) ? code : 'check-your-internet-connection';
 
   signIn = ({ email, password }) =>
     new Promise((resovle, reject) => {
@@ -57,7 +55,7 @@ class Firebase {
         .once('value')
         .then(snapshot => {
           if (snapshot.val()) {
-            reject(t('username-already-exists'));
+            reject('username-already-exists');
           } else {
             this.auth()
               .createUserWithEmailAndPassword(email, password)
