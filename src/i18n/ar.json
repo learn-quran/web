@@ -21,9 +21,6 @@
   "username-already-exists": "اسم المستخدم موجود مستبقًا",
   "auth/invalid-email": "صيغة البريد الإلكتروني خاطئة",
   "auth/weak-password": "كلمة المرور ضعيفة جدًا",
-
-    
-
-
+  "auth/wrong-password": "اسم المستخدم او كلمة المرور غير صحيحان",
   "":""
 }
