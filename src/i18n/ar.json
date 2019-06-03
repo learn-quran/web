@@ -19,7 +19,6 @@
   "auth/user-not-found": "اسم المستخدم او كلمة المرور غير صحيحان",
   "check-your-internet-connection": "تأكد من الإنترنت الخاص بك",
   "username-already-exists": "اسم المستخدم موجود مستبقًا",
-  "auth/email-already-in-use": "البريد الإلكتروني هذا مستخدم مسبقًا",
   "auth/invalid-email": "صيغة البريد الإلكتروني خاطئة",
   "auth/weak-password": "كلمة المرور ضعيفة جدًا",
 
