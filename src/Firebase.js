@@ -6,7 +6,7 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-import { t } from 'i18n';
+import { t } from './i18n';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -26,28 +26,26 @@ class Firebase {
     this.database = app.database();
   }
 
+  errors = [
+    'auth/email-already-in-use',
+    'auth/user-disabled',
+    'auth/user-not-found',
+    'auth/wrong-password',
+    'auth/email-already-in-use',
+    'auth/invalid-email',
+    'auth/weak-password',
+  ];
+
+  getErrorMessage = code =>
+    this.errors.includes(code) ? t(code) : t('check-your-internet-connection');
+
   signIn = ({ email, password }) =>
     new Promise((resovle, reject) => {
       this.auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => resovle())
         .catch(({ code, message }) => {
-          let error = null;
-          switch (code) {
-            case 'auth/email-already-in-use':
-              error = t('auth/email-already-in-use');
-              break;
-            case 'auth/user-disabled':
-              error = t('auth/user-disabled');
-              break;
-            case 'auth/user-not-found':
-            case 'auth/wrong-password':
-              error = t('auth/user-not-found');
-              break;
-            default:
-              error = t('check-your-internet-connection');
-          }
-          reject(error || message);
+          reject(this.getErrorMessage(code) || message);
         });
     });
   createUser = ({ email, password, username }) =>
@@ -79,21 +77,7 @@ class Firebase {
                 }
               })
               .catch(({ code, message }) => {
-                let error = null;
-                switch (code) {
-                  case 'auth/email-already-in-use':
-                    error = t('auth/email-already-in-use');
-                    break;
-                  case 'auth/invalid-email':
-                    error = t('auth/invalid-email');
-                    break;
-                  case 'auth/weak-password':
-                    error = t('auth/weak-password');
-                    break;
-                  default:
-                    error = t('check-your-internet-connection');
-                }
-                reject(error || message);
+                reject(this.getErrorMessage(code) || message);
               });
           }
         });
