@@ -5,7 +5,7 @@
 }
 .MuiDialog-root {
   .MuiDialog-paper {
-    min-width: 36vw;
+    min-width: calc(18vw + 300px);
     .MuiTypography-h6 {
       display: flex;
       justify-content: space-between;
