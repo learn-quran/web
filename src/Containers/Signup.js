@@ -17,8 +17,15 @@ import '../Assets/stylesheets/Signup.scss';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
-    .required('email-is-required')
+    .required(t('email-is-required'))
     .email(t('invalid-email')),
+  username: Yup.string()
+    .required('Username is required')
+    .min(3, 'Username too short')
+    .matches(
+      /^(?:[\u0600-\u065f]+|[a-z]+)$/i,
+      'Username can only contain letters',
+    ),
   password: Yup.string()
     .required(t('password-is-required'))
     .min(6, t('password-is-too-short')),
