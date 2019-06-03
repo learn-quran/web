@@ -19,7 +19,6 @@
   "auth/user-not-found": "Credentials are incorrect",
   "check-your-internet-connection": "Check your internet connection",
   "username-already-exists": "Username already exists",
-  "auth/email-already-in-use": "This email address has already been taken",
   "auth/invalid-email": "Invalid e-mail address format",
   "auth/weak-password": "Password too weak",
   
