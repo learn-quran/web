@@ -25,6 +25,7 @@ class Firebase {
   }
 
   errors = [
+    'check-your-internet-connection',
     'auth/email-already-in-use',
     'auth/user-disabled',
     'auth/user-not-found',
@@ -32,6 +33,12 @@ class Firebase {
     'auth/email-already-in-use',
     'auth/invalid-email',
     'auth/weak-password',
+    'username-already-exists',
+    'an-error-occured-please-try-again-later',
+    'auth/requires-recent-login',
+    'auth/user-mismatch',
+    'auth/user-not-found',
+    'auth/invalid-credential',
   ];
 
   getErrorMessage = code =>
@@ -108,7 +115,7 @@ class Firebase {
         .ref(`users/${this.auth().currentUser.uid}`)
         .update(updates)
         .then(() => resolve())
-        .catch(() => reject('An error occured. Please try again later'));
+        .catch(() => reject('an-error-occured-please-try-again-later'));
     });
   updateUserEmail = email =>
     new Promise((resolve, reject) => {
@@ -171,7 +178,7 @@ class Firebase {
             case 'auth/user-mismatch':
             case 'auth/user-not-found':
             case 'auth/invalid-credential':
-            case 'auth/invalid-email':
+            case 'auth/invalid-email': // Fix this
               error =
                 'Something went wrong with reauthenticating your account. Please sign out and try again';
               break;
