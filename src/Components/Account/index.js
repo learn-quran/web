@@ -64,7 +64,7 @@ class Account extends React.Component {
         this.props.firebase
           .updateUserOnDB({ username })
           .then(() => toast.success('Your username has been updated'))
-          .catch(err => toast.error(err))
+          .catch(err => toast.error(this.props.t(err)))
           .finally(() => {
             this.setState({ isSubmitting: false });
             this.persistUserInfo();
@@ -82,7 +82,7 @@ class Account extends React.Component {
         this.props.firebase
           .updateUserEmail(email)
           .then(() => toast.success('Your email has been updated'))
-          .catch(err => toast.error(err))
+          .catch(err => toast.error(this.props.t(err)))
           .finally(() => {
             this.setState({ isSubmitting: false });
             this.persistUserInfo();
@@ -99,7 +99,7 @@ class Account extends React.Component {
           .then(() => {
             toast.success('Password updated successfully');
           })
-          .catch(err => toast.error(err))
+          .catch(err => toast.error(this.props.t(err)))
           .finally(() => {
             this.setState({ isSubmitting: false });
             close();
@@ -116,7 +116,7 @@ class Account extends React.Component {
         .then(() => {
           toast.success('Account reauthenticated successfully');
         })
-        .catch(err => toast.error(err))
+        .catch(err => toast.error(this.props.t(err)))
         .finally(() => {
           this.setState({ isSubmitting: false });
           close();
