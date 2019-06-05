@@ -1,5 +1,7 @@
 {
   "language": "Language",
+  "english": "English",
+  "arabic": "Arabic",
   "home": "Home",
   "username": "Username",
   "sign-up": "Sign Up",
