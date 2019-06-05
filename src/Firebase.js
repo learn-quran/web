@@ -123,22 +123,7 @@ class Firebase {
         .currentUser.updateEmail(email)
         .then(() => this.updateUserOnDB({ email }).then(() => resolve()))
         .catch(({ code, message }) => {
-          let error = null;
-          switch (code) {
-            case 'auth/email-already-in-use':
-              error = 'This email address has already been taken';
-              break;
-            case 'auth/invalid-email':
-              error = 'Invalid e-mail address format';
-              break;
-            case 'auth/requires-recent-login':
-              error =
-                'Changing your email requires a recent login. Please log out and try again.';
-              break;
-            default:
-              error = 'Check your internet connection';
-          }
-          reject(error || message);
+          reject(this.getErrorMessage(code) || message);
         });
     });
   updateUserPassword = password =>
@@ -147,19 +132,7 @@ class Firebase {
         .currentUser.updatePassword(password)
         .then(() => resolve())
         .catch(({ code, message }) => {
-          let error = null;
-          switch (code) {
-            case 'auth/weak-password':
-              error = 'Password too weak';
-              break;
-            case 'auth/requires-recent-login':
-              error =
-                'Changing your password requires a recent login. Please log out and try again.';
-              break;
-            default:
-              error = 'Check your internet connection';
-          }
-          reject(error || message);
+          reject(this.getErrorMessage(code) || message);
         });
     });
   reauthenticate = password =>
@@ -173,22 +146,7 @@ class Firebase {
         .reauthenticateWithCredential(credintial)
         .then(() => resolve())
         .catch(({ code, message }) => {
-          let error = null;
-          switch (code) {
-            case 'auth/user-mismatch':
-            case 'auth/user-not-found':
-            case 'auth/invalid-credential':
-            case 'auth/invalid-email': // Fix this
-              error =
-                'Something went wrong with reauthenticating your account. Please sign out and try again';
-              break;
-            case 'auth/wrong-password':
-              error = 'The password you entered is incorrect';
-              break;
-            default:
-              error = 'Check your internet connection';
-          }
-          reject(error || message);
+          reject(this.getErrorMessage(code) || message);
         });
     });
 }
