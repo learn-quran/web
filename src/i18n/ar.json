@@ -15,10 +15,7 @@
   "an-error-occured-please-try-again-later": "حصل خطأ. يرجى المحاولة لاحقًا",
   "auth/requires-recent-login": "تغير البريد الإلكتروني يتطلب تسجيل دخول حديث. سحل الخروج وحاول مرة اخرى.",
   "auth/user-mismatch": "حصل خطأ اثناء اعادة مصادقة حسابك. يرجى تسجيل الخروج والمحاولة مرة أخرى.",
-  "auth/user-not-found": "حصل خطأ اثناء اعادة مصادقة حسابك. يرجى تسجيل الخروج والمحاولة مرة أخرى.",
   "auth/invalid-credential": "حصل خطأ اثناء اعادة مصادقة حسابك. يرجى تسجيل الخروج والمحاولة مرة أخرى.",
-  "auth/user-mismatch": "",
-  "auth/invalid-credential": "",
   "email": "البريد الإلكتروني",
   "password": "كلمة المرور",
   "password-confirmation": "تأكيد كلمة المرور",
@@ -29,6 +26,5 @@
   "password-confirmation-is-required": "يجب تأكيد كلمة المرور",
   "passwords-dont-match": "كلمتي المرور غير متطابقات",
   "this-will-be-used-on-the-leaderboard": "هذا سيستخدم على قائمة الصدارة.",
-
   "":""
 }
