@@ -15,7 +15,6 @@
   "an-error-occured-please-try-again-later": "An error occured. Please try again later",
   "auth/requires-recent-login": "Changing your email requires a recent login. Please log out and try again.",
   "auth/user-mismatch": "Something went wrong with reauthenticating your account. Please sign out and try again",
-  "auth/user-not-found": "Something went wrong with reauthenticating your account. Please sign out and try again",
   "auth/invalid-credential": "Something went wrong with reauthenticating your account. Please sign out and try again",
   "email": "Email",
   "password": "Password",
@@ -27,6 +26,5 @@
   "password-confirmation-is-required": "Password confirmation is required",
   "passwords-dont-match": "Passwords don't match",
   "this-will-be-used-on-the-leaderboard": "This will be used on the leaderboard.",
-  
   "":""
 }
