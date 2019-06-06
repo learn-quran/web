@@ -8,6 +8,7 @@
 body {
   margin: 0;
   .nav {
+    width: 100vw;
     display: flex;
     justify-content: space-between;
     -webkit-box-shadow: 1.8px 3px 8px -5px rgba(0,0,0,0.74);
@@ -26,6 +27,9 @@ body {
     }
     .language-switch {
       padding: 16px 12px 13px;
+      .language-button {
+        text-transform: none !important;
+      }
     }
   }
   .container {

@@ -86,9 +86,7 @@ class Firebase {
         .ref(`users/${this.auth().currentUser.uid}`)
         .once('value')
         .then(snapshot => {
-          resolve({
-            ...snapshot.val(),
-          });
+          resolve(snapshot.val());
         })
         .catch(error => reject(error.message));
     });
