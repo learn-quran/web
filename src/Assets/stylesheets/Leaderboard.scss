@@ -1,14 +1,34 @@
 .container {
+  position: relative;
   align-items: initial;
-  padding: 24px 0;
-  .MuiTable-root {
-    width: 60rem !important;
-    padding: 20px 28px;
-    .MuiTableCell-head {
-      font-size: 1rem !important;
+  justify-content: initial;
+  display: flex;
+  flex-direction: column;
+  padding-top: 18px;
+  .your-points-container {
+    display: flex;
+    position: relative;
+    justify-content: flex-end;
+    padding: 8px 28px;
+    .your-points {
+      padding: 4px 15px 0 0;
     }
-    .MuiTableCell-body {
-      font-size: 0.9rem !important;
-    } 
+    .points {
+      background-color: bisque;
+      border: 1px solid bisque;
+      border-radius: 4px;
+      padding: 4px 24px;
+    }
+  }
+  .table-container {
+    padding: 20px 28px;
+    table {
+      .MuiTableCell-head {
+        font-size: 1rem !important;
+      }
+      .MuiTableCell-body {
+        font-size: 0.9rem !important;
+      } 
+    }
   }
 }
