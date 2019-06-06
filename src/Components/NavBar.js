@@ -17,13 +17,13 @@ class NavBar extends React.Component {
     };
   }
   handleChange = language => {
-    this.props.i18n.changeLanguage(language);
-    localStorage.setItem('language', language);
-    document.documentElement.lang = language;
-    document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
-    document.body.classList.remove(language === 'en' ? 'rtl' : 'ltr');
-    document.body.setAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
-    this.handleClose();
+    if ((localStorage.getItem('language') || 'en') !== language) {
+      this.props.i18n.changeLanguage(language).then(() => {
+        localStorage.setItem('language', language);
+        this.handleClose();
+        window.location.reload();
+      });
+    }
   };
   handleClick = e => {
     this.setState({
@@ -46,6 +46,7 @@ class NavBar extends React.Component {
           <Button
             aria-owns={menu ? 'simple-menu' : undefined}
             aria-haspopup="true"
+            className="language-button"
             onClick={handleClick}>
             {t('language')}
           </Button>
@@ -54,8 +55,12 @@ class NavBar extends React.Component {
             anchorEl={menu}
             open={Boolean(menu)}
             onClose={handleClose}>
-            <MenuItem onClick={() => handleChange('en')}>ENGLISH</MenuItem>
-            <MenuItem onClick={() => handleChange('ar')}>ARABIC</MenuItem>
+            <MenuItem onClick={() => handleChange('en')}>
+              {t('english')}
+            </MenuItem>
+            <MenuItem onClick={() => handleChange('ar')}>
+              {t('arabic')}
+            </MenuItem>
           </Menu>
         </div>
       </div>

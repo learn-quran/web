@@ -4,6 +4,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { ScaleLoader } from 'react-spinners';
 
+import { createMuiTheme } from '@material-ui/core/styles';
+import { StylesProvider, ThemeProvider, jssPreset } from '@material-ui/styles';
+import { create } from 'jss';
+import rtl from 'jss-rtl';
+
 import Firebase, { FirebaseContext } from './Firebase';
 import { Navigation } from './Navigation';
 import NavBar from './Components/NavBar';
@@ -31,15 +36,13 @@ class App extends React.Component {
 
   componentDidMount() {
     const language = localStorage.getItem('language') || 'en';
-    this.props.i18n.changeLanguage(language).then(() => {
-      document.documentElement.lang = language;
-      document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
-      document.body.classList.remove(language === 'en' ? 'rtl' : 'ltr');
-      document.body.setAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
-      this.unsubscribe = this.props.firebase.auth().onAuthStateChanged(user => {
-        this.setState({ loading: false });
-        user ? this.setState({ user }) : this.setState({ user: null });
-      });
+    document.documentElement.lang = language;
+    document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
+    document.body.classList.remove(language === 'en' ? 'rtl' : 'ltr');
+    document.body.setAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
+    this.unsubscribe = this.props.firebase.auth().onAuthStateChanged(user => {
+      this.setState({ loading: false });
+      user ? this.setState({ user }) : this.setState({ user: null });
     });
   }
   componentWillUnmount() {
@@ -47,29 +50,37 @@ class App extends React.Component {
   }
 
   render() {
+    const language = localStorage.getItem('language') || 'en';
     const { user, loading } = this.state;
+    const jss = create(
+      language === 'en'
+        ? {
+            plugins: [...jssPreset().plugins],
+          }
+        : {
+            plugins: [...jssPreset().plugins, rtl()],
+          },
+    );
+    const theme = createMuiTheme({
+      direction: language === 'en' ? 'ltr' : 'rtl',
+    });
+
     return loading ? (
-      <ScaleLoader
-        sizeUnit={'px'}
-        size={150}
-        color={'#123abc'}
-        loading={loading}
-      />
+      <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
     ) : (
       <Router>
         <Fragment>
-          <NavBar user={user} />
-
-          <div className="container">
-            <Navigation user={user} />
-            <ToastContainer
-              position={
-                localStorage.getItem('language') === 'en'
-                  ? 'top-right'
-                  : 'top-left'
-              }
-            />
-          </div>
+          <StylesProvider jss={jss}>
+            <ThemeProvider theme={theme}>
+              <NavBar user={user} />
+              <div className="container">
+                <Navigation user={user} />
+                <ToastContainer
+                  position={language === 'en' ? 'top-right' : 'top-left'}
+                />
+              </div>
+            </ThemeProvider>
+          </StylesProvider>
         </Fragment>
       </Router>
     );
