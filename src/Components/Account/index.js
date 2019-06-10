@@ -58,17 +58,23 @@ class Account extends React.Component {
   };
 
   onUsernameSubmit = username => {
+    const { firebase, t } = this.props;
     if (username.length >= 3) {
       if (username !== this.state.user.username) {
-        this.setState({ isSubmitting: true });
-        this.props.firebase
-          .updateUserOnDB({ username })
-          .then(() => toast.success('Your username has been updated'))
-          .catch(err => toast.error(this.props.t(err)))
-          .finally(() => {
-            this.setState({ isSubmitting: false });
-            this.persistUserInfo();
-          });
+        firebase
+          .isUsernameDuplicated(username)
+          .then(() => {
+            this.setState({ isSubmitting: true });
+            firebase
+              .updateUserOnDB({ username })
+              .then(() => toast.success('Your username has been updated'))
+              .catch(err => toast.error(t(err)))
+              .finally(() => {
+                this.setState({ isSubmitting: false });
+                this.persistUserInfo();
+              });
+          })
+          .catch(err => toast.error(t(err)));
       }
     } else toast.error('Username too short');
   };
