@@ -38,7 +38,9 @@ class Account extends React.Component {
   }
 
   persistUserInfo = () => {
-    this.props.firebase
+    // eslint-disable-next-line no-unused-vars
+    const { firebase, t } = this.props;
+    firebase
       .getUser()
       .then(user => {
         this.setState({ user: { ...user } });
@@ -79,16 +81,17 @@ class Account extends React.Component {
     } else toast.error('Username too short');
   };
   onEmailSubmit = email => {
+    const { firebase, t } = this.props;
     if (
       // eslint-disable-next-line
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i.test(email)
     ) {
       if (email !== this.state.user.email) {
         this.setState({ isSubmitting: true });
-        this.props.firebase
+        firebase
           .updateUserEmail(email)
           .then(() => toast.success('Your email has been updated'))
-          .catch(err => toast.error(this.props.t(err)))
+          .catch(err => toast.error(t(err)))
           .finally(() => {
             this.setState({ isSubmitting: false });
             this.persistUserInfo();
@@ -97,15 +100,16 @@ class Account extends React.Component {
     } else toast.error('Invalid email');
   };
   onPasswordSubmit = (password, close) => {
+    const { firebase, t } = this.props;
     if (password.length > 1) {
       if (password.length > 6) {
         this.setState({ isSubmitting: true });
-        this.props.firebase
+        firebase
           .updateUserPassword(password)
           .then(() => {
             toast.success('Password updated successfully');
           })
-          .catch(err => toast.error(this.props.t(err)))
+          .catch(err => toast.error(t(err)))
           .finally(() => {
             this.setState({ isSubmitting: false });
             close();
@@ -115,14 +119,15 @@ class Account extends React.Component {
     }
   };
   onReauthSubmit = (password, close) => {
+    const { firebase, t } = this.props;
     if (password.length > 1 && password.length > 6) {
       this.setState({ isSubmitting: true });
-      this.props.firebase
+      firebase
         .reauthenticate(password)
         .then(() => {
           toast.success('Account reauthenticated successfully');
         })
-        .catch(err => toast.error(this.props.t(err)))
+        .catch(err => toast.error(t(err)))
         .finally(() => {
           this.setState({ isSubmitting: false });
           close();
@@ -131,7 +136,9 @@ class Account extends React.Component {
   };
 
   render() {
-    const { handleOpenClick, handleCloseClick, state } = this;
+    const { handleOpenClick, handleCloseClick, state, props } = this;
+    // eslint-disable-next-line no-unused-vars
+    const { t } = props;
     return (
       <div className="content">
         <div className="open-button" onClick={handleOpenClick}>
