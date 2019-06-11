@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { ScaleLoader } from 'react-spinners';
 
+import { withTranslation } from 'react-i18next';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -39,21 +41,22 @@ class Leaderboard extends React.Component {
   }
   render() {
     const { users, currentUser } = this.state;
+    const { t } = this.props;
     return users.length === 0 ? (
       <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
     ) : (
       <Fragment>
         <div className="your-points-container">
-          <div className="your-points">Your Points</div>
+          <div className="your-points">{t('your-points')}</div>
           <div className="points">{currentUser.points}</div>
         </div>
         <div className="table-container">
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell align="center">Username</TableCell>
-                <TableCell align="center">Points</TableCell>
-                <TableCell align="center">Latest Try</TableCell>
+                <TableCell align="center">{t('username')}</TableCell>
+                <TableCell align="center">{t('points')}</TableCell>
+                <TableCell align="center">{t('latest-try')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -81,6 +84,7 @@ class Leaderboard extends React.Component {
 }
 Leaderboard.propTypes = {
   firebase: PropTypes.object,
+  t: PropTypes.func,
 };
 
-export default withFirebase(Leaderboard);
+export default withTranslation()(withFirebase(Leaderboard));
