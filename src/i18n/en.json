@@ -23,6 +23,8 @@
   "password-confirmation": "Password confirmation",
   "password-is-required": "Password is required",
   "email-is-required": "Email is required",
+  "username-is-required": "Username is required",
+  "username-can-only-contain-letters" : "Username can only contain letters",
   "invalid-email": "Invalid email",
   "password-is-too-short": "Password is too short",
   "password-confirmation-is-required": "Password confirmation is required",

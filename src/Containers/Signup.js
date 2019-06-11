@@ -17,11 +17,11 @@ const SignupSchema = Yup.object().shape({
     .required('email-is-required')
     .email('invalid-email'),
   username: Yup.string()
-    .required('Username is required')
-    .min(3, 'Username too short')
+    .required('username-is-required')
+    .min(3, 'username-too-short')
     .matches(
       /^(?:[\u0600-\u065f]+|[a-z]+)$/i,
-      'Username can only contain letters',
+      'username-can-only-contain-letters',
     ),
   password: Yup.string()
     .required('password-is-required')
