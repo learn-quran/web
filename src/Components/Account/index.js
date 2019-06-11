@@ -47,7 +47,7 @@ class Account extends React.Component {
       })
       .catch(() => {
         toast.error(
-          'Something went wrong. Please close the tab and try again.',
+          t('something-went-wrong-please-close-the-tab-and-try-again'),
         );
       });
   };
@@ -69,7 +69,7 @@ class Account extends React.Component {
             this.setState({ isSubmitting: true });
             firebase
               .updateUserOnDB({ username })
-              .then(() => toast.success('Your username has been updated'))
+              .then(() => toast.success(t('your-username-has-been-updated')))
               .catch(err => toast.error(t(err)))
               .finally(() => {
                 this.setState({ isSubmitting: false });
@@ -78,7 +78,7 @@ class Account extends React.Component {
           })
           .catch(err => toast.error(t(err)));
       }
-    } else toast.error('Username too short');
+    } else toast.error(t('username-too-short'));
   };
   onEmailSubmit = email => {
     const { firebase, t } = this.props;
@@ -90,7 +90,7 @@ class Account extends React.Component {
         this.setState({ isSubmitting: true });
         firebase
           .updateUserEmail(email)
-          .then(() => toast.success('Your email has been updated'))
+          .then(() => toast.success(t('your-email-has-been-updated')))
           .catch(err => toast.error(t(err)))
           .finally(() => {
             this.setState({ isSubmitting: false });
@@ -107,7 +107,7 @@ class Account extends React.Component {
         firebase
           .updateUserPassword(password)
           .then(() => {
-            toast.success('Password updated successfully');
+            toast.success(t('password-updated-successfully'));
           })
           .catch(err => toast.error(t(err)))
           .finally(() => {
@@ -115,7 +115,7 @@ class Account extends React.Component {
             close();
             this.persistUserInfo();
           });
-      } else toast.error('Password too short');
+      } else toast.error(t('password-is-too-short'));
     }
   };
   onReauthSubmit = (password, close) => {
@@ -125,7 +125,7 @@ class Account extends React.Component {
       firebase
         .reauthenticate(password)
         .then(() => {
-          toast.success('Account reauthenticated successfully');
+          toast.success(t('account-reauthenticated-successfully'));
         })
         .catch(err => toast.error(t(err)))
         .finally(() => {
@@ -158,38 +158,41 @@ class Account extends React.Component {
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Edit the information below then hit save
+                {t('edit-the-information-below-then-hit-save')}
               </DialogContentText>
               <AccountRow
                 isExpandable
-                field="Username "
+                field={t('username')}
                 fieldValue={state.user.username}
                 onSubmit={this.onUsernameSubmit}
-                buttonText="Change Username"
+                buttonText={t('change-username')}
                 isSubmitting={state.isSubmitting}
               />
               <AccountRow
                 isExpandable
-                field="Email "
+                field={t('email')}
                 fieldValue={state.user.email}
                 onSubmit={this.onEmailSubmit}
                 textFieldType="email"
-                buttonText="Change Email"
+                buttonText={t('change-email')}
                 isSubmitting={state.isSubmitting}
               />
               <div className="buttons-container">
                 <PasswordInputDialog
-                  title="Change Password"
-                  headerText={`Enter your new password below. You need to be recrently logged-in to
-            change your password.`}
-                  submitButtonText="Change"
+                  title={t('change-password')}
+                  headerText={t(
+                    'enter-your-new-password-below-you-need-to-be-recently-logged-in-to-change-your-password',
+                  )}
+                  submitButtonText={t('change')}
                   onSubmit={this.onPasswordSubmit}
                   isSubmitting={state.isSubmitting}
                 />
                 <PasswordInputDialog
-                  title="Re-authenticate Account"
-                  headerText={`Enter your password below to re-authenticate your account.`}
-                  submitButtonText="Re-authenticate"
+                  title={t('re-authenticate-account')}
+                  headerText={t(
+                    'enter-your-password-below-to-re-authenticate-your-account',
+                  )}
+                  submitButtonText={t('re-authenticate')}
                   onSubmit={this.onReauthSubmit}
                   isSubmitting={state.isSubmitting}
                 />
