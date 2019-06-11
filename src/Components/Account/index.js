@@ -182,6 +182,7 @@ class Account extends React.Component {
                   headerText={t(
                     'enter-your-new-password-below-you-need-to-be-recently-logged-in-to-change-your-password',
                   )}
+                  label={t('password')}
                   submitButtonText={t('change')}
                   onSubmit={this.onPasswordSubmit}
                   isSubmitting={state.isSubmitting}
@@ -191,6 +192,7 @@ class Account extends React.Component {
                   headerText={t(
                     'enter-your-password-below-to-re-authenticate-your-account',
                   )}
+                  label={t('password')}
                   submitButtonText={t('re-authenticate')}
                   onSubmit={this.onReauthSubmit}
                   isSubmitting={state.isSubmitting}
