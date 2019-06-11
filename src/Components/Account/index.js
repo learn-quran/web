@@ -38,7 +38,6 @@ class Account extends React.Component {
   }
 
   persistUserInfo = () => {
-    // eslint-disable-next-line no-unused-vars
     const { firebase, t } = this.props;
     firebase
       .getUser()

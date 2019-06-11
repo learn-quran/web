@@ -15,7 +15,7 @@
   "auth/weak-password": "Password too weak",
   "auth/wrong-password": "Credentials are incorrect",
   "an-error-occured-please-try-again-later": "An error occured. Please try again later",
-  "auth/requires-recent-login": "Changing your email requires a recent login. Please log out and try again.",
+  "auth/requires-recent-login": "Changing the email or password requires a recent login. Click the re-authenticate button and try again.",
   "auth/user-mismatch": "Something went wrong with reauthenticating your account. Please sign out and try again",
   "auth/invalid-credential": "Something went wrong with reauthenticating your account. Please sign out and try again",
   "email": "Email",
