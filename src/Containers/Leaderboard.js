@@ -34,7 +34,8 @@ class Leaderboard extends React.Component {
       );
     firebase
       .getUser()
-      .then(currentUser => this._mounted && this.setState({ currentUser }));
+      .then(currentUser => this._mounted && this.setState({ currentUser }))
+      .catch(() => {});
   }
   componentWillUnmount() {
     this._mounted = false;
@@ -46,10 +47,12 @@ class Leaderboard extends React.Component {
       <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
     ) : (
       <Fragment>
-        <div className="your-points-container">
-          <div className="your-points">{t('your-points')}</div>
-          <div className="points">{currentUser.points}</div>
-        </div>
+        {!!currentUser.uid && (
+          <div className="your-points-container">
+            <div className="your-points">{t('your-points')}</div>
+            <div className="points">{currentUser.points}</div>
+          </div>
+        )}
         <div className="table-container">
           <Table>
             <TableHead>
