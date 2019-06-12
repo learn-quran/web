@@ -136,12 +136,11 @@ class Account extends React.Component {
 
   render() {
     const { handleOpenClick, handleCloseClick, state, props } = this;
-    // eslint-disable-next-line no-unused-vars
     const { t } = props;
     return (
       <div className="content">
         <div className="open-button" onClick={handleOpenClick}>
-          Account
+          {t('account')}
         </div>
         {!!state.user && (
           <Dialog
@@ -150,7 +149,7 @@ class Account extends React.Component {
             onClose={handleCloseClick}
             aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">
-              <div>Edit Account</div>
+              <div>{t('edit-account')}</div>
               <Icon className="icon" onClick={handleCloseClick}>
                 close
               </Icon>
