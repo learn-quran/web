@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ScaleLoader } from 'react-spinners';
 
@@ -46,7 +46,7 @@ class Leaderboard extends React.Component {
     return users.length === 0 ? (
       <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
     ) : (
-      <Fragment>
+      <div className="leaderboard-content">
         {!!currentUser.uid && (
           <div className="your-points-container">
             <div className="your-points">{t('your-points')}</div>
@@ -64,14 +64,12 @@ class Leaderboard extends React.Component {
             </TableHead>
             <TableBody>
               {users.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell
-                    align="center"
-                    component="th"
-                    scope="row"
-                    className={
-                      item.uid === currentUser.uid ? 'current-user-cell' : ''
-                    }>
+                <TableRow
+                  key={index}
+                  className={
+                    item.uid === currentUser.uid ? 'current-user-row' : ''
+                  }>
+                  <TableCell align="center" component="th" scope="row">
                     {item.username}
                   </TableCell>
                   <TableCell align="center">{item.points}</TableCell>
@@ -81,7 +79,7 @@ class Leaderboard extends React.Component {
             </TableBody>
           </Table>
         </div>
-      </Fragment>
+      </div>
     );
   }
 }
