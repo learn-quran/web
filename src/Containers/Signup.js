@@ -76,68 +76,70 @@ const Signup = ({ firebase }) => {
       }}
       onSubmit={submit}
       render={({ values, handleBlur, handleChange, handleSubmit }) => (
-        <form autoCapitalize="off">
-          <div className="form-container">
-            <div className="text-field-container">
-              <TextField
-                autoFocus
-                id="email"
-                label={t('email')}
-                type="email"
-                className="text-field"
-                value={values.email}
-                onChange={handleChange('email')}
-                onBlur={handleBlur('email')}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextField
-                id="username"
-                label={t('username')}
-                className="text-field"
-                value={values.username}
-                helperText={t('this-will-be-used-on-the-leaderboard')}
-                onChange={handleChange('username')}
-                onBlur={handleBlur('username')}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextField
-                id="password"
-                type="password"
-                label={t('password')}
-                className="text-field"
-                value={values.password}
-                onChange={handleChange('password')}
-                onBlur={handleBlur('password')}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextField
-                id="passwordConfirmation"
-                type="password"
-                label={t('password-confirmation')}
-                className="text-field"
-                margin="normal"
-                variant="outlined"
-                value={values.passwordConfirmation}
-                onChange={handleChange('passwordConfirmation')}
-                onBlur={handleBlur('passwordConfirmation')}
-                onKeyDown={e => handleKeyPress(e, values)}
-              />
+        <div className="signup-content">
+          <form autoCapitalize="off">
+            <div className="form-container">
+              <div className="text-field-container">
+                <TextField
+                  autoFocus
+                  id="email"
+                  label={t('email')}
+                  type="email"
+                  className="text-field"
+                  value={values.email}
+                  onChange={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="username"
+                  label={t('username')}
+                  className="text-field"
+                  value={values.username}
+                  helperText={t('this-will-be-used-on-the-leaderboard')}
+                  onChange={handleChange('username')}
+                  onBlur={handleBlur('username')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="password"
+                  type="password"
+                  label={t('password')}
+                  className="text-field"
+                  value={values.password}
+                  onChange={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="passwordConfirmation"
+                  type="password"
+                  label={t('password-confirmation')}
+                  className="text-field"
+                  margin="normal"
+                  variant="outlined"
+                  value={values.passwordConfirmation}
+                  onChange={handleChange('passwordConfirmation')}
+                  onBlur={handleBlur('passwordConfirmation')}
+                  onKeyDown={e => handleKeyPress(e, values)}
+                />
+              </div>
+              <div className="button-container">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="button"
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}>
+                  {t('sign-up')}
+                </Button>
+              </div>
             </div>
-            <div className="button-container">
-              <Button
-                variant="contained"
-                color="primary"
-                className="button"
-                onClick={handleSubmit}
-                disabled={isSubmitting}>
-                {t('sign-up')}
-              </Button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       )}
     />
   );
