@@ -14,6 +14,7 @@ import {
 const PasswordInputDialog = ({
   title,
   headerText,
+  label,
   submitButtonText,
   onSubmit,
   isSubmitting,
@@ -51,7 +52,7 @@ const PasswordInputDialog = ({
             className="text-field"
             margin="normal"
             variant="outlined"
-            label="Password "
+            label={label}
             type="password"
             value={password}
             onChange={handleChange}
@@ -75,6 +76,7 @@ const PasswordInputDialog = ({
 PasswordInputDialog.propTypes = {
   title: PropTypes.string,
   headerText: PropTypes.string,
+  label: PropTypes.string,
   submitButtonText: PropTypes.string,
   onSubmit: PropTypes.func,
   isSubmitting: PropTypes.bool,
