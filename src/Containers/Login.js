@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { TextField, Button } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
 
-import { useTranslation } from 'react-i18next';
+import InputDialog from '../Components/InputDialog';
 import '../Assets/stylesheets/Signup.scss';
 
 const LoginSchema = Yup.object().shape({
@@ -48,6 +49,11 @@ const Login = ({ firebase, history }) => {
       submit(values);
     }
   };
+
+  const onResetPasswordSubmit = email => {
+    console.log(email)
+  }
+
   return (
     <Formik
       initialValues={{
@@ -102,13 +108,19 @@ const Login = ({ firebase, history }) => {
                     onClick={() => history.push('/signup')}>
                     {t('dont-have-an-account')}
                   </Button>
-                  <Button
+                  <InputDialog
+                    title={t('forgot-your-password')}
                     variant="text"
-                    color="primary"
-                    className="button"
-                    onClick={() => {}}>
-                    {t('forgot-your-password')}
-                  </Button>
+                    headerText={t(
+                      'enter-your-email-below-to-send-instructions-to-reset-your-password',
+                    )}
+                    initialValue={values.email}
+                    label={t('email')}
+                    submitButtonText={t('send')}
+                    textFieldType="email"
+                    onSubmit={onResetPasswordSubmit}
+                    isSubmitting={isSubmitting}
+                  />
                 </div>
               </div>
             </div>
