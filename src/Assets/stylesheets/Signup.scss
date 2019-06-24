@@ -37,8 +37,9 @@
           align-self: center;
         }
         .inner-buttons-container {
-          width: 100%;
           display: flex;
+          justify-content: center;
+          width: 100%;
           margin: 24px 0;
         }
       }
