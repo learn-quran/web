@@ -62,20 +62,22 @@ class Account extends React.Component {
     const { firebase, t } = this.props;
     if (username.length >= 3) {
       if (username !== this.state.user.username) {
-        firebase
-          .isUsernameDuplicated(username)
-          .then(() => {
-            this.setState({ isSubmitting: true });
-            firebase
-              .updateUserOnDB({ username })
-              .then(() => toast.success(t('your-username-has-been-updated')))
-              .catch(err => toast.error(t(err)))
-              .finally(() => {
-                this.setState({ isSubmitting: false });
-                this.persistUserInfo();
-              });
-          })
-          .catch(err => toast.error(t(err)));
+        if (/^(?:[\u0600-\u065f]+|[a-z]+)$/i.test(username)) {
+          firebase
+            .isUsernameDuplicated(username)
+            .then(() => {
+              this.setState({ isSubmitting: true });
+              firebase
+                .updateUserOnDB({ username })
+                .then(() => toast.success(t('your-username-has-been-updated')))
+                .catch(err => toast.error(t(err)))
+                .finally(() => {
+                  this.setState({ isSubmitting: false });
+                  this.persistUserInfo();
+                });
+            })
+            .catch(err => toast.error(t(err)));
+        } else toast.error(t('username-can-only-contain-letters'));
       }
     } else toast.error(t('username-too-short'));
   };
