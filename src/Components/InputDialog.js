@@ -13,26 +13,35 @@ import {
 
 const PasswordInputDialog = ({
   title,
+  variant,
   headerText,
   label,
+  textFieldType,
+  initialValue,
   submitButtonText,
   onSubmit,
   isSubmitting,
 }) => {
   const [open, setOpen] = useState(false);
-  const [password, setPassword] = useState('');
+  const [value, setValue] = useState('');
 
-  const handleClickOpen = () => setOpen(true);
+  const handleClickOpen = () => {
+    setOpen(true);
+    setValue(initialValue || '');
+  };
   const handleClose = () => setOpen(false);
-  const handleChange = ({ target }) => setPassword(target.value);
+  const handleChange = ({ target }) => setValue(target.value);
   const handleSubmit = () => {
-    onSubmit(password, handleClose);
-    setPassword('');
+    onSubmit(value, handleClose);
+    setValue('');
   };
 
   return (
     <Fragment>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button
+        variant={variant || 'outlined'}
+        color="primary"
+        onClick={handleClickOpen}>
         {title}
       </Button>
       <Dialog
@@ -53,8 +62,8 @@ const PasswordInputDialog = ({
             margin="normal"
             variant="outlined"
             label={label}
-            type="password"
-            value={password}
+            type={textFieldType}
+            value={value}
             onChange={handleChange}
             fullWidth
           />
@@ -75,8 +84,11 @@ const PasswordInputDialog = ({
 };
 PasswordInputDialog.propTypes = {
   title: PropTypes.string,
+  variant: PropTypes.string,
   headerText: PropTypes.string,
   label: PropTypes.string,
+  initialValue: PropTypes.string,
+  textFieldType: PropTypes.string,
   submitButtonText: PropTypes.string,
   onSubmit: PropTypes.func,
   isSubmitting: PropTypes.bool,
