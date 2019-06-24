@@ -21,7 +21,7 @@ const LoginSchema = Yup.object().shape({
 
 const Login = ({ firebase, history }) => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const submit = values => {
     changeIsSubmitting(true);
     LoginSchema.validate(values, {
@@ -50,9 +50,20 @@ const Login = ({ firebase, history }) => {
     }
   };
 
-  const onResetPasswordSubmit = email => {
-    console.log(email)
-  }
+  const onResetPasswordSubmit = (email, close) => {
+    if (
+      // eslint-disable-next-line
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i.test(email)
+    ) {
+      firebase
+        .resetPassword(email, i18n.language)
+        .then(() => {
+          toast.success(t('email-sent'));
+          close();
+        })
+        .catch(({ message }) => toast.error(t(message)));
+    } else toast.error(t('invalid-email'));
+  };
 
   return (
     <Formik

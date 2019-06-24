@@ -80,6 +80,15 @@ class Firebase {
         })
         .catch(err => reject(err));
     });
+  resetPassword = (email, lang) =>
+    new Promise((resolve, reject) => {
+      const auth = this.auth();
+      auth.languageCode = lang;
+      auth
+        .sendPasswordResetEmail(email)
+        .then(() => resolve())
+        .catch(error => reject(error.message));
+    });
   getUser = () =>
     new Promise((resolve, reject) => {
       this.database
