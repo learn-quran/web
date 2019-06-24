@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { TextField, Button } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
-
-import { useTranslation } from 'react-i18next';
 
 import '../Assets/stylesheets/Signup.scss';
 
