@@ -35,6 +35,11 @@ const PasswordInputDialog = ({
     onSubmit(value, handleClose);
     setValue('');
   };
+  const handleKeyPress = ({ keyCode, charCode }) => {
+    if (keyCode === 13 || charCode === 13) {
+      onSubmit(value, handleClose);
+    }
+  };
 
   return (
     <Fragment>
@@ -58,6 +63,7 @@ const PasswordInputDialog = ({
           <DialogContentText>{headerText}</DialogContentText>
           <TextField
             autoFocus
+            fullWidth
             className="text-field"
             margin="normal"
             variant="outlined"
@@ -65,7 +71,7 @@ const PasswordInputDialog = ({
             type={textFieldType}
             value={value}
             onChange={handleChange}
-            fullWidth
+            onKeyDown={e => handleKeyPress(e)}
           />
         </DialogContent>
         <DialogActions>
