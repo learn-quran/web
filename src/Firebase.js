@@ -55,37 +55,30 @@ class Firebase {
     });
   createUser = ({ email, password, username }) =>
     new Promise((resolve, reject) => {
-      this.database
-        .ref('users')
-        .orderByChild('username')
-        .equalTo(username)
-        .once('value')
-        .then(snapshot => {
-          if (snapshot.val()) {
-            reject('username-already-exists');
-          } else {
-            this.auth()
-              .createUserWithEmailAndPassword(email, password)
-              .then(({ user }) => {
-                if (user && user.uid) {
-                  let updates = {};
-                  updates['users/' + user.uid] = {
-                    uid: user.uid,
-                    username: username,
-                    email: email,
-                    points: 0,
-                    lastPlayed: '3 days ago',
-                    isEmailVerified: false,
-                  };
-                  this.database.ref().update(updates);
-                  resolve();
-                }
-              })
-              .catch(({ code, message }) => {
-                reject(this.getErrorMessage(code) || message);
-              });
-          }
-        });
+      this.isUsernameDuplicated(username)
+        .then(() => {
+          this.auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(({ user }) => {
+              if (user && user.uid) {
+                let updates = {};
+                updates['users/' + user.uid] = {
+                  uid: user.uid,
+                  username: username,
+                  email: email,
+                  points: 0,
+                  lastPlayed: '3 days ago',
+                  isEmailVerified: false,
+                };
+                this.database.ref().update(updates);
+                resolve();
+              }
+            })
+            .catch(({ code, message }) => {
+              reject(this.getErrorMessage(code) || message);
+            });
+        })
+        .catch(err => reject(err));
     });
   getUser = () =>
     new Promise((resolve, reject) => {
