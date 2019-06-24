@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { TextField, Button } from '@material-ui/core';
 
@@ -18,7 +18,7 @@ const LoginSchema = Yup.object().shape({
     .required('email-is-required'),
 });
 
-const Login = ({ firebase }) => {
+const Login = ({ firebase, history }) => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
   const { t } = useTranslation();
   const submit = values => {
@@ -30,7 +30,7 @@ const Login = ({ firebase }) => {
       .then(() => {
         firebase
           .signIn(values)
-          .then(() => <Redirect to={{ pathname: '/' }} />)
+          .then(() => history.push('/'))
           .catch(error => {
             toast.error(t(error));
             changeIsSubmitting(false);
@@ -85,7 +85,7 @@ const Login = ({ firebase }) => {
                   onKeyDown={e => handleKeyPress(e, values)}
                 />
               </div>
-              <div className="button-container">
+              <div className="buttons-container">
                 <Button
                   variant="contained"
                   color="primary"
@@ -94,6 +94,22 @@ const Login = ({ firebase }) => {
                   disabled={isSubmitting}>
                   {t('log-in')}
                 </Button>
+                <div className="inner-buttons-container">
+                  <Button
+                    variant="text"
+                    color="primary"
+                    className="button"
+                    onClick={() => history.push('/signup')}>
+                    {t('dont-have-an-account')}
+                  </Button>
+                  <Button
+                    variant="text"
+                    color="primary"
+                    className="button"
+                    onClick={() => {}}>
+                    {t('forgot-your-password')}
+                  </Button>
+                </div>
               </div>
             </div>
           </form>
@@ -104,6 +120,7 @@ const Login = ({ firebase }) => {
 };
 Login.propTypes = {
   firebase: PropTypes.object,
+  history: PropTypes.object,
 };
 
-export default withFirebase(Login);
+export default withRouter(withFirebase(Login));
