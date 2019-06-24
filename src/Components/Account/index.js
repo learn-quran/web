@@ -38,14 +38,15 @@ class Account extends React.Component {
   }
 
   persistUserInfo = () => {
-    this.props.firebase
+    const { firebase, t } = this.props;
+    firebase
       .getUser()
       .then(user => {
         this.setState({ user: { ...user } });
       })
       .catch(() => {
         toast.error(
-          'Something went wrong. Please close the tab and try again.',
+          t('something-went-wrong-please-close-the-tab-and-try-again'),
         );
       });
   };
@@ -58,31 +59,40 @@ class Account extends React.Component {
   };
 
   onUsernameSubmit = username => {
+    const { firebase, t } = this.props;
     if (username.length >= 3) {
       if (username !== this.state.user.username) {
-        this.setState({ isSubmitting: true });
-        this.props.firebase
-          .updateUserOnDB({ username })
-          .then(() => toast.success('Your username has been updated'))
-          .catch(err => toast.error(err))
-          .finally(() => {
-            this.setState({ isSubmitting: false });
-            this.persistUserInfo();
-          });
+        if (/^(?:[\u0600-\u065f]+|[a-z]+)$/i.test(username)) {
+          firebase
+            .isUsernameDuplicated(username)
+            .then(() => {
+              this.setState({ isSubmitting: true });
+              firebase
+                .updateUserOnDB({ username })
+                .then(() => toast.success(t('your-username-has-been-updated')))
+                .catch(err => toast.error(t(err)))
+                .finally(() => {
+                  this.setState({ isSubmitting: false });
+                  this.persistUserInfo();
+                });
+            })
+            .catch(err => toast.error(t(err)));
+        } else toast.error(t('username-can-only-contain-letters'));
       }
-    } else toast.error('Username too short');
+    } else toast.error(t('username-too-short'));
   };
   onEmailSubmit = email => {
+    const { firebase, t } = this.props;
     if (
       // eslint-disable-next-line
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i.test(email)
     ) {
       if (email !== this.state.user.email) {
         this.setState({ isSubmitting: true });
-        this.props.firebase
+        firebase
           .updateUserEmail(email)
-          .then(() => toast.success('Your email has been updated'))
-          .catch(err => toast.error(err))
+          .then(() => toast.success(t('your-email-has-been-updated')))
+          .catch(err => toast.error(t(err)))
           .finally(() => {
             this.setState({ isSubmitting: false });
             this.persistUserInfo();
@@ -91,32 +101,34 @@ class Account extends React.Component {
     } else toast.error('Invalid email');
   };
   onPasswordSubmit = (password, close) => {
+    const { firebase, t } = this.props;
     if (password.length > 1) {
       if (password.length > 6) {
         this.setState({ isSubmitting: true });
-        this.props.firebase
+        firebase
           .updateUserPassword(password)
           .then(() => {
-            toast.success('Password updated successfully');
+            toast.success(t('password-updated-successfully'));
           })
-          .catch(err => toast.error(err))
+          .catch(err => toast.error(t(err)))
           .finally(() => {
             this.setState({ isSubmitting: false });
             close();
             this.persistUserInfo();
           });
-      } else toast.error('Password too short');
+      } else toast.error(t('password-is-too-short'));
     }
   };
   onReauthSubmit = (password, close) => {
+    const { firebase, t } = this.props;
     if (password.length > 1 && password.length > 6) {
       this.setState({ isSubmitting: true });
-      this.props.firebase
+      firebase
         .reauthenticate(password)
         .then(() => {
-          toast.success('Account reauthenticated successfully');
+          toast.success(t('account-reauthenticated-successfully'));
         })
-        .catch(err => toast.error(err))
+        .catch(err => toast.error(t(err)))
         .finally(() => {
           this.setState({ isSubmitting: false });
           close();
@@ -125,11 +137,12 @@ class Account extends React.Component {
   };
 
   render() {
-    const { handleOpenClick, handleCloseClick, state } = this;
+    const { handleOpenClick, handleCloseClick, state, props } = this;
+    const { t } = props;
     return (
       <div className="content">
         <div className="open-button" onClick={handleOpenClick}>
-          Account
+          {t('account')}
         </div>
         {!!state.user && (
           <Dialog
@@ -138,45 +151,50 @@ class Account extends React.Component {
             onClose={handleCloseClick}
             aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">
-              <div>Edit Account</div>
+              <div>{t('edit-account')}</div>
               <Icon className="icon" onClick={handleCloseClick}>
                 close
               </Icon>
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Edit the information below then hit save
+                {t('edit-the-information-below-then-hit-save')}
               </DialogContentText>
               <AccountRow
                 isExpandable
-                field="Username "
+                field={t('username')}
                 fieldValue={state.user.username}
                 onSubmit={this.onUsernameSubmit}
-                buttonText="Change Username"
+                buttonText={t('change-username')}
                 isSubmitting={state.isSubmitting}
               />
               <AccountRow
                 isExpandable
-                field="Email "
+                field={t('email')}
                 fieldValue={state.user.email}
                 onSubmit={this.onEmailSubmit}
                 textFieldType="email"
-                buttonText="Change Email"
+                buttonText={t('change-email')}
                 isSubmitting={state.isSubmitting}
               />
               <div className="buttons-container">
                 <PasswordInputDialog
-                  title="Change Password"
-                  headerText={`Enter your new password below. You need to be recrently logged-in to
-            change your password.`}
-                  submitButtonText="Change"
+                  title={t('change-password')}
+                  headerText={t(
+                    'enter-your-new-password-below-you-need-to-be-recently-logged-in-to-change-your-password',
+                  )}
+                  label={t('password')}
+                  submitButtonText={t('change')}
                   onSubmit={this.onPasswordSubmit}
                   isSubmitting={state.isSubmitting}
                 />
                 <PasswordInputDialog
-                  title="Re-authenticate Account"
-                  headerText={`Enter your password below to re-authenticate your account.`}
-                  submitButtonText="Re-authenticate"
+                  title={t('re-authenticate-account')}
+                  headerText={t(
+                    'enter-your-password-below-to-re-authenticate-your-account',
+                  )}
+                  label={t('password')}
+                  submitButtonText={t('re-authenticate')}
                   onSubmit={this.onReauthSubmit}
                   isSubmitting={state.isSubmitting}
                 />

@@ -1,8 +1,10 @@
-.container {
+.leaderboard-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
   position: relative;
   align-items: initial;
   justify-content: initial;
-  display: flex;
   flex-direction: column;
   padding-top: 18px;
   .your-points-container {
@@ -11,11 +13,10 @@
     justify-content: flex-end;
     padding: 8px 28px;
     .your-points {
-      padding: 4px 15px 0 0;
+      padding: 4px 15px;
     }
     .points {
-      background-color: bisque;
-      border: 1px solid bisque;
+      background-color: rgba(254, 227, 193, 0.7);
       border-radius: 4px;
       padding: 4px 24px;
     }
@@ -29,6 +30,10 @@
       .MuiTableCell-body {
         font-size: 0.9rem !important;
       } 
+      .current-user-row {
+        background-color: rgba(254, 227, 193, 0.6);
+        
+      }
     }
   }
 }

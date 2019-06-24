@@ -56,46 +56,48 @@ const Login = ({ firebase }) => {
       }}
       onSubmit={submit}
       render={({ values, handleBlur, handleChange, handleSubmit }) => (
-        <form onSubmit={handleSubmit} autoCapitalize="off">
-          <div className="form-container login">
-            <div className="text-field-container">
-              <TextField
-                autoFocus
-                id="email"
-                label={t('email')}
-                type="email"
-                className="text-field"
-                value={values.email}
-                onChange={handleChange('email')}
-                onBlur={handleBlur('email')}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextField
-                id="password"
-                type="password"
-                label={t('password')}
-                className="text-field"
-                value={values.password}
-                onChange={handleChange('password')}
-                onBlur={handleBlur('password')}
-                margin="normal"
-                variant="outlined"
-                onKeyDown={e => handleKeyPress(e, values)}
-              />
+        <div className="signup-content">
+          <form onSubmit={handleSubmit} autoCapitalize="off">
+            <div className="form-container login">
+              <div className="text-field-container">
+                <TextField
+                  autoFocus
+                  id="email"
+                  label={t('email')}
+                  type="email"
+                  className="text-field"
+                  value={values.email}
+                  onChange={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  margin="normal"
+                  variant="outlined"
+                />
+                <TextField
+                  id="password"
+                  type="password"
+                  label={t('password')}
+                  className="text-field"
+                  value={values.password}
+                  onChange={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  margin="normal"
+                  variant="outlined"
+                  onKeyDown={e => handleKeyPress(e, values)}
+                />
+              </div>
+              <div className="button-container">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className="button"
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}>
+                  {t('log-in')}
+                </Button>
+              </div>
             </div>
-            <div className="button-container">
-              <Button
-                variant="contained"
-                color="primary"
-                className="button"
-                onClick={handleSubmit}
-                disabled={isSubmitting}>
-                {t('log-in')}
-              </Button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       )}
     />
   );
