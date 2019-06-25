@@ -98,7 +98,7 @@ class Account extends React.Component {
             this.persistUserInfo();
           });
       }
-    } else toast.error('Invalid email');
+    } else toast.error(t('invalid-email'));
   };
   onPasswordSubmit = (password, close) => {
     const { firebase, t } = this.props;
