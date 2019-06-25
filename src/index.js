@@ -12,6 +12,7 @@ import rtl from 'jss-rtl';
 import Firebase, { FirebaseContext } from './Firebase';
 import { Navigation } from './Navigation';
 import NavBar from './Components/NavBar';
+import NoConnection from './Containers/NoConnection';
 
 import './i18n';
 import { withTranslation } from 'react-i18next';
@@ -29,29 +30,40 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      connected: false,
       user: null,
-      loading: true,
+      loading: 0,
     };
   }
 
   componentDidMount() {
+    const { firebase } = this.props;
     const language = localStorage.getItem('language') || 'en';
     document.documentElement.lang = language;
     document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
     document.body.classList.remove(language === 'en' ? 'rtl' : 'ltr');
     document.body.setAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
-    this.unsubscribe = this.props.firebase.auth().onAuthStateChanged(user => {
-      this.setState({ loading: false });
-      user ? this.setState({ user }) : this.setState({ user: null });
-    });
+    setTimeout(() => {
+      this.connectedRef = firebase.database.ref('.info/connected');
+      this.connectedRef.on('value', snap => {
+        const connected = snap.val();
+        this.setState({ connected, loading: connected ? 1 : -1 });
+        if (connected === true) {
+          this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
+            this.setState({ loading: 2, user: user ? user : null });
+          });
+        }
+      });
+    }, 1000);
   }
   componentWillUnmount() {
     this.unsubscribe();
+    this.connectedRef.off();
   }
 
   render() {
+    const { user, loading, connected } = this.state;
     const language = localStorage.getItem('language') || 'en';
-    const { user, loading } = this.state;
     const jss = create(
       language === 'en'
         ? {
@@ -65,7 +77,11 @@ class App extends React.Component {
       direction: language === 'en' ? 'ltr' : 'rtl',
     });
 
-    return loading ? (
+    return loading === 0 ? (
+      <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
+    ) : !connected && loading === -1 ? (
+      <NoConnection />
+    ) : loading === 1 ? (
       <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
     ) : (
       <Router>
