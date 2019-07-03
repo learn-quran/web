@@ -44,7 +44,10 @@ const Signup = ({ firebase, history }) => {
       })
         .then(() => {
           firebase
-            .createUser(values)
+            .createUser({
+              ...values,
+              language: localStorage.getItem('language'),
+            })
             .then(() => history.push('/'))
             .catch(error => {
               toast.error(t(error));
