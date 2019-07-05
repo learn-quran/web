@@ -22,6 +22,7 @@ class Firebase {
 
     this.auth = app.auth;
     this.database = app.database();
+    this.isLoggedIn = false;
   }
 
   errors = [
