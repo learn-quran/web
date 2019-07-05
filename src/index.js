@@ -50,6 +50,7 @@ class App extends React.Component {
         this.setState({ connected, loading: connected ? 1 : -1 });
         if (connected === true) {
           this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
+            firebase.isLoggedIn = !!user;
             this.setState({ loading: 2, user: user ? user : null });
           });
         }
