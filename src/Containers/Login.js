@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { TextField, Button } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
 
-import { useTranslation } from 'react-i18next';
+import InputDialog from '../Components/InputDialog';
 import '../Assets/stylesheets/Signup.scss';
 
 const LoginSchema = Yup.object().shape({
@@ -18,9 +19,9 @@ const LoginSchema = Yup.object().shape({
     .required('email-is-required'),
 });
 
-const Login = ({ firebase }) => {
+const Login = ({ firebase, history }) => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const submit = values => {
     changeIsSubmitting(true);
     LoginSchema.validate(values, {
@@ -30,7 +31,7 @@ const Login = ({ firebase }) => {
       .then(() => {
         firebase
           .signIn(values)
-          .then(() => <Redirect to={{ pathname: '/' }} />)
+          .then(() => history.push('/'))
           .catch(error => {
             toast.error(t(error));
             changeIsSubmitting(false);
@@ -48,6 +49,22 @@ const Login = ({ firebase }) => {
       submit(values);
     }
   };
+
+  const onResetPasswordSubmit = (email, close) => {
+    if (
+      // eslint-disable-next-line
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i.test(email)
+    ) {
+      firebase
+        .resetPassword(email, i18n.language)
+        .then(() => {
+          toast.success(t('email-sent'));
+          close();
+        })
+        .catch(({ message }) => toast.error(t(message)));
+    } else toast.error(t('invalid-email'));
+  };
+
   return (
     <Formik
       initialValues={{
@@ -85,7 +102,7 @@ const Login = ({ firebase }) => {
                   onKeyDown={e => handleKeyPress(e, values)}
                 />
               </div>
-              <div className="button-container">
+              <div className="buttons-container">
                 <Button
                   variant="contained"
                   color="primary"
@@ -94,6 +111,28 @@ const Login = ({ firebase }) => {
                   disabled={isSubmitting}>
                   {t('log-in')}
                 </Button>
+                <div className="inner-buttons-container">
+                  <Button
+                    variant="text"
+                    color="primary"
+                    className="button"
+                    onClick={() => history.push('/signup')}>
+                    {t('dont-have-an-account')}
+                  </Button>
+                  <InputDialog
+                    title={t('forgot-your-password')}
+                    variant="text"
+                    headerText={t(
+                      'enter-your-email-below-to-send-instructions-to-reset-your-password',
+                    )}
+                    initialValue={values.email}
+                    label={t('email')}
+                    submitButtonText={t('send')}
+                    textFieldType="email"
+                    onSubmit={onResetPasswordSubmit}
+                    isSubmitting={isSubmitting}
+                  />
+                </div>
               </div>
             </div>
           </form>
@@ -104,6 +143,7 @@ const Login = ({ firebase }) => {
 };
 Login.propTypes = {
   firebase: PropTypes.object,
+  history: PropTypes.object,
 };
 
-export default withFirebase(Login);
+export default withRouter(withFirebase(Login));

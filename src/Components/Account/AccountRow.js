@@ -23,6 +23,11 @@ const AccountRow = ({
   const [value, setValue] = useState(fieldValue);
   const handleChange = ({ target }) => setValue(target.value);
   const handleSubmit = () => onSubmit(value);
+  const handleKeyPress = ({ keyCode, charCode }) => {
+    if (keyCode === 13 || charCode === 13) {
+      onSubmit(value);
+    }
+  };
   return (
     <ExpansionPanel
       disabled={!isExpandable}
@@ -36,7 +41,7 @@ const AccountRow = ({
         <div className="field-value">{fieldValue}</div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <form>
+        <div className="form">
           <div className="form-conatiner">
             <TextField
               className="text-field"
@@ -46,6 +51,7 @@ const AccountRow = ({
               onChange={handleChange}
               label={field}
               type={textFieldType}
+              onKeyDown={e => handleKeyPress(e)}
             />
             <Button
               variant="contained"
@@ -56,7 +62,7 @@ const AccountRow = ({
               {buttonText}
             </Button>
           </div>
-        </form>
+        </div>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );

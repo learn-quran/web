@@ -15,7 +15,7 @@ import { withFirebase } from '../../Firebase';
 import { withTranslation } from 'react-i18next';
 
 import AccountRow from './AccountRow';
-import PasswordInputDialog from './PasswordInputDialog';
+import InputDialog from '../InputDialog';
 
 import '../../Assets/stylesheets/Account.scss';
 
@@ -98,7 +98,7 @@ class Account extends React.Component {
             this.persistUserInfo();
           });
       }
-    } else toast.error('Invalid email');
+    } else toast.error(t('invalid-email'));
   };
   onPasswordSubmit = (password, close) => {
     const { firebase, t } = this.props;
@@ -178,23 +178,25 @@ class Account extends React.Component {
                 isSubmitting={state.isSubmitting}
               />
               <div className="buttons-container">
-                <PasswordInputDialog
+                <InputDialog
                   title={t('change-password')}
                   headerText={t(
                     'enter-your-new-password-below-you-need-to-be-recently-logged-in-to-change-your-password',
                   )}
                   label={t('password')}
                   submitButtonText={t('change')}
+                  textFieldType="password"
                   onSubmit={this.onPasswordSubmit}
                   isSubmitting={state.isSubmitting}
                 />
-                <PasswordInputDialog
+                <InputDialog
                   title={t('re-authenticate-account')}
                   headerText={t(
                     'enter-your-password-below-to-re-authenticate-your-account',
                   )}
                   label={t('password')}
                   submitButtonText={t('re-authenticate')}
+                  textFieldType="password"
                   onSubmit={this.onReauthSubmit}
                   isSubmitting={state.isSubmitting}
                 />
