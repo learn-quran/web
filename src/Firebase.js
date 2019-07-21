@@ -22,6 +22,7 @@ class Firebase {
 
     this.auth = app.auth;
     this.database = app.database();
+    this.isLoggedIn = false;
   }
 
   errors = [
@@ -53,7 +54,7 @@ class Firebase {
           reject(this.getErrorMessage(code) || message);
         });
     });
-  createUser = ({ email, password, username }) =>
+  createUser = ({ email, password, username, language }) =>
     new Promise((resolve, reject) => {
       this.isUsernameDuplicated(username)
         .then(() => {
@@ -66,6 +67,7 @@ class Firebase {
                   uid: user.uid,
                   username: username,
                   email: email,
+                  language: language,
                   points: 0,
                   lastPlayed: '3 days ago',
                   isEmailVerified: false,
@@ -79,6 +81,15 @@ class Firebase {
             });
         })
         .catch(err => reject(err));
+    });
+  resetPassword = (email, lang) =>
+    new Promise((resolve, reject) => {
+      const auth = this.auth();
+      auth.languageCode = lang;
+      auth
+        .sendPasswordResetEmail(email)
+        .then(() => resolve())
+        .catch(error => reject(error.message));
     });
   getUser = () =>
     new Promise((resolve, reject) => {

@@ -8,6 +8,7 @@ import Menu from '@material-ui/core/Menu';
 import { withTranslation } from 'react-i18next';
 
 import { SignedInNavBar, SignedOutNavBar } from '../Navigation';
+import { withFirebase } from '../Firebase';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -16,15 +17,27 @@ class NavBar extends React.Component {
       menu: null,
     };
   }
+
   handleChange = language => {
+    const { firebase, i18n } = this.props;
     if ((localStorage.getItem('language') || 'en') !== language) {
-      this.props.i18n.changeLanguage(language).then(() => {
+      i18n.changeLanguage(language).then(() => {
         localStorage.setItem('language', language);
         this.handleClose();
-        window.location.reload();
+        if (firebase.isLoggedIn) {
+          firebase
+            .updateUserOnDB({ language })
+            .then(() => {
+              window.location.reload();
+            })
+            .catch(() => {});
+        } else {
+          window.location.reload();
+        }
       });
     }
   };
+
   handleClick = e => {
     this.setState({
       menu: e.currentTarget,
@@ -35,6 +48,7 @@ class NavBar extends React.Component {
       menu: null,
     });
   };
+
   render() {
     const { handleChange, handleClose, handleClick, state, props } = this;
     const { menu } = state;
@@ -71,6 +85,7 @@ NavBar.propTypes = {
   user: PropTypes.object,
   t: PropTypes.func,
   i18n: PropTypes.object,
+  firebase: PropTypes.object,
 };
 
-export default withTranslation()(NavBar);
+export default withTranslation()(withFirebase(NavBar));

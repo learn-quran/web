@@ -50,5 +50,11 @@
   "your-points": "Your Points",
   "points": "Points",
   "latest-try": "Latest Try",
+  "already-have-an-account": "Already have an account",
+  "dont-have-an-account": "Don't have an account",
+  "forgot-your-password": "Forgot my password",
+  "enter-your-email-below-to-send-instructions-to-reset-your-password": "ُEnter your email below to send password reset instructions to.",
+  "send": "Send",
+  "email-sent": "Email sent",
   "":""
 }

@@ -50,5 +50,11 @@
   "your-points": "نقاطك",
   "points": "النقاط",
   "latest-try": "آخر محاولة",
+  "already-have-an-account": "لديك حساب ؟ تسجيل الدخول",
+  "dont-have-an-account": "ليس لدي حساب",
+  "forgot-your-password": "نسيت كلمة المرور",
+  "enter-your-email-below-to-send-instructions-to-reset-your-password": "الرجاء إدخال عنوان البريد الألكتروني أدناه لإرسال تعليمات نسيان كلمة المرور.",
+  "send": "أرسال",
+  "email-sent": "تم إرسال البريد الألكتروني",
   "":""
 }

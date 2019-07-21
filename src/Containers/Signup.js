@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { TextField, Button } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
-
-import { useTranslation } from 'react-i18next';
 
 import '../Assets/stylesheets/Signup.scss';
 
@@ -31,7 +30,7 @@ const SignupSchema = Yup.object().shape({
   ),
 });
 
-const Signup = ({ firebase }) => {
+const Signup = ({ firebase, history }) => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
   const { t } = useTranslation();
   const submit = values => {
@@ -45,8 +44,11 @@ const Signup = ({ firebase }) => {
       })
         .then(() => {
           firebase
-            .createUser(values)
-            .then(() => <Redirect to={{ pathname: '/' }} />)
+            .createUser({
+              ...values,
+              language: localStorage.getItem('language'),
+            })
+            .then(() => history.push('/'))
             .catch(error => {
               toast.error(t(error));
               changeIsSubmitting(false);
@@ -127,7 +129,7 @@ const Signup = ({ firebase }) => {
                   onKeyDown={e => handleKeyPress(e, values)}
                 />
               </div>
-              <div className="button-container">
+              <div className="buttons-container">
                 <Button
                   variant="contained"
                   color="primary"
@@ -136,6 +138,15 @@ const Signup = ({ firebase }) => {
                   disabled={isSubmitting}>
                   {t('sign-up')}
                 </Button>
+                <div className="inner-buttons-container">
+                  <Button
+                    variant="text"
+                    color="primary"
+                    className="button"
+                    onClick={() => history.push('/login')}>
+                    {t('already-have-an-account')}
+                  </Button>
+                </div>
               </div>
             </div>
           </form>
@@ -146,6 +157,7 @@ const Signup = ({ firebase }) => {
 };
 Signup.propTypes = {
   firebase: PropTypes.object,
+  history: PropTypes.object,
 };
 
-export default withFirebase(Signup);
+export default withRouter(withFirebase(Signup));
