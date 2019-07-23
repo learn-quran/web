@@ -45,10 +45,10 @@ const SignedOutNavBar = () => {
 
 const SignedInNavigation = () => (
   <Switch>
+    <Route path="/" component={Player} />
     <Route path="/home" component={Home} />
     <Route path="/leaderboard" component={Leaderboard} />
-    <Route path="/play" component={Player} />
-    <Route render={() => <Redirect to="/home" />} />
+    <Route render={() => <Redirect to="/" />} />
   </Switch>
 );
 
