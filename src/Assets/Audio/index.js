@@ -15,7 +15,12 @@ function getFourRandomDatoms(datom) {
   let names = [];
   const values = Object.values(data);
   for (let _ = 0; _ < 3; _++) {
-    names.push({ ...values[getRandomInt(values.length)], disabled: false });
+    const currVal = values[getRandomInt(values.length)]
+    if (currVal.index === datom.index) {
+      _--;
+      continue;
+    }
+    names.push({ ...currVal, disabled: false });
   }
   names.push({ ...datom, disabled: false });
   return shuffleArray(names);
