@@ -174,12 +174,22 @@ class Firebase {
   getAsset = assetId =>
     new Promise((resolve, reject) => {
       this.storage()
-        .ref(`audio/${assetId}.mp3`)
+        .ref(`audio/${'test'}.mp3`)
         .getDownloadURL()
         .then(url => resolve(url))
         .catch(({ code, message }) => {
           reject(this.getErrorMessage(code) || message);
         });
+    });
+  updateUserPoints = newPoints =>
+    new Promise((resolve, reject) => {
+      this.getUser()
+        .then(({ points }) => {
+          this.updateUserOnDB({ points: points + newPoints })
+            .then(() => resolve())
+            .catch(() => reject());
+        })
+        .catch(() => reject());
     });
 }
 
