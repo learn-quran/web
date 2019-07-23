@@ -5,6 +5,7 @@ import app from 'firebase/app';
 // Firebase dependencies
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/storage';
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -22,6 +23,7 @@ class Firebase {
 
     this.auth = app.auth;
     this.database = app.database();
+    this.storage = app.storage;
     this.isLoggedIn = false;
   }
 
@@ -165,6 +167,16 @@ class Firebase {
       user
         .reauthenticateWithCredential(credintial)
         .then(() => resolve())
+        .catch(({ code, message }) => {
+          reject(this.getErrorMessage(code) || message);
+        });
+    });
+  getAsset = assetId =>
+    new Promise((resolve, reject) => {
+      this.storage()
+        .ref(`audio/${assetId}.mp3`)
+        .getDownloadURL()
+        .then(url => resolve(url))
         .catch(({ code, message }) => {
           reject(this.getErrorMessage(code) || message);
         });
