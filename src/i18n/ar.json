@@ -57,5 +57,6 @@
   "enter-your-email-below-to-send-instructions-to-reset-your-password": "الرجاء إدخال عنوان البريد الألكتروني أدناه لإرسال تعليمات نسيان كلمة المرور.",
   "send": "أرسال",
   "email-sent": "تم إرسال البريد الألكتروني",
+  "congratulations-you-earned-n-points": "تهانينا! لقد حصلت على {{points}} نقاط",
   "":""
 }
