@@ -6,6 +6,7 @@ import Home from './Containers/Home';
 import Signup from './Containers/Signup';
 import Login from './Containers/Login';
 import Leaderboard from './Containers/Leaderboard';
+import Player from './Containers/Player';
 
 import Account from './Components/Account';
 
@@ -20,6 +21,9 @@ const SignedInNavBar = () => {
       </div>
       <div className="nav-item">
         <Account />
+      </div>
+      <div className="nav-item">
+        <Link to="/play">{t('play')}</Link>
       </div>
     </div>
   );
@@ -41,9 +45,10 @@ const SignedOutNavBar = () => {
 
 const SignedInNavigation = () => (
   <Switch>
+    <Route path="/" component={Player} />
     <Route path="/home" component={Home} />
     <Route path="/leaderboard" component={Leaderboard} />
-    <Route render={() => <Redirect to="/home" />} />
+    <Route render={() => <Redirect to="/" />} />
   </Switch>
 );
 

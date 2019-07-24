@@ -24,3 +24,5 @@ yarn-error.log*
 
 /package-lock.json
 /.firebase
+
+/src/Assets/Audio/data.json
