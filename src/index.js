@@ -4,7 +4,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { ScaleLoader } from 'react-spinners';
 
-import { createMuiTheme } from '@material-ui/core/styles';
 import { StylesProvider, ThemeProvider, jssPreset } from '@material-ui/styles';
 import { create } from 'jss';
 import rtl from 'jss-rtl';
@@ -20,6 +19,7 @@ import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import * as serviceWorker from './serviceWorker';
 import './Assets/stylesheets/index.scss';
+import { getTheme } from './Theme';
 
 class App extends React.Component {
   static propTypes = {
@@ -74,9 +74,7 @@ class App extends React.Component {
             plugins: [...jssPreset().plugins, rtl()],
           },
     );
-    const theme = createMuiTheme({
-      direction: language === 'en' ? 'ltr' : 'rtl',
-    });
+    const theme = getTheme(language);
 
     return loading === 0 ? (
       <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
