@@ -87,7 +87,6 @@ class App extends React.Component {
         <Fragment>
           <StylesProvider jss={jss}>
             <ThemeProvider theme={theme}>
-              <NavBar user={user} />
               <div className="container">
                 <Navigation user={user} />
                 <ToastContainer
