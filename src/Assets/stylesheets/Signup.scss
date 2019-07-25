@@ -5,9 +5,15 @@
   position: relative;
   justify-content: center;
   align-items: center;
+  background-image: url('https://scontent.famm3-2.fna.fbcdn.net/v/t1.15752-9/67160202_663296140851892_8869816908937953280_n.jpg?_nc_cat=100&_nc_eui2=AeH6pTdvgtULvFWzFd_2_8bIhGzpKEsU1ehU9R2t-6hl_AX21nyLTNdBqova9tacaFYYHkWEUp0csL4oLgJ6oLlmJkO_yO2Box5EvCMWSdl4bg&_nc_oc=AQl7bOzfl6GcZt8tCT-_wq9mgPXrGvToB5NkQXoiCBihgddA5HwZL4qh96NtwVXkbPU&_nc_ht=scontent.famm3-2.fna&oh=63250f403c97d5658aeec37d03733f9f&oe=5DE211B5');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
   form {
     display: flex;
     width: 26rem;
+    background-color: rgba(79, 79, 79, 0.8);
+    border-radius: 13px;
     .form-container {
       display: flex;
       align-items: center;
