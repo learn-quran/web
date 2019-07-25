@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import * as serviceWorker from './serviceWorker';
 import './Assets/stylesheets/index.scss';
 import { getTheme } from './Theme';
+import FAB from './Components/FAB';
 
 class App extends React.Component {
   static propTypes = {
@@ -91,6 +92,7 @@ class App extends React.Component {
                 <ToastContainer
                   position={language === 'en' ? 'top-right' : 'top-left'}
                 />
+                <FAB />
               </div>
             </ThemeProvider>
           </StylesProvider>

@@ -8,9 +8,48 @@
 body {
   margin: 0;
   .container {
+    position: relative;
     display: flex;
     height: 100vh;
     width: 100vw;
+  }
+  .fab {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    .main-fab {
+      position: absolute !important;
+      bottom: -0.5rem;
+      left: -0.5rem;
+      transition: all 0.3s ease;
+    }
+    .fab-wheel {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      transition: all 0.3s ease;
+      transform-origin: bottom left;
+      transform: scale(0);
+      &.open {
+        transform: scale(1);
+        .fab-action {
+          opacity: 1;
+        }
+      }
+      .fab-action {
+        position: absolute !important;
+        transition: all 1s ease;
+        opacity: 0;
+      }
+      .fab-action-1 {
+        bottom: 3rem;
+        left: 1rem;
+      }
+      .fab-action-2 {
+        bottom: 1rem;
+        left: 4rem;
+      }
+    }
   }
   .en {
     font-family: 'Rajdhani', sans-serif;
