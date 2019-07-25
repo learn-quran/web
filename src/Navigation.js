@@ -3,12 +3,11 @@ import { Link, Switch, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Home from './Containers/Home';
-import Signup from './Containers/Signup';
-import Login from './Containers/Login';
 import Leaderboard from './Containers/Leaderboard';
 import Player from './Containers/Player';
 
 import Account from './Components/Account';
+import Landing from './Containers/Landing';
 
 import { useTranslation } from 'react-i18next';
 
@@ -45,19 +44,18 @@ const SignedOutNavBar = () => {
 
 const SignedInNavigation = () => (
   <Switch>
-    <Route path="/" component={Player} />
-    <Route path="/home" component={Home} />
-    <Route path="/leaderboard" component={Leaderboard} />
+    <Route exact path="/" component={Player} />
+    <Route exact path="/home" component={Home} />
+    <Route exact path="/leaderboard" component={Leaderboard} />
     <Route render={() => <Redirect to="/" />} />
   </Switch>
 );
 
 const SignedOutNavigation = () => (
   <Switch>
-    <Route path="/signup" component={Signup} />
-    <Route path="/login" component={Login} />
-    <Route path="/leaderboard" component={Leaderboard} />
-    <Route render={() => <Redirect to="/signup" />} />
+    <Route exact path="/" component={Landing} />
+    <Route exact path="/leaderboard" component={Leaderboard} />
+    <Route render={() => <Redirect to="/" />} />
   </Switch>
 );
 
