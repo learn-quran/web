@@ -22,8 +22,9 @@ const Landing = () => {
         </div>
         <div className={`text-container ${t('lang-code')}`}>
           <div className="header">
-            Learn Quran is a hybrid platform for testing your knowledge in the
-            Holy Quran!
+            {`${t(
+              'learn-quran-is-a-hybrid-platform-for-testing-your-knowledge-in-the-holy-quran',
+            )}!`}
           </div>
           <div className="sections">
             <div className="section">
@@ -33,11 +34,7 @@ const Landing = () => {
                   🎮
                 </span>
               </div>
-              The idea is that once you create an account you'll be redirected
-              to a page where an audio is playing, the aduio is an Aya (verse)
-              of randomly chosen Sura from the Holy Quran. There are four
-              choices, only one of which is correct. The goal is to guess what
-              Sura the verse playing is from. Have fun!{' '}
+              {t('landing-page-how-to-play-paragprah')}
               <pre className="ascii">~(^-^)~</pre>
             </div>
             <div className="section">
@@ -47,11 +44,7 @@ const Landing = () => {
                   ✨
                 </span>
               </div>
-              This project was originally created for educational purposes.
-              About two years ago I released my first Android app/game created
-              with Unity, it was horrible, to say the least. Recreating the same
-              app I made when I was first starting has really made me take
-              another look at the process and effor I put in back then.
+              {t('landing-page-inspiration-paragprah')}
             </div>
           </div>
         </div>
