@@ -10,7 +10,6 @@ import rtl from 'jss-rtl';
 
 import Firebase, { FirebaseContext } from './Firebase';
 import { Navigation } from './Navigation';
-import NavBar from './Components/NavBar';
 import NoConnection from './Containers/NoConnection';
 
 import './i18n';
