@@ -34,8 +34,8 @@ const Landing = () => {
                   🎮
                 </span>
               </div>
-              {t('landing-page-how-to-play-paragprah')}
-              <pre className="ascii">~(^-^)~</pre>
+              {`${t('landing-page-how-to-play-paragprah')} `}
+              <span className="ascii">~(^-^)~</span>
             </div>
             <div className="section">
               <div className="header">

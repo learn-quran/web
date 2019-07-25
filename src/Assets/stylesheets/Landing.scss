@@ -62,6 +62,8 @@
         font-weight: 700;
         text-transform: uppercase;
         height: 20%;
+        color: rgb(189, 160, 93);
+        text-align: center;
       }
       .sections {
         height: 80%;
@@ -72,6 +74,9 @@
           .header {
             font-size: 1.28rem;
             height: initial;
+            color: white;
+            text-align: start;
+            text-decoration-line: underline;
             span {
               font-size: 1.45rem;
             }
@@ -79,6 +84,9 @@
           .ascii {
             font-family: initial;
             font-weight: 100;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }
