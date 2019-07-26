@@ -71,7 +71,7 @@ class Firebase {
                   email: email,
                   language: language,
                   points: 0,
-                  lastPlayed: '3 days ago',
+                  lastPlayed: 'never-played',
                   isEmailVerified: false,
                 };
                 this.database.ref().update(updates);
@@ -190,6 +190,16 @@ class Firebase {
             .catch(() => reject());
         })
         .catch(() => reject());
+    });
+  updateUserLastPlayed = lastPlayed =>
+    new Promise(() => {
+      this.getUser()
+        .then(({ points }) => {
+          this.updateUserOnDB({ lastPlayed })
+            .then(() => {})
+            .catch(() => {});
+        })
+        .catch(() => {});
     });
 }
 
