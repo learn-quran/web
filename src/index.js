@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { ScaleLoader } from 'react-spinners';
 
 import { StylesProvider, ThemeProvider, jssPreset } from '@material-ui/styles';
 import { create } from 'jss';
@@ -10,7 +9,7 @@ import rtl from 'jss-rtl';
 
 import Firebase, { FirebaseContext } from './Firebase';
 import { Navigation } from './Navigation';
-import NoConnection from './Containers/NoConnection';
+import MonitorConnection from './Containers/MonitorConnection';
 import './i18n';
 import { withTranslation } from 'react-i18next';
 import * as moment from 'moment';
@@ -30,10 +29,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      connected: false,
+      noConnection: false,
       user: null,
-      loading: 0,
+      loading: true,
     };
+    this.connectedRef = props.firebase.database.ref('.info/connected');
   }
 
   componentDidMount() {
@@ -45,15 +45,20 @@ class App extends React.Component {
     document.body.setAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
     moment.locale(language);
     setTimeout(() => {
-      this.connectedRef = firebase.database.ref('.info/connected');
       this.connectedRef.on('value', snap => {
         const connected = snap.val();
-        this.setState({ connected, loading: connected ? 1 : -1 });
+        clearTimeout(this.connectionTimer);
+        this.setState({ loading: true, noConnection: false });
         if (connected === true) {
           this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
             firebase.isLoggedIn = !!user;
-            this.setState({ loading: 2, user: user ? user : null });
+            this.setState({ loading: false, user: user ? user : null });
           });
+        } else {
+          this.connectionTimer = setTimeout(
+            () => this.setState({ noConnection: true, loading: false }),
+            5000,
+          );
         }
       });
     }, 1000);
@@ -64,7 +69,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { user, loading, connected } = this.state;
+    const { user, loading, noConnection } = this.state;
     const language = localStorage.getItem('language') || 'en';
     const jss = create(
       language === 'en'
@@ -77,28 +82,24 @@ class App extends React.Component {
     );
     const theme = getTheme(language);
 
-    return loading === 0 ? (
-      <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
-    ) : !connected && loading === -1 ? (
-      <NoConnection />
-    ) : loading === 1 ? (
-      <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
-    ) : (
-      <Router>
-        <Fragment>
-          <StylesProvider jss={jss}>
-            <ThemeProvider theme={theme}>
-              <div className="container">
-                <Navigation user={user} />
-                <ToastContainer
-                  position={language === 'en' ? 'top-right' : 'top-left'}
-                />
-                <FAB user={user} />
-              </div>
-            </ThemeProvider>
-          </StylesProvider>
-        </Fragment>
-      </Router>
+    return (
+      <MonitorConnection noConnection={noConnection} loading={loading}>
+        <Router>
+          <Fragment>
+            <StylesProvider jss={jss}>
+              <ThemeProvider theme={theme}>
+                <div className="container">
+                  <Navigation user={user} />
+                  <ToastContainer
+                    position={language === 'en' ? 'top-right' : 'top-left'}
+                  />
+                  <FAB user={user} />
+                </div>
+              </ThemeProvider>
+            </StylesProvider>
+          </Fragment>
+        </Router>
+      </MonitorConnection>
     );
   }
 }
