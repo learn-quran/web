@@ -10,6 +10,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
+import * as moment from 'moment';
+import 'moment/locale/ar';
+
 import { withFirebase } from '../Firebase';
 import { objectToArray } from '../Helpers';
 
@@ -73,7 +76,11 @@ class Leaderboard extends React.Component {
                     {item.username}
                   </TableCell>
                   <TableCell align="center">{item.points}</TableCell>
-                  <TableCell align="center">{item.lastPlayed}</TableCell>
+                  <TableCell align="center">
+                    {item.lastPlayed === 'never-played'
+                      ? t(item.lastPlayed)
+                      : moment(item.lastPlayed).fromNow()}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
