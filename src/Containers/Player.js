@@ -87,7 +87,11 @@ class Player extends React.Component {
           );
         })
         .catch(() => {
-          toast.error(t('there-was-an-error-please-contact-us-to-fix-it'));
+          toast.error(
+            t(
+              'there-was-an-error-adding-your-points-please-contact-us-to-fix-it',
+            ),
+          );
         });
     } else {
       toast.warn(t('try-again'));
