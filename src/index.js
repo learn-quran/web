@@ -11,9 +11,9 @@ import rtl from 'jss-rtl';
 import Firebase, { FirebaseContext } from './Firebase';
 import { Navigation } from './Navigation';
 import NoConnection from './Containers/NoConnection';
-
 import './i18n';
 import { withTranslation } from 'react-i18next';
+import * as moment from 'moment';
 
 import PropTypes from 'prop-types';
 import * as serviceWorker from './serviceWorker';
@@ -43,6 +43,7 @@ class App extends React.Component {
     document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
     document.body.classList.remove(language === 'en' ? 'rtl' : 'ltr');
     document.body.setAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
+    moment.locale(language);
     setTimeout(() => {
       this.connectedRef = firebase.database.ref('.info/connected');
       this.connectedRef.on('value', snap => {
