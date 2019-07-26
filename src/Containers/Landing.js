@@ -15,15 +15,16 @@ const Landing = () => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
   const { t } = useTranslation();
   return (
-    <div className="content">
+    <div className={`content ${t('lang-code')}`}>
       <div className="left side">
         <div className="logo-container">
           <img src={logo} alt="Learn Quran" className="logo" />
         </div>
         <div className={`text-container ${t('lang-code')}`}>
           <div className="header">
+            <span className="title">{`${t('learn-quran')} `}</span>
             {`${t(
-              'learn-quran-is-a-hybrid-platform-for-testing-your-knowledge-in-the-holy-quran',
+              'is-a-hybrid-platform-for-testing-your-knowledge-in-the-holy-quran',
             )}!`}
           </div>
           <div className="sections">

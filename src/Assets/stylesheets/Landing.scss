@@ -17,6 +17,9 @@
     height: initial;
     flex-direction: column;
   }
+  &.ar {
+    background-image: url('../Images/background-ar.jpg');
+  }
   .side {
     width: 50%;
     height: 95%;
