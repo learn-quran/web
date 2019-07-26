@@ -81,7 +81,6 @@ const Login = ({
           <div className="form-container login">
             <div className="text-field-container">
               <TextField
-                autoFocus
                 id="email"
                 label={t('email')}
                 type="email"
