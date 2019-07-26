@@ -9,6 +9,7 @@ import {
   DialogTitle,
   Icon,
 } from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
 
 import PropTypes from 'prop-types';
 import { withFirebase } from '../../Firebase';
@@ -142,7 +143,7 @@ class Account extends React.Component {
     return (
       <div className="content">
         <div className="open-button" onClick={handleOpenClick}>
-          {t('account')}
+          <AccountCircle />
         </div>
         {!!state.user && (
           <Dialog
