@@ -8,6 +8,8 @@ import {
   DialogContentText,
   DialogTitle,
   Icon,
+  Fab,
+  Tooltip,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 
@@ -141,10 +143,16 @@ class Account extends React.Component {
     const { handleOpenClick, handleCloseClick, state, props } = this;
     const { t } = props;
     return (
-      <div className="content">
-        <div className="open-button" onClick={handleOpenClick}>
-          <AccountCircle />
-        </div>
+      <React.Fragment>
+        <Tooltip title={t('account')} placement="top">
+          <Fab
+            size="medium"
+            className="fab-action fab-action-3"
+            aria-label={t('account')}
+            onClick={handleOpenClick}>
+            <AccountCircle />
+          </Fab>
+        </Tooltip>
         {!!state.user && (
           <Dialog
             maxWidth="lg"
@@ -206,9 +214,8 @@ class Account extends React.Component {
             <DialogActions />
           </Dialog>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }
-
 export default withTranslation()(withFirebase(Account));

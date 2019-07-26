@@ -92,7 +92,7 @@ class App extends React.Component {
                 <ToastContainer
                   position={language === 'en' ? 'top-right' : 'top-left'}
                 />
-                <FAB />
+                <FAB user={user} />
               </div>
             </ThemeProvider>
           </StylesProvider>

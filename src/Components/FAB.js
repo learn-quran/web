@@ -11,8 +11,9 @@ import {
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
 import { useTranslation } from 'react-i18next';
+import Account from './Account';
 
-const FAB = ({ firebase, history }) => {
+const FAB = ({ firebase, history, user }) => {
   const [isOpen, changeIsOpen] = useState(false);
   const [menu, setMenu] = useState(null);
   const { t, i18n } = useTranslation();
@@ -36,6 +37,7 @@ const FAB = ({ firebase, history }) => {
       });
     }
   };
+  const userStatus = user ? 'signed-in' : 'not-signed-in';
   return (
     <div className="fab">
       <Tooltip title={t('menu')} placement="top">
@@ -47,7 +49,7 @@ const FAB = ({ firebase, history }) => {
           <MenuIcon />
         </Fab>
       </Tooltip>
-      <div className={`fab-wheel ${isOpen && 'open'}`}>
+      <div className={`fab-wheel ${isOpen && 'open'} ${userStatus}`}>
         <React.Fragment>
           <Tooltip title={t('language')} placement="top">
             <Fab
@@ -80,6 +82,7 @@ const FAB = ({ firebase, history }) => {
             <InsertChartOutlined />
           </Fab>
         </Tooltip>
+        {!!user && <Account />}
       </div>
     </div>
   );
@@ -87,6 +90,7 @@ const FAB = ({ firebase, history }) => {
 FAB.propTypes = {
   firebase: PropTypes.object,
   history: PropTypes.object,
+  user: PropTypes.object,
 };
 
 export default withRouter(withFirebase(FAB));

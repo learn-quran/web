@@ -36,6 +36,20 @@ body {
           opacity: 1;
         }
       }
+      &.signed-in {
+        .fab-action-1 {
+          bottom: 4rem;
+          left: -0.5rem;
+        }
+        .fab-action-2 {
+          bottom: 3rem;
+          left: 3rem;
+        }
+        .fab-action-3 {
+          bottom: 0;
+          left: 5rem;
+        }
+      }
       .fab-action {
         position: absolute !important;
         transition: all 1s ease;
