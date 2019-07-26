@@ -66,7 +66,12 @@ class Player extends React.Component {
     this.points = 3;
   };
 
-  handleResetClick = () => (this.audioComponent.audioEl.currentTime = 0);
+  handleResetClick = () => {
+    const el = this.audioComponent.audioEl;
+    el.pause();
+    el.currentTime = 0;
+    el.play();
+  };
   handleVolumeChange = (_, volume) => this.setState({ volume });
   handleAnswerClick = index => {
     const { t, firebase } = this.props;
