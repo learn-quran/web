@@ -1,4 +1,5 @@
 import React from 'react';
+import * as moment from 'moment';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
 import { toast } from 'react-toastify';
@@ -93,6 +94,7 @@ class Player extends React.Component {
         this.forceUpdate();
       }
     }
+    firebase.updateUserLastPlayed(moment().format());
   };
 
   render() {
