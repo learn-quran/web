@@ -87,7 +87,6 @@ const Signup = ({
           <div className="form-container">
             <div className="text-field-container">
               <TextField
-                autoFocus
                 id="email"
                 label={t('email')}
                 type="email"
