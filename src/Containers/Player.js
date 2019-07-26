@@ -35,6 +35,10 @@ class Player extends React.Component {
   }
 
   componentDidMount() {
+    this.getAsset();
+  }
+
+  getAsset = () => {
     this.props.firebase
       .getAsset(getRandomAsset(this.datom))
       .then(url => this.setState({ url }))
@@ -45,7 +49,7 @@ class Player extends React.Component {
           ),
         );
       });
-  }
+  };
 
   initalize = (reset = false) => {
     if (reset) {
@@ -54,6 +58,7 @@ class Player extends React.Component {
         won: false,
         lost: false,
       });
+      this.getAsset();
     }
     this.datom = getRandomDatom();
     this.datoms = getFourRandomDatoms(this.datom);
