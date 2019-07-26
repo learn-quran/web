@@ -174,7 +174,7 @@ class Firebase {
   getAsset = assetId =>
     new Promise((resolve, reject) => {
       this.storage()
-        .ref(`audio/${'test'}.mp3`)
+        .ref(`audio/${assetId}.mp3`)
         .getDownloadURL()
         .then(url => resolve(url))
         .catch(({ code, message }) => {
