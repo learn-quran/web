@@ -2,6 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 import {
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -138,9 +139,10 @@ class Account extends React.Component {
         });
     }
   };
+  logout = () => this.props.firebase.auth().signOut();
 
   render() {
-    const { handleOpenClick, handleCloseClick, state, props } = this;
+    const { handleOpenClick, handleCloseClick, logout, state, props } = this;
     const { t } = props;
     return (
       <React.Fragment>
@@ -209,6 +211,15 @@ class Account extends React.Component {
                   onSubmit={this.onReauthSubmit}
                   isSubmitting={state.isSubmitting}
                 />
+              </div>
+              <div className="logout-button-container">
+                <Button
+                  onClick={logout}
+                  color="primary"
+                  variant="outlined"
+                  className="logout-button">
+                  {t('log-out')}
+                </Button>
               </div>
             </DialogContent>
             <DialogActions />
