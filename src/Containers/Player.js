@@ -118,7 +118,11 @@ class Player extends React.Component {
         this.forceUpdate();
       }
     }
-    firebase.updateUserLastPlayed(moment().format());
+    firebase.updateUserLastPlayed(
+      moment()
+        .locale('en')
+        .format(),
+    );
   };
 
   render() {

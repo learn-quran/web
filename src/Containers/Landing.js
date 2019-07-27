@@ -15,7 +15,7 @@ const Landing = () => {
   const [isSubmitting, changeIsSubmitting] = useState(false);
   const { t } = useTranslation();
   return (
-    <div className={`content ${t('lang-code')}-bg`}>
+    <div className={`landing-content ${t('lang-code')}-bg`}>
       <div className="left side">
         <div className="logo-container">
           <img src={logo} alt="Learn Quran" className="logo" />

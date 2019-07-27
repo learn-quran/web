@@ -88,13 +88,11 @@ class App extends React.Component {
           <Fragment>
             <StylesProvider jss={jss}>
               <ThemeProvider theme={theme}>
-                <div className="container">
-                  <Navigation user={user} />
-                  <ToastContainer
-                    position={language === 'en' ? 'top-right' : 'top-left'}
-                  />
-                  <FAB user={user} />
-                </div>
+                <Navigation user={user} />
+                <ToastContainer
+                  position={language === 'en' ? 'top-right' : 'top-left'}
+                />
+                <FAB user={user} />
               </ThemeProvider>
             </StylesProvider>
           </Fragment>
