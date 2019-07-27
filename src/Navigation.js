@@ -7,27 +7,15 @@ import Player from './Containers/Player';
 
 import Landing from './Containers/Landing';
 
-const SignedInNavigation = () => (
+const Navigation = ({ user }) => (
   <Switch>
-    <Route exact path="/" component={Player} />
+    <Route exact path="/" component={user ? Player : Landing} />
     <Route exact path="/leaderboard" component={Leaderboard} />
     <Route render={() => <Redirect to="/" />} />
   </Switch>
 );
-
-const SignedOutNavigation = () => (
-  <Switch>
-    <Route exact path="/" component={Landing} />
-    <Route exact path="/leaderboard" component={Leaderboard} />
-    <Route render={() => <Redirect to="/" />} />
-  </Switch>
-);
-
-const Navigation = ({ user }) => {
-  return user ? <SignedInNavigation /> : <SignedOutNavigation />;
-};
 Navigation.propTypes = {
   user: PropTypes.object,
 };
 
-export { SignedInNavigation, SignedOutNavigation, Navigation };
+export { Navigation };
