@@ -31,12 +31,14 @@ class Player extends React.Component {
       volume: 0.5,
       won: false,
       lost: false,
+      user: {},
     };
     this.initalize();
   }
 
   componentDidMount() {
     this.getAsset();
+    this.persistUserInfo();
   }
 
   getAsset = () => {
@@ -51,7 +53,19 @@ class Player extends React.Component {
         );
       });
   };
-
+  persistUserInfo = () => {
+    const { firebase, t } = this.props;
+    firebase
+      .getUser()
+      .then(user => {
+        this.setState({ user: { ...user } });
+      })
+      .catch(() => {
+        toast.error(
+          t('something-went-wrong-please-close-the-tab-and-try-again'),
+        );
+      });
+  };
   initalize = (reset = false) => {
     if (reset) {
       this.setState({
@@ -85,6 +99,7 @@ class Player extends React.Component {
           toast.success(
             t('congratulations-you-earned-n-points', { points: this.points }),
           );
+          this.persistUserInfo();
         })
         .catch(() => {
           toast.error(
@@ -107,10 +122,16 @@ class Player extends React.Component {
   };
 
   render() {
-    const { volume, url, lost, won } = this.state;
+    const { volume, url, lost, won, user } = this.state;
     const { t } = this.props;
     return (
       <div className="player-content">
+        {!!user.uid && (
+          <div className="your-points-container">
+            <div className="your-points">{t('your-points')}</div>
+            <div className="points">{user.points}</div>
+          </div>
+        )}
         <IconButton
           className="reset-button"
           aria-label={t('reset')}
