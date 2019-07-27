@@ -50,12 +50,6 @@ class Leaderboard extends React.Component {
       <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
     ) : (
       <div className="leaderboard-content">
-        {!!currentUser.uid && (
-          <div className="your-points-container">
-            <div className="your-points">{t('your-points')}</div>
-            <div className="points">{currentUser.points}</div>
-          </div>
-        )}
         <div className="table-container">
           <Table>
             <TableHead>
