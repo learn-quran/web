@@ -35,6 +35,14 @@
                 display: flex;
                 justify-content: space-around;
                 align-items: center;
+                .text-field {
+                  .MuiFormLabel-root, .MuiInputBase-root {
+                    color: black;
+                  }
+                  .MuiOutlinedInput-notchedOutline {
+                    border-color: black;
+                  }
+                }
               }
             }
           }

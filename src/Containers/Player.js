@@ -136,30 +136,6 @@ class Player extends React.Component {
             <div className="points">{user.points}</div>
           </div>
         )}
-        <IconButton
-          className="reset-button"
-          aria-label={t('reset')}
-          onClick={this.handleResetClick}>
-          <Refresh />
-        </IconButton>
-        <Grid container spacing={2} className="slider-container">
-          <Grid item>
-            <VolumeDown />
-          </Grid>
-          <Grid item xs>
-            <Slider
-              value={volume}
-              onChange={this.handleVolumeChange}
-              aria-labelledby={t('change-volume')}
-              min={0}
-              max={1}
-              step={0.05}
-            />
-          </Grid>
-          <Grid item>
-            <VolumeUp />
-          </Grid>
-        </Grid>
         {lost ? (
           <AfterPlay
             animationData={onLose}
@@ -173,44 +149,70 @@ class Player extends React.Component {
             buttonText={t('play-again')}
           />
         ) : (
-          <div className="buttons-container">
-            <div className="buttons-row">
-              <Button
-                variant="outlined"
-                color="primary"
-                className="button"
-                disabled={this.datoms[0].disabled}
-                onClick={() => this.handleAnswerClick(0)}>
-                {this.datoms[0].name[t('lang-code')]}
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                className="button"
-                disabled={this.datoms[1].disabled}
-                onClick={() => this.handleAnswerClick(1)}>
-                {this.datoms[1].name[t('lang-code')]}
-              </Button>
+          <React.Fragment>
+            <IconButton
+              className="reset-button"
+              aria-label={t('reset')}
+              onClick={this.handleResetClick}>
+              <Refresh />
+            </IconButton>
+            <Grid container spacing={2} className="slider-container">
+              <Grid item>
+                <VolumeDown />
+              </Grid>
+              <Grid item xs>
+                <Slider
+                  value={volume}
+                  onChange={this.handleVolumeChange}
+                  aria-labelledby={t('change-volume')}
+                  min={0}
+                  max={1}
+                  step={0.05}
+                />
+              </Grid>
+              <Grid item>
+                <VolumeUp />
+              </Grid>
+            </Grid>
+            <div className="buttons-container">
+              <div className="buttons-row">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className="button"
+                  disabled={this.datoms[0].disabled}
+                  onClick={() => this.handleAnswerClick(0)}>
+                  {this.datoms[0].name[t('lang-code')]}
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className="button"
+                  disabled={this.datoms[1].disabled}
+                  onClick={() => this.handleAnswerClick(1)}>
+                  {this.datoms[1].name[t('lang-code')]}
+                </Button>
+              </div>
+              <div className="buttons-row">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className="button"
+                  disabled={this.datoms[2].disabled}
+                  onClick={() => this.handleAnswerClick(2)}>
+                  {this.datoms[2].name[t('lang-code')]}
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className="button"
+                  disabled={this.datoms[3].disabled}
+                  onClick={() => this.handleAnswerClick(3)}>
+                  {this.datoms[3].name[t('lang-code')]}
+                </Button>
+              </div>
             </div>
-            <div className="buttons-row">
-              <Button
-                variant="outlined"
-                color="primary"
-                className="button"
-                disabled={this.datoms[2].disabled}
-                onClick={() => this.handleAnswerClick(2)}>
-                {this.datoms[2].name[t('lang-code')]}
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                className="button"
-                disabled={this.datoms[3].disabled}
-                onClick={() => this.handleAnswerClick(3)}>
-                {this.datoms[3].name[t('lang-code')]}
-              </Button>
-            </div>
-          </div>
+          </React.Fragment>
         )}
         <ReactAudioPlayer
           autoPlay

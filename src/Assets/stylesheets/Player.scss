@@ -30,10 +30,10 @@
     animation:spin 0.5s linear;
   }
   .slider-container {
-    width: 40%;
+    width: 30%;
     padding: 30px 0;
     @media only screen and (max-width: 768px) {
-      width: 55%;
+      width: 45%;
     }
   }
   .buttons-container {
@@ -46,6 +46,7 @@
       .button {
         min-width: 9rem;
         margin: 10px 15px;
+        font-size: 16px;
       }
     }
   }
