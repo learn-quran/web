@@ -37,7 +37,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const { firebase } = this.props;
+    const { firebase, i18n } = this.props;
     const language = localStorage.getItem('language') || 'en';
     document.documentElement.lang = language;
     document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
@@ -53,6 +53,19 @@ class App extends React.Component {
           this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
             firebase.isLoggedIn = !!user;
             this.setState({ loading: false, user: user ? user : null });
+            if (user) {
+              firebase.getUser().then(({ language: userLanguage }) => {
+                if (
+                  language !== userLanguage ||
+                  i18n.language !== userLanguage
+                ) {
+                  i18n.changeLanguage(userLanguage).then(() => {
+                    localStorage.setItem('language', userLanguage);
+                    window.location.reload();
+                  });
+                }
+              });
+            }
           });
         } else {
           this.connectionTimer = setTimeout(
