@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
 import { toast } from 'react-toastify';
-import { Button, Grid, Slider, IconButton } from '@material-ui/core';
+import { Button, Grid, Slider, IconButton, Tooltip } from '@material-ui/core';
 import { VolumeDown, VolumeUp, Refresh } from '@material-ui/icons';
 
 import {
@@ -93,6 +93,7 @@ class Player extends React.Component {
       this.setState({
         won: true,
       });
+      this.audioComponent.audioEl.pause();
       firebase
         .updateUserPoints(this.points)
         .then(() => {
@@ -114,6 +115,7 @@ class Player extends React.Component {
       this.points -= 1;
       if (this.points === 0) {
         this.setState({ lost: true });
+        this.audioComponent.audioEl.pause();
       } else {
         this.forceUpdate();
       }
@@ -150,12 +152,14 @@ class Player extends React.Component {
           />
         ) : (
           <React.Fragment>
-            <IconButton
-              className="reset-button"
-              aria-label={t('reset')}
-              onClick={this.handleResetClick}>
-              <Refresh />
-            </IconButton>
+            <Tooltip title={t('reset')} placement="top">
+              <IconButton
+                className="reset-button"
+                aria-label={t('reset')}
+                onClick={this.handleResetClick}>
+                <Refresh />
+              </IconButton>
+            </Tooltip>
             <Grid container spacing={2} className="slider-container">
               <Grid item>
                 <VolumeDown />
