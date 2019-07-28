@@ -152,6 +152,9 @@ class Player extends React.Component {
           />
         ) : (
           <React.Fragment>
+            <div className={`warning ${t('lang-code')}`}>
+              {t('please-click-the-button-below-if-no-audio-is-playing')}
+            </div>
             <Tooltip title={t('reset')} placement="top">
               <IconButton
                 className="reset-button"
