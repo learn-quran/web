@@ -12,7 +12,7 @@
   "auth/user-disabled": "تم الغاء تفعيل حسابك",
   "auth/user-not-found": "اسم المستخدم او كلمة المرور غير صحيحان",
   "check-your-internet-connection": "تأكد من الإنترنت الخاص بك",
-  "username-already-exists": "اسم المستخدم موجود مستبقًا",
+  "username-already-exists": "اسم المستخدم موجود مسبقًا",
   "auth/invalid-email": "صيغة البريد الإلكتروني خاطئة",
   "auth/weak-password": "كلمة المرور ضعيفة جدًا",
   "auth/wrong-password": "اسم المستخدم او كلمة المرور غير صحيحان",
@@ -70,6 +70,7 @@
   "try-again": "حاول مُجددًا",
   "reset": "إعادة",
   "change-volume": "تعديل مُستوى الصوت",
-  "play-again": "العب مرّة أُخرى",
+  "play-again": "إلعب مرّة أُخرى",
+  "log-out": "تسجيل الخروج",
   "":""
 }
