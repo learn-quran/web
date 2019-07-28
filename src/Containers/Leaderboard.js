@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { ScaleLoader } from 'react-spinners';
 
-import { withTranslation } from 'react-i18next';
-
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Tooltip,
+  Fab,
+} from '@material-ui/core';
+import { Home } from '@material-ui/icons';
 
 import * as moment from 'moment';
 import 'moment/locale/ar';
 
+import { withTranslation } from 'react-i18next';
 import { withFirebase } from '../Firebase';
 import { objectToArray } from '../Helpers';
 
@@ -80,6 +85,15 @@ class Leaderboard extends React.Component {
             </TableBody>
           </Table>
         </div>
+        <Tooltip title={t('resume-playing')} placement="top">
+          <Fab
+            size="small"
+            className="home-fab"
+            aria-label={t('home')}
+            onClick={() => this.props.history.push('/')}>
+            <Home />
+          </Fab>
+        </Tooltip>
       </div>
     );
   }
@@ -87,6 +101,7 @@ class Leaderboard extends React.Component {
 Leaderboard.propTypes = {
   firebase: PropTypes.object,
   t: PropTypes.func,
+  history: PropTypes.object,
 };
 
-export default withTranslation()(withFirebase(Leaderboard));
+export default withRouter(withTranslation()(withFirebase(Leaderboard)));
