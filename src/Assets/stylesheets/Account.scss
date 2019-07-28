@@ -38,9 +38,15 @@
                 .text-field {
                   .MuiFormLabel-root, .MuiInputBase-root {
                     color: black;
+                    &.Mui-focused .MuiOutlinedInput-notchedOutline{
+                      border-color: #B9994E;
+                    }
+                    .MuiOutlinedInput-notchedOutline {
+                      border-color: black;
+                    }
                   }
-                  .MuiOutlinedInput-notchedOutline {
-                    border-color: black;
+                  .MuiFormLabel-root.Mui-focused {
+                    color: #B9994E;
                   }
                 }
               }
