@@ -216,7 +216,7 @@ class Account extends React.Component {
                 <Button
                   onClick={logout}
                   color="primary"
-                  variant="outlined"
+                  variant="contained"
                   className="logout-button">
                   {t('log-out')}
                 </Button>
