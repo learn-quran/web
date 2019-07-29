@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import Login from './Login';
 import Signup from './Signup';
@@ -8,7 +8,7 @@ import Signup from './Signup';
 import { logo } from '../Assets/Images';
 
 import '../Assets/stylesheets/Landing.scss';
-import { useTranslation } from 'react-i18next';
+import About from '../Components/About';
 
 const Landing = () => {
   const [isLogin, showLogin] = useState(false);
@@ -65,6 +65,7 @@ const Landing = () => {
           />
         )}
       </div>
+      <About />
     </div>
   );
 };
