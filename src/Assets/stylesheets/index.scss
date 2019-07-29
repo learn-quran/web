@@ -75,6 +75,55 @@ html {
         }
       }
     }
+    .info-icon {
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+    }
+    .about {
+      display: flex;
+      position: relative;
+      justify-content: space-between;
+      padding: 5px 0 15px;
+      @media only screen and (max-width: 850px) {
+        align-items: center;
+        flex-direction: column;
+      }
+      .author {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        text-align: center;
+        width: 30%;
+        padding: 12px 0;
+        border-width: 0.1;
+        border-radius: 8;
+        border-color: '#ccc';
+        -webkit-box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.5);
+        -moz-box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.5);
+        box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.5);
+        @media only screen and (max-width: 850px) {
+          width: 90%;
+          margin: 10px 0; 
+        }
+        .name {
+          font-size: 1.2em;
+          padding: 15px 8px;
+        }
+        .icons-container {
+          padding: 8px 0 20px;
+          display: flex;
+          justify-content: space-evenly;
+          width: 100%;
+          svg {
+            cursor: pointer;
+          }
+        }
+      }
+    }
     .en {
       font-family: 'Rajdhani', sans-serif;
     }
