@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import app from 'firebase/app';
+import moment from 'moment';
 
 // Firebase dependencies
 import 'firebase/auth';
@@ -70,6 +71,7 @@ class Firebase {
                   username: username,
                   email: email,
                   language: language,
+                  createdAt: moment(),
                   points: 0,
                   lastPlayed: 'never-played',
                   isEmailVerified: false,
