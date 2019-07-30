@@ -67,6 +67,9 @@ class Player extends React.Component {
       });
   };
   initalize = (reset = false) => {
+    this.datom = getRandomDatom();
+    this.datoms = getFourRandomDatoms(this.datom);
+    this.points = 3;
     if (reset) {
       this.setState({
         url: '',
@@ -75,9 +78,6 @@ class Player extends React.Component {
       });
       this.getAsset();
     }
-    this.datom = getRandomDatom();
-    this.datoms = getFourRandomDatoms(this.datom);
-    this.points = 3;
   };
 
   handleResetClick = () => {

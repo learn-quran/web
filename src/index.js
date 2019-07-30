@@ -37,8 +37,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    if (!localStorage.getItem('language'))
+      localStorage.setItem('language', 'en');
     const { firebase, i18n } = this.props;
-    const language = localStorage.getItem('language') || 'en';
+    const language = localStorage.getItem('language');
     document.documentElement.lang = language;
     document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
     document.body.classList.remove(language === 'en' ? 'rtl' : 'ltr');
