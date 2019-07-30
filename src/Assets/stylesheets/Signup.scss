@@ -1,52 +1,44 @@
-.signup-content {
-  width: 100%;
-  height: 100%;
+form {
   display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  background-image: url('https://scontent.famm3-2.fna.fbcdn.net/v/t1.15752-9/67160202_663296140851892_8869816908937953280_n.jpg?_nc_cat=100&_nc_eui2=AeH6pTdvgtULvFWzFd_2_8bIhGzpKEsU1ehU9R2t-6hl_AX21nyLTNdBqova9tacaFYYHkWEUp0csL4oLgJ6oLlmJkO_yO2Box5EvCMWSdl4bg&_nc_oc=AQl7bOzfl6GcZt8tCT-_wq9mgPXrGvToB5NkQXoiCBihgddA5HwZL4qh96NtwVXkbPU&_nc_ht=scontent.famm3-2.fna&oh=63250f403c97d5658aeec37d03733f9f&oe=5DE211B5');
-  background-repeat: no-repeat;
-  background-position: bottom;
-  background-size: cover;
-  form {
+  width: 26rem;
+  background-color: rgba(79, 79, 79, 0.8);
+  border-radius: 13px;
+  .form-container {
     display: flex;
-    width: 26rem;
-    background-color: rgba(79, 79, 79, 0.8);
-    border-radius: 13px;
-    .form-container {
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    padding: 2px 16px;
+    width: 100%;
+    &.login {
+      justify-content: center;
+    }
+    .text-field-container {
       display: flex;
-      align-items: center;
-      justify-content: space-around;
       flex-direction: column;
-      padding: 2px 16px;
       width: 100%;
-      &.login {
+      .text-field {
+        width: 100%;
+      }
+    }
+    .buttons-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 30px 0;
+      button {
+        width: 80%;
+        padding: 8px 18px;
+        align-self: center;
+      }
+      .inner-buttons-container {
+        display: flex;
         justify-content: center;
-      }
-      .text-field-container {
-        display: flex;
         flex-direction: column;
+        align-items: center;
         width: 100%;
-        .text-field {
-          width: 100%;
-        }
-      }
-      .buttons-container {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin: 30px 0;
-        .button {
-          width: 80%;
-          padding: 8px 18px;
-          align-self: center;
-        }
-        .inner-buttons-container {
-          display: flex;
-          justify-content: center;
-          width: 100%;
-          margin: 24px 0;
+        button {
+          margin: 8px 0;
         }
       }
     }
