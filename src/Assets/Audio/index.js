@@ -15,7 +15,7 @@ function getFourRandomDatoms(datom) {
   let names = [];
   const values = Object.values(data);
   for (let _ = 0; _ < 3; _++) {
-    const currVal = values[getRandomInt(values.length)]
+    const currVal = values[getRandomInt(values.length)];
     if (currVal.index === datom.index) {
       _--;
       continue;
