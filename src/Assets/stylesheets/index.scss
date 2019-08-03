@@ -6,6 +6,9 @@
 }
 html {
   font-size: 100%;
+  .Toastify__toast-container.ar > .Toastify__toast {
+    direction: rtl;
+  }
   body {
     margin: 0;
     font-size: 100%;
@@ -53,11 +56,11 @@ html {
         }
         .fab-action-1 {
           bottom: 3rem;
-          left: 1rem;
+          left: -0.5rem;
         }
         .fab-action-2 {
-          bottom: 1rem;
-          left: 4rem;
+          bottom: 6.5rem;
+          left: -0.5rem;
         }
       }
     }

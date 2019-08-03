@@ -53,7 +53,7 @@ const FAB = ({ firebase, history, user }) => {
         <React.Fragment>
           <Tooltip title={t('language')} placement="top">
             <Fab
-              size="medium"
+              size="small"
               className="fab-action fab-action-1"
               aria-label={t('language')}
               onClick={handleClick}>
@@ -75,7 +75,7 @@ const FAB = ({ firebase, history, user }) => {
         </React.Fragment>
         <Tooltip title={t('leaderboard')} placement="top">
           <Fab
-            size="medium"
+            size="small"
             className="fab-action fab-action-2"
             aria-label={t('leaderboard')}
             onClick={() => history.push('/leaderboard')}>
