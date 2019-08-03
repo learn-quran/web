@@ -16,11 +16,20 @@ html {
       position: fixed;
       bottom: 20px;
       left: 20px;
+      @media only screen and (max-width: 850px) {
+        position: absolute;
+        top: 20px;
+        bottom: initial;
+      }
       .main-fab {
         position: absolute !important;
         bottom: -0.5rem;
         left: -0.5rem;
         transition: all 0.3s ease;
+        @media only screen and (max-width: 850px) {
+          bottom: initial;
+          top: -0.5rem;
+        }
       }
       .fab-wheel {
         position: absolute;
@@ -29,6 +38,10 @@ html {
         transition: all 0.3s ease;
         transform-origin: bottom left;
         transform: scale(0);
+        @media only screen and (max-width: 850px) {
+          bottom: initial;
+          top: 0;
+        }
         &.open {
           transform: scale(1);
           .fab-action {
@@ -57,10 +70,18 @@ html {
         .fab-action-1 {
           bottom: 3rem;
           left: -0.5rem;
+          @media only screen and (max-width: 850px) {
+            bottom: initial;
+            top: 3rem;
+          }
         }
         .fab-action-2 {
           bottom: 6.5rem;
           left: -0.5rem;
+          @media only screen and (max-width: 850px) {
+            bottom: initial;
+            top: 6.5rem;
+          }
         }
       }
     }
