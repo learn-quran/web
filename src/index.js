@@ -105,7 +105,8 @@ class App extends React.Component {
               <ThemeProvider theme={theme}>
                 <Navigation user={user} />
                 <ToastContainer
-                  position={language === 'en' ? 'top-right' : 'top-left'}
+                  position="top-right"
+                  className={this.props.t('lang-code')}
                 />
                 <FAB user={user} />
               </ThemeProvider>
