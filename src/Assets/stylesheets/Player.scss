@@ -12,8 +12,8 @@
     top: 15px;
     left: 10px;
     @media only screen and (max-width: 768px) {
-      left: 50%;
-      transform: translateX(-50%);
+      position: relative;
+      padding-bottom: 15px;
     }
     .your-points {
       padding: 4px 15px;
