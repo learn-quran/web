@@ -148,7 +148,7 @@ class Account extends React.Component {
       <React.Fragment>
         <Tooltip title={t('account')} placement="top">
           <Fab
-            size="medium"
+            size="small"
             className="fab-action fab-action-3"
             aria-label={t('account')}
             onClick={handleOpenClick}>
