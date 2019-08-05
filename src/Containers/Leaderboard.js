@@ -32,6 +32,7 @@ class Leaderboard extends React.Component {
     };
   }
   componentDidMount() {
+    document.title = this.props.t('leaderboard');
     this._mounted = true;
     const { firebase } = this.props;
     firebase
