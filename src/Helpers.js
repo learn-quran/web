@@ -1,7 +1,7 @@
 const objectToArray = object => {
   let array = [];
   for (let values of Object.values(object)) {
-    if (values.id || values.uid) array.push(values);
+    if (Object.values(values).length >= 1) array.push(values);
     else continue;
   }
   return array;

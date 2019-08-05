@@ -2,24 +2,23 @@ import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { ScaleLoader } from 'react-spinners';
 
-import { createMuiTheme } from '@material-ui/core/styles';
 import { StylesProvider, ThemeProvider, jssPreset } from '@material-ui/styles';
 import { create } from 'jss';
 import rtl from 'jss-rtl';
 
 import Firebase, { FirebaseContext } from './Firebase';
 import { Navigation } from './Navigation';
-import NavBar from './Components/NavBar';
-import NoConnection from './Containers/NoConnection';
-
+import MonitorConnection from './Containers/MonitorConnection';
 import './i18n';
 import { withTranslation } from 'react-i18next';
+import * as moment from 'moment';
 
 import PropTypes from 'prop-types';
 import * as serviceWorker from './serviceWorker';
-import './Assets/stylesheets/index.scss';
+import './Assets/StyleSheets/index.scss';
+import { getTheme } from './Theme';
+import FAB from './Components/FAB';
 
 class App extends React.Component {
   static propTypes = {
@@ -30,29 +29,52 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      connected: false,
+      noConnection: false,
       user: null,
-      loading: 0,
+      loading: true,
     };
+    this.connectedRef = props.firebase.database.ref('.info/connected');
   }
 
   componentDidMount() {
-    const { firebase } = this.props;
-    const language = localStorage.getItem('language') || 'en';
+    document.title = this.props.t('learn-quran');
+    if (!localStorage.getItem('language'))
+      localStorage.setItem('language', 'en');
+    const { firebase, i18n } = this.props;
+    const language = localStorage.getItem('language');
     document.documentElement.lang = language;
     document.body.classList.add(language === 'en' ? 'ltr' : 'rtl');
     document.body.classList.remove(language === 'en' ? 'rtl' : 'ltr');
     document.body.setAttribute('dir', language === 'en' ? 'ltr' : 'rtl');
+    moment.locale(language);
     setTimeout(() => {
-      this.connectedRef = firebase.database.ref('.info/connected');
       this.connectedRef.on('value', snap => {
         const connected = snap.val();
-        this.setState({ connected, loading: connected ? 1 : -1 });
+        clearTimeout(this.connectionTimer);
+        this.setState({ loading: true, noConnection: false });
         if (connected === true) {
           this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
             firebase.isLoggedIn = !!user;
-            this.setState({ loading: 2, user: user ? user : null });
+            this.setState({ loading: false, user: user ? user : null });
+            if (user) {
+              firebase.getUser().then(({ language: userLanguage }) => {
+                if (
+                  language !== userLanguage ||
+                  i18n.language !== userLanguage
+                ) {
+                  i18n.changeLanguage(userLanguage).then(() => {
+                    localStorage.setItem('language', userLanguage);
+                    window.location.reload();
+                  });
+                }
+              });
+            }
           });
+        } else {
+          this.connectionTimer = setTimeout(
+            () => this.setState({ noConnection: true, loading: false }),
+            5000,
+          );
         }
       });
     }, 1000);
@@ -63,7 +85,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { user, loading, connected } = this.state;
+    const { user, loading, noConnection } = this.state;
     const language = localStorage.getItem('language') || 'en';
     const jss = create(
       language === 'en'
@@ -74,32 +96,25 @@ class App extends React.Component {
             plugins: [...jssPreset().plugins, rtl()],
           },
     );
-    const theme = createMuiTheme({
-      direction: language === 'en' ? 'ltr' : 'rtl',
-    });
+    const theme = getTheme(language);
 
-    return loading === 0 ? (
-      <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
-    ) : !connected && loading === -1 ? (
-      <NoConnection />
-    ) : loading === 1 ? (
-      <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
-    ) : (
-      <Router>
-        <Fragment>
-          <StylesProvider jss={jss}>
-            <ThemeProvider theme={theme}>
-              <NavBar user={user} />
-              <div className="container">
+    return (
+      <MonitorConnection noConnection={noConnection} loading={loading}>
+        <Router>
+          <Fragment>
+            <StylesProvider jss={jss}>
+              <ThemeProvider theme={theme}>
                 <Navigation user={user} />
                 <ToastContainer
-                  position={language === 'en' ? 'top-right' : 'top-left'}
+                  position="top-right"
+                  className={this.props.t('lang-code')}
                 />
-              </div>
-            </ThemeProvider>
-          </StylesProvider>
-        </Fragment>
-      </Router>
+                <FAB user={user} />
+              </ThemeProvider>
+            </StylesProvider>
+          </Fragment>
+        </Router>
+      </MonitorConnection>
     );
   }
 }

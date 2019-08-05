@@ -44,7 +44,7 @@ const PasswordInputDialog = ({
   return (
     <Fragment>
       <Button
-        variant={variant || 'outlined'}
+        variant={variant || 'contained'}
         color="primary"
         onClick={handleClickOpen}>
         {title}

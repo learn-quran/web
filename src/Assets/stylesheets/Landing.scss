@@ -1,0 +1,123 @@
+.landing-content {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: relative;
+  justify-content: space-evenly;
+  background-image: url('../Images/background.jpg');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+  @media only screen and (max-width: 850px) {
+    flex-direction: column;
+    height: initial;
+  }
+  &.ar-bg {
+    background-image: url('../Images/background-ar.jpg');
+  }
+  .side {
+    width: 50%;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    @media only screen and (max-width: 850px) {
+      width: 100%;
+    }
+  }
+  .left {
+    flex-direction: column;
+    justify-content: flex-start;
+    .logo-container {
+      padding: 5% 0 3% 0; 
+      .logo {
+        width: 204px;
+        height: 204px;
+      }
+    }
+    .text-container {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: white;
+      font-size: 1em;
+      .header {
+        font-size: 1.2em;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: rgb(189, 160, 93);
+        text-align: center;
+      }
+      .sections {
+        padding-top: 3%;
+        .section {
+          padding: 3% 0;
+          .header {
+            font-size: 1.1em;
+            color: white;
+            text-align: start;
+            text-decoration-line: underline;
+            span {
+              font-size: 1.1em;
+            }
+          }
+          .ascii {
+            font-family: initial;
+            font-weight: 100;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .right {
+    @media only screen and (max-width: 850px) {
+      margin: 30px 0;
+    }
+    form {
+      display: flex;
+      width: 26rem;
+      background-color: rgba(79, 79, 79, 0.8);
+      border-radius: 13px;
+      .form-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        padding: 2px 16px;
+        width: 100%;
+        &.login {
+          justify-content: center;
+        }
+        .text-field-container {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          .text-field {
+            width: 100%;
+          }
+        }
+        .buttons-container {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin: 30px 0;
+          .button {
+            width: 80%;
+            padding: 8px 18px;
+            align-self: center;
+          }
+          .inner-buttons-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 24px 0;
+          }
+        }
+      }
+    }
+  }
+}

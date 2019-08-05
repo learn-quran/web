@@ -4,37 +4,157 @@
 * {
   box-sizing: border-box;
 }
-
-body {
-  margin: 0;
-  .nav {
-    width: 100vw;
-    display: flex;
-    justify-content: space-between;
-    -webkit-box-shadow: 1.8px 3px 8px -5px rgba(0,0,0,0.74);
-    -moz-box-shadow: 1.8px 3px 8px -5px rgba(0,0,0,0.74);
-    box-shadow: 1.8px 3px 8px -5px rgba(0,0,0,0.74);
-    .nav-content {
-      position: relative;
-      padding: 25px 12px 18px;
-      display: flex;
-      .nav-item {
-        padding: 0 10px;
-        a {
-          text-decoration: none;
+html {
+  font-size: 100%;
+  .Toastify__toast-container.ar > .Toastify__toast {
+    direction: rtl;
+  }
+  body {
+    margin: 0;
+    font-size: 100%;
+    .landing-content ~ .fab {
+      @media only screen and (max-width: 850px) {
+        position: absolute;
+        top: 20px;
+        bottom: initial;
+        .main-fab {
+          bottom: initial;
+          top: -0.5rem;
+        }
+        .fab-wheel {
+          bottom: initial;
+          top: 0;
+          .fab-action-1 {
+            bottom: initial;
+            top: 3rem;
+          }
+          .fab-action-2 {
+            bottom: initial;
+            top: 6.5rem;
+          }
         }
       }
     }
-    .language-switch {
-      padding: 16px 12px 13px;
-      .language-button {
-        text-transform: none !important;
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      .main-fab {
+        position: absolute !important;
+        bottom: -0.5rem;
+        left: -0.5rem;
+        transition: all 0.3s ease;
+      }
+      .fab-wheel {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transition: all 0.3s ease;
+        transform-origin: bottom left;
+        transform: scale(0);
+        &.open {
+          transform: scale(1);
+          .fab-action {
+            opacity: 1;
+          }
+        }
+        &.signed-in {
+          .fab-action-1 {
+            bottom: 4rem;
+            left: -0.5rem;
+          }
+          .fab-action-2 {
+            bottom: 2.5rem;
+            left: 2.5rem;
+          }
+          .fab-action-3 {
+            bottom: 0;
+            left: 5rem;
+          }
+        }
+        .fab-action {
+          position: absolute !important;
+          transition: all 1s ease;
+          opacity: 0;
+        }
+        .fab-action-1 {
+          bottom: 3rem;
+          left: -0.5rem;
+        }
+        .fab-action-2 {
+          bottom: 6.5rem;
+          left: -0.5rem;
+        }
       }
     }
-  }
-  .container {
-    display: flex;
-    height: 90vh;
-    width: 100vw;
+    .animation-container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      background-color: #4F4F4F;
+      .animation {
+        width: 35%;
+        @media only screen and (max-width: 850px) {
+          width: 75%;
+        }
+      }
+    }
+    .info-icon {
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+    }
+    .about {
+      display: flex;
+      position: relative;
+      justify-content: space-between;
+      padding: 5px 0 15px;
+      @media only screen and (max-width: 850px) {
+        align-items: center;
+        flex-direction: column;
+      }
+      .author {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        text-align: center;
+        width: 30%;
+        padding: 12px 0;
+        border-width: 0.1;
+        border-radius: 8;
+        border-color: '#ccc';
+        -webkit-box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.5);
+        -moz-box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.5);
+        box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.5);
+        @media only screen and (max-width: 850px) {
+          width: 90%;
+          margin: 10px 0; 
+        }
+        .name {
+          font-size: 1.2em;
+          padding: 15px 8px;
+        }
+        .icons-container {
+          padding: 8px 0 20px;
+          display: flex;
+          justify-content: space-evenly;
+          width: 100%;
+          svg {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .en {
+      font-family: 'Rajdhani', sans-serif;
+    }
+    .ar {
+      font-family: 'Amiri', serif;
+    }
   }
 }

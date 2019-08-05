@@ -1,19 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { ScaleLoader } from 'react-spinners';
 
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Tooltip,
+  Fab,
+} from '@material-ui/core';
+import { Home } from '@material-ui/icons';
+
+import * as moment from 'moment';
+import 'moment/locale/ar';
+
 import { withTranslation } from 'react-i18next';
-
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
 import { withFirebase } from '../Firebase';
 import { objectToArray } from '../Helpers';
 
-import '../Assets/stylesheets/Leaderboard.scss';
+import '../Assets/StyleSheets/Leaderboard.scss';
 
 class Leaderboard extends React.Component {
   constructor(props) {
@@ -24,6 +32,7 @@ class Leaderboard extends React.Component {
     };
   }
   componentDidMount() {
+    document.title = this.props.t('leaderboard');
     this._mounted = true;
     const { firebase } = this.props;
     firebase
@@ -47,12 +56,6 @@ class Leaderboard extends React.Component {
       <ScaleLoader sizeUnit={'px'} size={150} color={'#123abc'} loading />
     ) : (
       <div className="leaderboard-content">
-        {!!currentUser.uid && (
-          <div className="your-points-container">
-            <div className="your-points">{t('your-points')}</div>
-            <div className="points">{currentUser.points}</div>
-          </div>
-        )}
         <div className="table-container">
           <Table>
             <TableHead>
@@ -73,12 +76,25 @@ class Leaderboard extends React.Component {
                     {item.username}
                   </TableCell>
                   <TableCell align="center">{item.points}</TableCell>
-                  <TableCell align="center">{item.lastPlayed}</TableCell>
+                  <TableCell align="center">
+                    {item.lastPlayed === 'never-played'
+                      ? t(item.lastPlayed)
+                      : moment(item.lastPlayed).fromNow()}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </div>
+        <Tooltip title={t('resume-playing')} placement="top">
+          <Fab
+            size="small"
+            className="home-fab"
+            aria-label={t('home')}
+            onClick={() => this.props.history.push('/')}>
+            <Home />
+          </Fab>
+        </Tooltip>
       </div>
     );
   }
@@ -86,6 +102,7 @@ class Leaderboard extends React.Component {
 Leaderboard.propTypes = {
   firebase: PropTypes.object,
   t: PropTypes.func,
+  history: PropTypes.object,
 };
 
-export default withTranslation()(withFirebase(Leaderboard));
+export default withRouter(withTranslation()(withFirebase(Leaderboard)));

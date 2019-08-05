@@ -1,8 +1,9 @@
 import React from 'react';
+import * as moment from 'moment';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
 import { toast } from 'react-toastify';
-import { Button, Grid, Slider, IconButton } from '@material-ui/core';
+import { Button, Grid, Slider, IconButton, Tooltip } from '@material-ui/core';
 import { VolumeDown, VolumeUp, Refresh } from '@material-ui/icons';
 
 import {
@@ -12,7 +13,7 @@ import {
 } from '../Assets/Audio';
 import { onWin, onLose } from '../Assets/Animations';
 
-import '../Assets/stylesheets/Player.scss';
+import '../Assets/StyleSheets/Player.scss';
 import { withTranslation } from 'react-i18next';
 import { withFirebase } from '../Firebase';
 import AfterPlay from '../Components/AfterPlay';
@@ -30,11 +31,17 @@ class Player extends React.Component {
       volume: 0.5,
       won: false,
       lost: false,
+      user: {},
     };
     this.initalize();
   }
 
   componentDidMount() {
+    this.getAsset();
+    this.persistUserInfo();
+  }
+
+  getAsset = () => {
     this.props.firebase
       .getAsset(getRandomAsset(this.datom))
       .then(url => this.setState({ url }))
@@ -45,22 +52,40 @@ class Player extends React.Component {
           ),
         );
       });
-  }
-
+  };
+  persistUserInfo = () => {
+    const { firebase, t } = this.props;
+    firebase
+      .getUser()
+      .then(user => {
+        this.setState({ user: { ...user } });
+      })
+      .catch(() => {
+        toast.error(
+          t('something-went-wrong-please-close-the-tab-and-try-again'),
+        );
+      });
+  };
   initalize = (reset = false) => {
+    this.datom = getRandomDatom();
+    this.datoms = getFourRandomDatoms(this.datom);
+    this.points = 3;
     if (reset) {
       this.setState({
         url: '',
         won: false,
         lost: false,
       });
+      this.getAsset();
     }
-    this.datom = getRandomDatom();
-    this.datoms = getFourRandomDatoms(this.datom);
-    this.points = 3;
   };
 
-  handleResetClick = () => (this.audioComponent.audioEl.currentTime = 0);
+  handleResetClick = () => {
+    const el = this.audioComponent.audioEl;
+    el.pause();
+    el.currentTime = 0;
+    el.play();
+  };
   handleVolumeChange = (_, volume) => this.setState({ volume });
   handleAnswerClick = index => {
     const { t, firebase } = this.props;
@@ -68,15 +93,21 @@ class Player extends React.Component {
       this.setState({
         won: true,
       });
+      this.audioComponent.audioEl.pause();
       firebase
         .updateUserPoints(this.points)
         .then(() => {
           toast.success(
             t('congratulations-you-earned-n-points', { points: this.points }),
           );
+          this.persistUserInfo();
         })
         .catch(() => {
-          toast.error(t('there-was-an-error-please-contact-us-to-fix-it'));
+          toast.error(
+            t(
+              'there-was-an-error-adding-your-points-please-contact-us-to-fix-it',
+            ),
+          );
         });
     } else {
       toast.warn(t('try-again'));
@@ -84,41 +115,29 @@ class Player extends React.Component {
       this.points -= 1;
       if (this.points === 0) {
         this.setState({ lost: true });
+        this.audioComponent.audioEl.pause();
       } else {
         this.forceUpdate();
       }
     }
+    firebase.updateUserLastPlayed(
+      moment()
+        .locale('en')
+        .format(),
+    );
   };
 
   render() {
-    const { volume, url, lost, won } = this.state;
+    const { volume, url, lost, won, user } = this.state;
     const { t } = this.props;
     return (
       <div className="player-content">
-        <IconButton
-          className="reset-button"
-          aria-label={t('reset')}
-          onClick={this.handleResetClick}>
-          <Refresh />
-        </IconButton>
-        <Grid container spacing={2} className="slider-container">
-          <Grid item>
-            <VolumeDown />
-          </Grid>
-          <Grid item xs>
-            <Slider
-              value={volume}
-              onChange={this.handleVolumeChange}
-              aria-labelledby={t('change-volume')}
-              min={0}
-              max={1}
-              step={0.05}
-            />
-          </Grid>
-          <Grid item>
-            <VolumeUp />
-          </Grid>
-        </Grid>
+        {!!user.uid && (
+          <div className="your-points-container">
+            <div className="your-points">{t('your-points')}</div>
+            <div className="points">{user.points}</div>
+          </div>
+        )}
         {lost ? (
           <AfterPlay
             animationData={onLose}
@@ -132,44 +151,75 @@ class Player extends React.Component {
             buttonText={t('play-again')}
           />
         ) : (
-          <div className="buttons-container">
-            <div className="buttons-row">
-              <Button
-                variant="outlined"
-                color="primary"
-                className="button"
-                disabled={this.datoms[0].disabled}
-                onClick={() => this.handleAnswerClick(0)}>
-                {this.datoms[0].name[t('lang-code')]}
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                className="button"
-                disabled={this.datoms[1].disabled}
-                onClick={() => this.handleAnswerClick(1)}>
-                {this.datoms[1].name[t('lang-code')]}
-              </Button>
+          <React.Fragment>
+            <div className={`warning ${t('lang-code')}`}>
+              {t('please-click-the-button-below-if-no-audio-is-playing')}
             </div>
-            <div className="buttons-row">
-              <Button
-                variant="outlined"
-                color="primary"
-                className="button"
-                disabled={this.datoms[2].disabled}
-                onClick={() => this.handleAnswerClick(2)}>
-                {this.datoms[2].name[t('lang-code')]}
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                className="button"
-                disabled={this.datoms[3].disabled}
-                onClick={() => this.handleAnswerClick(3)}>
-                {this.datoms[3].name[t('lang-code')]}
-              </Button>
+            <Tooltip title={t('reset')} placement="top">
+              <IconButton
+                className="reset-button"
+                aria-label={t('reset')}
+                onClick={this.handleResetClick}>
+                <Refresh />
+              </IconButton>
+            </Tooltip>
+            <Grid container spacing={2} className="slider-container">
+              <Grid item>
+                <VolumeDown />
+              </Grid>
+              <Grid item xs>
+                <Slider
+                  value={volume}
+                  onChange={this.handleVolumeChange}
+                  aria-labelledby={t('change-volume')}
+                  min={0}
+                  max={1}
+                  step={0.05}
+                />
+              </Grid>
+              <Grid item>
+                <VolumeUp />
+              </Grid>
+            </Grid>
+            <div className="buttons-container">
+              <div className="buttons-row">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className="button"
+                  disabled={this.datoms[0].disabled}
+                  onClick={() => this.handleAnswerClick(0)}>
+                  {this.datoms[0].name[t('lang-code')]}
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className="button"
+                  disabled={this.datoms[1].disabled}
+                  onClick={() => this.handleAnswerClick(1)}>
+                  {this.datoms[1].name[t('lang-code')]}
+                </Button>
+              </div>
+              <div className="buttons-row">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className="button"
+                  disabled={this.datoms[2].disabled}
+                  onClick={() => this.handleAnswerClick(2)}>
+                  {this.datoms[2].name[t('lang-code')]}
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className="button"
+                  disabled={this.datoms[3].disabled}
+                  onClick={() => this.handleAnswerClick(3)}>
+                  {this.datoms[3].name[t('lang-code')]}
+                </Button>
+              </div>
             </div>
-          </div>
+          </React.Fragment>
         )}
         <ReactAudioPlayer
           autoPlay

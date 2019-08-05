@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
@@ -9,7 +9,7 @@ import { TextField, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
 
-import '../Assets/stylesheets/Signup.scss';
+import '../Assets/StyleSheets/Signup.scss';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -30,8 +30,13 @@ const SignupSchema = Yup.object().shape({
   ),
 });
 
-const Signup = ({ firebase, history }) => {
-  const [isSubmitting, changeIsSubmitting] = useState(false);
+const Signup = ({
+  firebase,
+  history,
+  isSubmitting,
+  changeIsSubmitting,
+  showLogin,
+}) => {
   const { t } = useTranslation();
   const submit = values => {
     if (values.password !== values.passwordConfirmation) {
@@ -78,79 +83,76 @@ const Signup = ({ firebase, history }) => {
       }}
       onSubmit={submit}
       render={({ values, handleBlur, handleChange, handleSubmit }) => (
-        <div className="signup-content">
-          <form autoCapitalize="off">
-            <div className="form-container">
-              <div className="text-field-container">
-                <TextField
-                  autoFocus
-                  id="email"
-                  label={t('email')}
-                  type="email"
-                  className="text-field"
-                  value={values.email}
-                  onChange={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  margin="normal"
-                  variant="outlined"
-                />
-                <TextField
-                  id="username"
-                  label={t('username')}
-                  className="text-field"
-                  value={values.username}
-                  helperText={t('this-will-be-used-on-the-leaderboard')}
-                  onChange={handleChange('username')}
-                  onBlur={handleBlur('username')}
-                  margin="normal"
-                  variant="outlined"
-                />
-                <TextField
-                  id="password"
-                  type="password"
-                  label={t('password')}
-                  className="text-field"
-                  value={values.password}
-                  onChange={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  margin="normal"
-                  variant="outlined"
-                />
-                <TextField
-                  id="passwordConfirmation"
-                  type="password"
-                  label={t('password-confirmation')}
-                  className="text-field"
-                  margin="normal"
-                  variant="outlined"
-                  value={values.passwordConfirmation}
-                  onChange={handleChange('passwordConfirmation')}
-                  onBlur={handleBlur('passwordConfirmation')}
-                  onKeyDown={e => handleKeyPress(e, values)}
-                />
-              </div>
-              <div className="buttons-container">
+        <form autoCapitalize="off">
+          <div className="form-container">
+            <div className="text-field-container">
+              <TextField
+                id="email"
+                label={t('email')}
+                type="email"
+                className="text-field"
+                value={values.email}
+                onChange={handleChange('email')}
+                onBlur={handleBlur('email')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="username"
+                label={t('username')}
+                className="text-field"
+                value={values.username}
+                helperText={t('this-will-be-used-on-the-leaderboard')}
+                onChange={handleChange('username')}
+                onBlur={handleBlur('username')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="password"
+                type="password"
+                label={t('password')}
+                className="text-field"
+                value={values.password}
+                onChange={handleChange('password')}
+                onBlur={handleBlur('password')}
+                margin="normal"
+                variant="outlined"
+              />
+              <TextField
+                id="passwordConfirmation"
+                type="password"
+                label={t('password-confirmation')}
+                className="text-field"
+                margin="normal"
+                variant="outlined"
+                value={values.passwordConfirmation}
+                onChange={handleChange('passwordConfirmation')}
+                onBlur={handleBlur('passwordConfirmation')}
+                onKeyDown={e => handleKeyPress(e, values)}
+              />
+            </div>
+            <div className="buttons-container">
+              <Button
+                variant="contained"
+                color="primary"
+                className="button"
+                onClick={handleSubmit}
+                disabled={isSubmitting}>
+                {t('sign-up')}
+              </Button>
+              <div className="inner-buttons-container">
                 <Button
-                  variant="contained"
+                  variant="text"
                   color="primary"
                   className="button"
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}>
-                  {t('sign-up')}
+                  onClick={() => showLogin(true)}>
+                  {t('already-have-an-account')}
                 </Button>
-                <div className="inner-buttons-container">
-                  <Button
-                    variant="text"
-                    color="primary"
-                    className="button"
-                    onClick={() => history.push('/login')}>
-                    {t('already-have-an-account')}
-                  </Button>
-                </div>
               </div>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       )}
     />
   );
@@ -158,6 +160,9 @@ const Signup = ({ firebase, history }) => {
 Signup.propTypes = {
   firebase: PropTypes.object,
   history: PropTypes.object,
+  isSubmitting: PropTypes.bool,
+  changeIsSubmitting: PropTypes.func,
+  showLogin: PropTypes.func,
 };
 
 export default withRouter(withFirebase(Signup));

@@ -2,13 +2,17 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 import {
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Icon,
+  Fab,
+  Tooltip,
 } from '@material-ui/core';
+import { AccountCircle } from '@material-ui/icons';
 
 import PropTypes from 'prop-types';
 import { withFirebase } from '../../Firebase';
@@ -17,7 +21,7 @@ import { withTranslation } from 'react-i18next';
 import AccountRow from './AccountRow';
 import InputDialog from '../InputDialog';
 
-import '../../Assets/stylesheets/Account.scss';
+import '../../Assets/StyleSheets/Account.scss';
 
 class Account extends React.Component {
   static propTypes = {
@@ -68,7 +72,7 @@ class Account extends React.Component {
             .then(() => {
               this.setState({ isSubmitting: true });
               firebase
-                .updateUserOnDB({ username })
+                .updateUserOnDB({ username }, true)
                 .then(() => toast.success(t('your-username-has-been-updated')))
                 .catch(err => toast.error(t(err)))
                 .finally(() => {
@@ -135,15 +139,22 @@ class Account extends React.Component {
         });
     }
   };
+  logout = () => this.props.firebase.auth().signOut();
 
   render() {
-    const { handleOpenClick, handleCloseClick, state, props } = this;
+    const { handleOpenClick, handleCloseClick, logout, state, props } = this;
     const { t } = props;
     return (
-      <div className="content">
-        <div className="open-button" onClick={handleOpenClick}>
-          {t('account')}
-        </div>
+      <React.Fragment>
+        <Tooltip title={t('account')} placement="top">
+          <Fab
+            size="small"
+            className="fab-action fab-action-3"
+            aria-label={t('account')}
+            onClick={handleOpenClick}>
+            <AccountCircle />
+          </Fab>
+        </Tooltip>
         {!!state.user && (
           <Dialog
             maxWidth="lg"
@@ -201,13 +212,21 @@ class Account extends React.Component {
                   isSubmitting={state.isSubmitting}
                 />
               </div>
+              <div className="logout-button-container">
+                <Button
+                  onClick={logout}
+                  color="primary"
+                  variant="contained"
+                  className="logout-button">
+                  {t('log-out')}
+                </Button>
+              </div>
             </DialogContent>
             <DialogActions />
           </Dialog>
         )}
-      </div>
+      </React.Fragment>
     );
   }
 }
-
 export default withTranslation()(withFirebase(Account));

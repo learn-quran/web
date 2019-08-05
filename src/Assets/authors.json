@@ -1,0 +1,31 @@
+{
+  "mohshbool": {
+    "name": {
+      "en": "Mohammad Shbool",
+      "ar": "محمد الشبول"
+    },
+    "urls": {
+      "twitter": "https://www.twitter.com/mohshbool",
+      "github": "https://www.github.com/mohshbool"
+    }
+  },
+  "asadmar": {
+    "name": {
+      "en": "Asad Marmash",
+      "ar": "أسد مرمش"
+    },
+    "urls": {
+      "facebook": "https://www.facebook.com/asad.marmash1"
+    }
+  },
+  "sadeemkh": {
+    "name": {
+      "en": "Sadeem Khalaf",
+      "ar": "سديم خلف"
+    },
+    "urls": {
+      "facebook": "https://www.facebook.com/sadeemkhalaf",
+      "behance": "https://www.behance.net/Sadeem-Khalaf"
+    }
+  }
+}
