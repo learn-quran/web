@@ -21,7 +21,7 @@ import { withTranslation } from 'react-i18next';
 import { withFirebase } from '../Firebase';
 import { objectToArray } from '../Helpers';
 
-import '../Assets/stylesheets/Leaderboard.scss';
+import '../Assets/StyleSheets/Leaderboard.scss';
 
 class Leaderboard extends React.Component {
   constructor(props) {

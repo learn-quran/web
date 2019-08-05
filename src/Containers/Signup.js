@@ -9,7 +9,7 @@ import { TextField, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
 
-import '../Assets/stylesheets/Signup.scss';
+import '../Assets/StyleSheets/Signup.scss';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()

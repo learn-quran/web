@@ -21,7 +21,7 @@ import { withTranslation } from 'react-i18next';
 import AccountRow from './AccountRow';
 import InputDialog from '../InputDialog';
 
-import '../../Assets/stylesheets/Account.scss';
+import '../../Assets/StyleSheets/Account.scss';
 
 class Account extends React.Component {
   static propTypes = {

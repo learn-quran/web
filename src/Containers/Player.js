@@ -13,7 +13,7 @@ import {
 } from '../Assets/Audio';
 import { onWin, onLose } from '../Assets/Animations';
 
-import '../Assets/stylesheets/Player.scss';
+import '../Assets/StyleSheets/Player.scss';
 import { withTranslation } from 'react-i18next';
 import { withFirebase } from '../Firebase';
 import AfterPlay from '../Components/AfterPlay';
