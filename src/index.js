@@ -37,6 +37,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    document.title = this.props.t('learn-quran');
     if (!localStorage.getItem('language'))
       localStorage.setItem('language', 'en');
     const { firebase, i18n } = this.props;
