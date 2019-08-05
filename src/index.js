@@ -16,7 +16,7 @@ import * as moment from 'moment';
 
 import PropTypes from 'prop-types';
 import * as serviceWorker from './serviceWorker';
-import './Assets/stylesheets/index.scss';
+import './Assets/StyleSheets/index.scss';
 import { getTheme } from './Theme';
 import FAB from './Components/FAB';
 

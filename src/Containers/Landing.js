@@ -7,7 +7,7 @@ import Signup from './Signup';
 
 import { logo } from '../Assets/Images';
 
-import '../Assets/stylesheets/Landing.scss';
+import '../Assets/StyleSheets/Landing.scss';
 import About from '../Components/About';
 
 const Landing = () => {
