@@ -66,15 +66,21 @@ class Firebase {
             .then(({ user }) => {
               if (user && user.uid) {
                 let updates = {};
-                updates['users/' + user.uid] = {
+                updates['users/private/' + user.uid] = {
                   uid: user.uid,
-                  username: username,
                   email: email,
                   language: language,
-                  createdAt: moment(),
+                  username: username,
                   points: 0,
                   lastPlayed: 'never-played',
-                  isEmailVerified: false,
+                  createdAt: moment()
+                    .locale('en')
+                    .format(),
+                };
+                updates['users/public/' + user.uid] = {
+                  username: username,
+                  points: 0,
+                  lastPlayed: 'never-played',
                 };
                 this.database.ref().update(updates);
                 resolve();
@@ -98,7 +104,7 @@ class Firebase {
   getUser = () =>
     new Promise((resolve, reject) => {
       this.database
-        .ref(`users/${this.auth().currentUser.uid}`)
+        .ref(`users/private/${this.auth().currentUser.uid}`)
         .once('value')
         .then(snapshot => {
           resolve(snapshot.val());
@@ -108,7 +114,7 @@ class Firebase {
   isUsernameDuplicated = username =>
     new Promise((resolve, reject) => {
       this.database
-        .ref('users')
+        .ref('users/public')
         .orderByChild('username')
         .equalTo(username)
         .once('value')
@@ -126,18 +132,27 @@ class Firebase {
   getLeaderboard = () =>
     new Promise((resolve, reject) => {
       this.database
-        .ref('users')
+        .ref('users/public')
         .orderByChild('points')
         .once('value')
         .then(snapshot => {
           resolve(snapshot.val());
         });
     });
-  updateUserOnDB = updates =>
+  updateUserOnDB = (_updates, _public = false, _private = true) =>
     new Promise((resolve, reject) => {
-      this.database
-        .ref(`users/${this.auth().currentUser.uid}`)
-        .update(updates)
+      if (!_public && !_private) return;
+      const { uid } = this.auth().currentUser;
+      const promises = [];
+      if (_public)
+        promises.push(
+          this.database.ref(`users/public/${uid}`).update(_updates),
+        );
+      if (_private)
+        promises.push(
+          this.database.ref(`users/private/${uid}`).update(_updates),
+        );
+      Promise.all(promises)
         .then(() => resolve())
         .catch(() => reject('an-error-occured-please-try-again-later'));
     });
@@ -187,7 +202,7 @@ class Firebase {
     new Promise((resolve, reject) => {
       this.getUser()
         .then(({ points }) => {
-          this.updateUserOnDB({ points: points + newPoints })
+          this.updateUserOnDB({ points: points + newPoints }, true)
             .then(() => resolve())
             .catch(() => reject());
         })
@@ -197,7 +212,7 @@ class Firebase {
     new Promise(() => {
       this.getUser()
         .then(({ points }) => {
-          this.updateUserOnDB({ lastPlayed })
+          this.updateUserOnDB({ lastPlayed }, true)
             .then(() => {})
             .catch(() => {});
         })

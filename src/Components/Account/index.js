@@ -72,7 +72,7 @@ class Account extends React.Component {
             .then(() => {
               this.setState({ isSubmitting: true });
               firebase
-                .updateUserOnDB({ username })
+                .updateUserOnDB({ username }, true)
                 .then(() => toast.success(t('your-username-has-been-updated')))
                 .catch(err => toast.error(t(err)))
                 .finally(() => {
