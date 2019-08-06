@@ -1,0 +1,26 @@
+{
+	"al-imran": {
+		"index": 3,
+		"name": {
+			"en": "Al-Imran",
+			"ar": "سورة آل عمران"
+		},
+		"assets": ["zllnbolz", "iq555uon", "vqxouvyz"]
+	},
+	"ibrahim": {
+		"index": 14,
+		"name": {
+			"en": "Ibrahim",
+			"ar": "سورة ابراهيم"
+		},
+		"assets": ["ge1djfwj", "swqfuh9t", "hkxrqzks"]
+	},
+	"al-ahzab": {
+		"index": 33,
+		"name": {
+			"en": "Al-Ahzab",
+			"ar": "سورة الأحزاب"
+		},
+		"assets": ["6hqdldyv", "521og0yo", "5g6063sl"]
+	},
+}
