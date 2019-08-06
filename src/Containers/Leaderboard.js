@@ -86,7 +86,9 @@ class Leaderboard extends React.Component {
             </TableBody>
           </Table>
         </div>
-        <Tooltip title={t('resume-playing')} placement="top">
+        <Tooltip
+          title={currentUser.uid ? t('resume-playing') : t('home')}
+          placement="top">
           <Fab
             size="small"
             className="home-fab"
