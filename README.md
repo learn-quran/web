@@ -5,6 +5,7 @@ This repository contains [the website for Learn Quran](https://learn-quran-remas
 
 ## Stack 📚
 - **[React](https://reactjs.org)**
+- **[Firebase](https://firebase.google.com)**
 - **[Material UI](https://material-ui.com)**
 - **[Sass](https://github.com/sass)**
 
