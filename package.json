@@ -1,7 +1,9 @@
 {
   "name": "learn-quran",
   "version": "0.1.0",
-  "private": true,
+  "author": "Mohammad Shbool <@mohshbool> (https://github.com/mohshbool)",
+  "homepage": "https://learn-quran-remastered.firebaseapp.com",
+  "license": "GPL-3.0",
   "dependencies": {
     "@material-ui/core": "^4.0.2",
     "@material-ui/icons": "^4.2.1",
