@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import Login from './Login';
-import Signup from './Signup';
+import Login from '../Components/Login';
+import Signup from '../Components/Signup';
 
 import { logo } from '../Assets/Images';
 
