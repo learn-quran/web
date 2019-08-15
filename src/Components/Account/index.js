@@ -65,24 +65,28 @@ class Account extends React.Component {
   onUsernameSubmit = username => {
     const { firebase, t } = this.props;
     if (username.length >= 3) {
-      if (username !== this.state.user.username) {
-        if (/^(?:[\u0600-\u065f]+|[a-z]+)$/i.test(username)) {
-          firebase
-            .isUsernameDuplicated(username)
-            .then(() => {
-              this.setState({ isSubmitting: true });
-              firebase
-                .updateUserOnDB({ username }, true)
-                .then(() => toast.success(t('your-username-has-been-updated')))
-                .catch(err => toast.error(t(err)))
-                .finally(() => {
-                  this.setState({ isSubmitting: false });
-                  this.persistUserInfo();
-                });
-            })
-            .catch(err => toast.error(t(err)));
-        } else toast.error(t('username-can-only-contain-letters'));
-      }
+      if (username.length <= 20) {
+        if (username !== this.state.user.username) {
+          if (/^(?:[\u0600-\u065f]+|[a-z]+)$/i.test(username)) {
+            firebase
+              .isUsernameDuplicated(username)
+              .then(() => {
+                this.setState({ isSubmitting: true });
+                firebase
+                  .updateUserOnDB({ username }, true)
+                  .then(() =>
+                    toast.success(t('your-username-has-been-updated')),
+                  )
+                  .catch(err => toast.error(t(err)))
+                  .finally(() => {
+                    this.setState({ isSubmitting: false });
+                    this.persistUserInfo();
+                  });
+              })
+              .catch(err => toast.error(t(err)));
+          } else toast.error(t('username-can-only-contain-letters'));
+        }
+      } else toast.error(t('username-too-long'));
     } else toast.error(t('username-too-short'));
   };
   onEmailSubmit = email => {

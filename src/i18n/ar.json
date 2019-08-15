@@ -35,6 +35,7 @@
   "something-went-wrong-please-close-the-tab-and-try-again": "حصل خطأ. يرجى اغلاق الصفحة والمحاولة مجددًا.",
   "your-username-has-been-updated": "تم تغيير اسم المستخدم.",
   "username-too-short": "اسم المستخدم قصير جدًا.",
+  "username-too-long": "اسم المستخدم طويل جدًا.",
   "edit-account": "تعديل الحساب",
   "your-email-has-been-updated": "تم تغيير البريد الإلكتروني.",
   "password-updated-successfully": "تم تغيير كلمة المرور بنجاح.",
