@@ -1,0 +1,31 @@
+.privacy-content {
+  padding: 32px 8vw;
+  direction: ltr !important;
+  * {
+    font-family: inherit;
+  }
+  h1 {
+    text-align: center;
+    font-family: inherit;
+    padding-bottom: 16px;
+  }
+  p {
+    font-size: 1.2em;
+    &:last-child {
+      @media only screen and (max-width: 768px) {
+        text-align: center;
+      }
+    }
+  }
+  strong {
+    font-size: 1.45em;
+    font-weight: 900;
+    text-decoration: underline;
+  }
+  a {
+    text-decoration: none;
+    color: #4f4f4f;
+    font-weight: 700;
+    font-size: 1.05em;
+  }
+}
