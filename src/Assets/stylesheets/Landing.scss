@@ -28,8 +28,21 @@
   .left {
     flex-direction: column;
     justify-content: flex-start;
-    .logo-container {
+    .android-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
       padding: 5% 0 3% 0; 
+      .button {
+        width: 65%;
+        font-size: 1.2em;
+        font-weight: 700;
+        text-align: center;
+      }
+    }
+    .logo-container {
+      padding: 3% 0; 
       .logo {
         width: 204px;
         height: 204px;

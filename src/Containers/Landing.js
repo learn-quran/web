@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
 import Login from '../Components/Login';
@@ -17,6 +18,24 @@ const Landing = () => {
   return (
     <div className={`landing-content ${t('lang-code')}-bg`}>
       <div className="left side">
+        {!!navigator.userAgent.match(/android/i) && (
+          <div className="android-container">
+            <Button
+              variant="contained"
+              color="primary"
+              className="button"
+              onClick={() => {
+                window.location.href =
+                  'https://play.app.goo.gl/?link=https://play.google.com/store/apps/details?id=com.shbool.learnquran';
+                // Fallback solution
+                // window.open(
+                //   'https://play.google.com/store/apps/details?id=com.shbool.learnquran',
+                // );
+              }}>
+              {t('download-android-app')}
+            </Button>
+          </div>
+        )}
         <div className="logo-container">
           <img src={logo} alt="Learn Quran" className="logo" />
         </div>
