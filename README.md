@@ -1,5 +1,5 @@
 # Learn Quran Web
-This repository contains [the website for Learn Quran](https://learn-quran-remastered.firebaseapp.com). Please refer to the [learn-quran/native](https://github.com/learn-quran/native) respository for the best experience on mobile devices, available [Android](https://play.google.com/store/apps/details?id=com.shbool.learnquran) only, because I can't afford to pay for Apple's Developer Program 😅.
+This repository contains [the website for Learn Quran](https://learn-quran.now.sh). Please refer to the [learn-quran/native](https://github.com/learn-quran/native) respository for the best experience on mobile devices, available [Android](https://play.google.com/store/apps/details?id=com.shbool.learnquran) only, because I can't afford to pay for Apple's Developer Program 😅.
 
 *[To know more about the platform itself](https://github.com/learn-quran/learn-quran).*
 
