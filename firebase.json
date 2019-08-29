@@ -14,6 +14,13 @@
     ],
     "headers": [
       {"source": "/service-worker.js", "headers": [{"key": "Cache-Control", "value": "no-cache"}]}
+    ],
+    "redirects": [ 
+      {
+        "source": "/**",
+        "destination": "https://learn-quran.now.sh",
+        "type": 301
+      } 
     ]
   }
 }
