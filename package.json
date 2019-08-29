@@ -2,7 +2,7 @@
   "name": "learn-quran",
   "version": "0.1.0",
   "author": "Mohammad Shbool <@mohshbool> (https://github.com/mohshbool)",
-  "homepage": "https://learn-quran-remastered.firebaseapp.com",
+  "homepage": "https://learn-quran-remastered.now.sh",
   "license": "GPL-3.0",
   "scripts": {
     "start": "react-scripts start",
